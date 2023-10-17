@@ -9,9 +9,10 @@ package Business.Feedback;
  * @author 15469
  */
 public class ProfessorFeedback extends Feedback{
-    
-    public ProfessorFeedback(String feedback) {
+    String id;
+    public ProfessorFeedback(String feedback,String id) {
         super(feedback);
+        this.id=id;
     }
     
 }
