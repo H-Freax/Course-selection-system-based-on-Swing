@@ -16,12 +16,11 @@ import java.util.ArrayList;
 
 
 public class FacultyDirectory {
-    Business business;
     ArrayList<FacultyProfile> facultylist;
 
-    public FacultyDirectory(Business d) {
+    public FacultyDirectory() {
 
-        business = d;
+
         facultylist = new ArrayList();
 
     }

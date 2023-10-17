@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 //你们两个写的不一样，看看怎么搞s
 public class Course {
+    //Section?
     String id;
     String type;
     String name;

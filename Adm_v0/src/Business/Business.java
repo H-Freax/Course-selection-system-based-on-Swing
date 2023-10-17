@@ -7,6 +7,7 @@ package Business;
 
 import Business.Person.PersonDirectory;
 import Business.Profiles.EmployeeDirectory;
+import Business.Profiles.FacultyDirectory;
 
 import Business.UserAccounts.UserAccountDirectory;
 
@@ -18,7 +19,7 @@ public class Business {
 
     String name;
     PersonDirectory persondirectory; //all people profiles regardless of the role
-
+    FacultyDirectory facultydirectory;
     EmployeeDirectory employeedirectory;
     UserAccountDirectory useraccountdirectory;
 
@@ -29,10 +30,14 @@ public class Business {
         persondirectory = new PersonDirectory();
         employeedirectory = new EmployeeDirectory(this);
         useraccountdirectory = new UserAccountDirectory();
-
+        facultydirectory = new FacultyDirectory();
 
     }
-
+    
+    public FacultyDirectory  getFacultyDirectory() {
+        return facultydirectory;
+    }
+    
     public PersonDirectory getPersonDirectory() {
         return persondirectory;
     }
