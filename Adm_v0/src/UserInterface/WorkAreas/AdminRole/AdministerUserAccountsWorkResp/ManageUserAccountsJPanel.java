@@ -8,6 +8,7 @@ package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 import Business.Business;
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
+import javax.swing.JOptionPane;
 
 
 import javax.swing.JPanel;
@@ -54,10 +55,10 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
             Object[] row = new Object[5];
             row[0] = ua;
- //           row[1] = ua.getStatus(); //complete this..
- //           row[2] = ua.getLastUpdated()
- //           row[3] = 
-
+            row[1] = ua.getStatus(); //complete this..
+            row[2] = ua.getLastUpdate();
+            row[3] = ua.getLastActivity();
+            //row[4]
             ((DefaultTableModel) UserAccountTable.getModel()).addRow(row);
         }
 
@@ -90,7 +91,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(30, 300, 76, 32);
+        Back.setBounds(30, 300, 80, 23);
 
         Next.setText("Next >>");
         Next.addActionListener(new java.awt.event.ActionListener() {
@@ -99,17 +100,17 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             }
         });
         add(Next);
-        Next.setBounds(500, 300, 80, 32);
+        Next.setBounds(500, 300, 80, 23);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("User Accounts");
         add(jLabel1);
-        jLabel1.setBounds(30, 90, 190, 19);
+        jLabel1.setBounds(30, 90, 190, 20);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Manage User Accounts");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        jLabel2.setBounds(21, 20, 550, 28);
 
         UserAccountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,7 +144,10 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
         // TODO add your handling code here:
-        if(selecteduseraccount==null) return;
+        if(selecteduseraccount==null){
+            JOptionPane.showMessageDialog(null, "Please select a row!");
+            return;
+        } 
         AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel);
         CardSequencePanel.add(mppd);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -159,13 +163,11 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             return;
         }
         selecteduseraccount = (UserAccount) UserAccountTable.getValueAt(selectedrow, 0);
+        System.out.print(selectedrow);
         if (selecteduseraccount == null) {
-            return;
-        
-        
-            
+            return;   
     }//GEN-LAST:event_UserAccountTableMousePressed
-    
+
     }
     
 

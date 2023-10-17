@@ -183,6 +183,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         //manage student profile
         
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed

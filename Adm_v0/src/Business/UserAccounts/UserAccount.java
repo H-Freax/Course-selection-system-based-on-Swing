@@ -18,13 +18,41 @@ public class UserAccount {
     Profile profile;
     String username;
     String password;
+    String status;
+    String LastUpdate;
+    String LastActivity;
     
     public UserAccount (Profile profile, String un, String pw){
         username = un;
          password = pw;
          this.profile = profile;
-
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getLastUpdate() {
+        return LastUpdate;
+    }
+
+    public void setLastUpdate(String LastUpdate) {
+        this.LastUpdate = LastUpdate;
+    }
+
+    public String getLastActivity() {
+        return LastActivity;
+    }
+
+    public void setLastActivity(String LastActivity) {
+        this.LastActivity = LastActivity;
+    }
+    
+    
 
     public String getPersonId(){
         return profile.getPerson().getPersonId();
