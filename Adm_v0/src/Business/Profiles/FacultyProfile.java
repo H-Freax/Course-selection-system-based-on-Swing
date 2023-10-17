@@ -10,10 +10,7 @@ package Business.Profiles;
  */
 
 
-import Business.Business;
 import Business.Person.Person;
-
-import java.util.ArrayList;
 
 public class FacultyProfile extends Profile{
 

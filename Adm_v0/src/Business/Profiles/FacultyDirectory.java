@@ -8,6 +8,40 @@ package Business.Profiles;
  *
  * @author 15469
  */
+
+import Business.Business;
+import Business.Person.Person;
+
+import java.util.ArrayList;
+
+
 public class FacultyDirectory {
-    
+        Business business;
+    ArrayList<FacultyProfile> facultylist;
+
+    public FacultyDirectory(Business d) {
+
+        business = d;
+        facultylist = new ArrayList();
+
+    }
+
+    public FacultyProfile newFacultyProfile(Person p) {
+
+        FacultyProfile sp = new FacultyProfile(p);
+        facultylist.add(sp);
+        return sp;
+    }
+
+    public FacultyProfile findFaculty(String id) {
+
+        for (FacultyProfile sp : facultylist) {
+
+            if (sp.isMatch(id)) {
+                return sp;
+            }
+        }
+            return null; //not found after going through the whole list
+         }
+ 
 }
