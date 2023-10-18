@@ -6,6 +6,7 @@ package Business.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -18,13 +19,12 @@ public class User {
 
     private String username;
     private String nowpwd;
+    private LocalDateTime lastActivity;
+    private LocalDateTime lastUpdated;
     private ArrayList<String> pwds;
     private Boolean enabled;
 
    
-    public User(){
-        
-    }
     public User(String username, String nowpwd, ArrayList<String> pwds, Boolean enabled) {
         this.username = username;
         this.nowpwd = nowpwd;
@@ -36,6 +36,25 @@ public class User {
         return username;
     }
 
+    public LocalDateTime getLastActivity() {
+        return lastActivity;
+    }
+
+    public void setLastActivity(LocalDateTime lastActivity) {
+        this.lastActivity = lastActivity;
+    }
+
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    
+    
+    
     public void setUsername(String username) {
         this.username = username;
     }
