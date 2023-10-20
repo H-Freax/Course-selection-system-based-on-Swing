@@ -12,14 +12,36 @@ import java.util.ArrayList;
  * @author 15469
  */
 public class Professor extends Person{
-    double rating;
-    ArrayList<Rate>ratelist;
-
-    public Professor(String name, String NUID,String role) {
+    double rating;              //rate for professor
+    ArrayList<Rate>ratelist;    //rate for course
+    String region;
+    String language;
+    boolean enabled;
+    
+    
+    public Professor(String name, String NUID,String role,String language,String region,boolean enabled) {
         super(name,NUID,role);
         ratelist=new ArrayList<>();
+        this.language=language;
+        this.region=region;
+        this.enabled=enabled;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+    
+    public boolean addRating(Rate rate){
+        return ratelist.add(rate);
+    }
+    public boolean deleteRating(Rate rate){
+        return ratelist.remove(rate);
+    }
+    
     public double getRating() {
         return rating;
     }
@@ -28,13 +50,28 @@ public class Professor extends Person{
         this.rating = rating;
     }
 
+    
     public ArrayList<Rate> getRatelist() {
         return ratelist;
     }
 
-    public void setRatelist(ArrayList<Rate> ratelist) {
-        this.ratelist = ratelist;
+    public String getRegion() {
+        return region;
     }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    
 
 
     

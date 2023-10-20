@@ -4,6 +4,7 @@
  */
 package Business.Person;
 import Business.User.User;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,9 @@ public class Person {
     private String NUID;
     private ArrayList<User> users;
     private String role;
-
+    private LocalDateTime lastActive;
+    private LocalDateTime lastUpdate;
+    
     public Person(String name, String NUID,String role) {
         this.name = name;
         this.NUID = NUID;
@@ -24,6 +27,25 @@ public class Person {
         this.role = role;
     }
 
+    public LocalDateTime getLastActive() {
+        return lastActive;
+    }
+
+    public void setLastActive(LocalDateTime lastActive) {
+        this.lastActive = lastActive;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    
+    
+    
     public String getName() {
         return name;
     }

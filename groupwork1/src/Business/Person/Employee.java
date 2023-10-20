@@ -11,11 +11,29 @@ import java.util.ArrayList;
  * @author 15469
  */
 public class Employee extends Person{
+    boolean enabled;
+    String pwd;
     
-    
-    public Employee(String name, String NUID,String role) {
+    public Employee(String name, String NUID,String role,String pwd,boolean enabled) {
         super(name,NUID,role);
+        this.pwd=pwd;
+        this.enabled=enabled;
+    }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
     
     @Override

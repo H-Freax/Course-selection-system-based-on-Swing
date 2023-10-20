@@ -10,12 +10,33 @@ package Business.Person;
  */
 public class Student extends Person{
     double GPA;
+    boolean enabled;
+    String pwd;
+
     
     public Student(String name, String NUID,String role) {
         super(name,NUID,role);
 
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    
+    
     public double getGPA() {
         return GPA;
     }
