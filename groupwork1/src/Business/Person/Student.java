@@ -8,14 +8,36 @@ package Business.Person;
  *
  * @author 15469
  */
+
+//have name,id,role
 public class Student extends Person{
     double GPA;
+    boolean enabled;
+    String pwd;
     
-    public Student(String name, String NUID,String role) {
+    public Student(String name, String NUID,String role,String pwd) {
         super(name,NUID,role);
-
+        this.pwd=encrypted(pwd);
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    
+    
     public double getGPA() {
         return GPA;
     }

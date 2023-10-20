@@ -10,12 +10,32 @@ import java.util.ArrayList;
  *
  * @author 15469
  */
-public class Employee extends Person{
-    
-    
-    public Employee(String name, String NUID,String role) {
-        super(name,NUID,role);
 
+////have name,id,role
+public class Employee extends Person{
+    boolean enabled;
+    String pwd;
+    
+    public Employee(String name, String NUID,String role,String pwd,boolean enabled) {
+        super(name,NUID,role);
+        this.enabled=enabled;
+        this.pwd=encrypted(pwd);
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
     
     @Override

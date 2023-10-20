@@ -4,19 +4,27 @@
  */
 package Business.Person;
 import Business.User.User;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  *
  * @author freax
  */
+
+
+
 public class Person {
     
     private String name;
     private String NUID;
     private ArrayList<User> users;
     private String role;
-
+    private LocalDateTime lastActive;
+    private LocalDateTime lastUpdate;
+    
     public Person(String name, String NUID,String role) {
         this.name = name;
         this.NUID = NUID;
@@ -24,6 +32,42 @@ public class Person {
         this.role = role;
     }
 
+    public static String encrypted(String input){
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(input.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for(byte aByte : bytes){
+                sb.append(Integer.toString((aByte & 0xff)+0x100,16).substring(1));
+            }
+            String str = sb.toString();
+            return sb.toString();
+        }catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        return null;
+        }
+    }
+    
+    public LocalDateTime getLastActive() {
+        return lastActive;
+    }
+
+    public void setLastActive(LocalDateTime lastActive) {
+        this.lastActive = lastActive;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    
+    
+    
     public String getName() {
         return name;
     }

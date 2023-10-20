@@ -18,6 +18,10 @@ public Directory (){
        personlist = new ArrayList();
     }
 
+    public boolean delete(Person p){
+        return personlist.remove(p);
+    }
+
     public Person newPerson(String name, String NUID,String role) {
 
         Person p = new Person(name,NUID,role);
