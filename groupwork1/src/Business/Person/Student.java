@@ -15,9 +15,9 @@ public class Student extends Person{
     boolean enabled;
     String pwd;
     
-    public Student(String name, String NUID,String role) {
+    public Student(String name, String NUID,String role,String pwd) {
         super(name,NUID,role);
-
+        this.pwd=encrypted(pwd);
     }
 
     public boolean isEnabled() {

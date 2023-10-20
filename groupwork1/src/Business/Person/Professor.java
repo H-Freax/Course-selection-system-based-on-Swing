@@ -19,16 +19,27 @@ public class Professor extends Person{
     String region;
     String language;
     boolean enabled;
+    String pwd;
     
-    
-    public Professor(String name, String NUID,String role,String language,String region,boolean enabled) {
+    public Professor(String pwd,String name, String NUID,String role,String language,String region,boolean enabled) {
         super(name,NUID,role);
         ratelist=new ArrayList<>();
         this.language=language;
         this.region=region;
         this.enabled=enabled;
+        this.pwd=encrypted(pwd);
     }
 
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    
+    
     public boolean isEnabled() {
         return enabled;
     }

@@ -18,8 +18,8 @@ public class Employee extends Person{
     
     public Employee(String name, String NUID,String role,String pwd,boolean enabled) {
         super(name,NUID,role);
-        this.pwd=pwd;
         this.enabled=enabled;
+        this.pwd=encrypted(pwd);
     }
 
     public boolean isEnabled() {
