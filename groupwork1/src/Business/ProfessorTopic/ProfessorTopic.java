@@ -8,6 +8,7 @@ package Business.ProfessorTopic;
  *
  * @author 15469
  */
+// professor teaching topic
 public class ProfessorTopic {
     String pid;
     String topic;

@@ -10,6 +10,8 @@ import java.util.ArrayList;
  *
  * @author 15469
  */
+
+////have name,id,role
 public class Employee extends Person{
     boolean enabled;
     String pwd;

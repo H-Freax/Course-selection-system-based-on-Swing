@@ -8,6 +8,8 @@ package Business.Rate;
  *
  * @author 15469
  */
+
+//rating for course-professor
 public class Rate {
     String professor_id ;
     String studuent_id ;

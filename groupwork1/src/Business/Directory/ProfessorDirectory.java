@@ -4,34 +4,32 @@
  */
 package Business.Directory;
 
-import Business.Person.Employee;
+import Business.Person.Professor;
 import java.util.ArrayList;
 
 /**
  *
  * @author 15469
  */
-
-
-public class EmployeeDirectory{
-    ArrayList<Employee> employeeList;
+public class ProfessorDirectory {
+    ArrayList<Professor> professorList;
     
-    public EmployeeDirectory() {
-        employeeList=new ArrayList<>();
+    public ProfessorDirectory() {
+        professorList=new ArrayList<>();
     }
     
-    public boolean delete(Employee p){
-        return employeeList.remove(p);
+    public boolean delete(Professor p){
+        return professorList.remove(p);
     }
 
-    public Employee newEmployee(Employee p) {
-        employeeList.add(p);
+    public Professor newProfessor(Professor p) {
+        professorList.add(p);
         return p;
     }
 
-    public Employee findEmployee(String id) {
+    public Professor findProfessor(String id) {
 
-        for (Employee p : employeeList) {
+        for (Professor p : professorList) {
 
             if (p.getUserbyName(id)!=null) {
                 return p;
@@ -40,5 +38,5 @@ public class EmployeeDirectory{
             return null; //not found after going through the whole list
          }
     
-    
+ 
 }

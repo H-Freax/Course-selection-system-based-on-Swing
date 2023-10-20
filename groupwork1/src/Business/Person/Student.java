@@ -8,11 +8,12 @@ package Business.Person;
  *
  * @author 15469
  */
+
+//have name,id,role
 public class Student extends Person{
     double GPA;
     boolean enabled;
     String pwd;
-
     
     public Student(String name, String NUID,String role) {
         super(name,NUID,role);

@@ -11,6 +11,8 @@ import java.util.ArrayList;
  *
  * @author 15469
  */
+
+////have name,id,role
 public class Professor extends Person{
     double rating;              //rate for professor
     ArrayList<Rate>ratelist;    //rate for course
