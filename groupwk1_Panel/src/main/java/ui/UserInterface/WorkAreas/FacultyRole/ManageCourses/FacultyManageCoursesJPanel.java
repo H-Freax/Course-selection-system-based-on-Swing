@@ -138,7 +138,6 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         jLabel23 = new javax.swing.JLabel();
         txtStudentCount = new javax.swing.JTextField();
         btnSearchStudent = new javax.swing.JButton();
-        btnViewStudent = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
@@ -598,8 +597,6 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
         btnSearchStudent.setText("Search");
 
-        btnViewStudent.setText("View");
-
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel1.setText("Select Semester:");
 
@@ -666,8 +663,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                                                     .addGap(54, 54, 54)
                                                     .addComponent(txtStudentScore, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addComponent(btnSearchStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGap(17, 17, 17)
-                                    .addComponent(btnViewStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(103, 103, 103))
                                 .addGroup(coursehistoryPanelLayout.createSequentialGroup()
                                     .addGroup(coursehistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coursehistoryPanelLayout.createSequentialGroup()
@@ -789,17 +785,12 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                 .addGroup(coursehistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(coursehistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(19, 19, 19)
+                .addGroup(coursehistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtSearchStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(coursehistoryPanelLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(coursehistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSearchStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(coursehistoryPanelLayout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(btnSearchStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coursehistoryPanelLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btnViewStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(3, 3, 3)
+                        .addComponent(btnSearchStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(coursehistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
@@ -827,7 +818,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -847,7 +838,6 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnSearchCurrentCourse;
     private javax.swing.JButton btnSearchStudent;
     private javax.swing.JButton btnView;
-    private javax.swing.JButton btnViewStudent;
     private javax.swing.JScrollPane courseHistoryScrollPane;
     private javax.swing.JPanel coursehistoryPanel;
     private javax.swing.JTextArea createCourseIntroductionTextArea;

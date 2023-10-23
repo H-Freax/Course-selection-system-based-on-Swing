@@ -19,6 +19,8 @@ import model.PersonList;
 import model.Person;
 import model.User;
 import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
+import ui.UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 
 /**
  *
@@ -27,7 +29,7 @@ import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
 
 
 public class LoginJPanel extends javax.swing.JPanel {
-
+    int i=0;
     private JPanel ViewContainer;
     private PersonList personList;
     private JPanel controlPanel;
@@ -48,12 +50,16 @@ public class LoginJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         loginbtn = new javax.swing.JButton();
         lbltitle = new javax.swing.JLabel();
         txtloginusername = new javax.swing.JTextField();
         lblusername = new javax.swing.JLabel();
         lblpwd = new javax.swing.JLabel();
         txtloginpwd = new javax.swing.JPasswordField();
+        btnAdmin = new javax.swing.JRadioButton();
+        btnProfessor = new javax.swing.JRadioButton();
+        btnStudent = new javax.swing.JRadioButton();
 
         loginbtn.setText("Login");
         loginbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -76,6 +82,30 @@ public class LoginJPanel extends javax.swing.JPanel {
 
         lblpwd.setText("Password:");
 
+        buttonGroup1.add(btnAdmin);
+        btnAdmin.setText("Admin");
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(btnProfessor);
+        btnProfessor.setText("Faculty");
+        btnProfessor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProfessorActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(btnStudent);
+        btnStudent.setText("Student");
+        btnStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStudentActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,15 +115,27 @@ public class LoginJPanel extends javax.swing.JPanel {
                 .addComponent(lbltitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(163, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblpwd)
-                    .addComponent(lblusername))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginbtn)
-                    .addComponent(txtloginusername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
+                        .addComponent(btnAdmin)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnProfessor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnStudent))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap(163, Short.MAX_VALUE)
+                                .addComponent(lblusername))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblpwd)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loginbtn)
+                            .addComponent(txtloginusername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
@@ -109,19 +151,27 @@ public class LoginJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblpwd)
                     .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdmin)
+                    .addComponent(btnProfessor)
+                    .addComponent(btnStudent))
+                .addGap(37, 37, 37)
                 .addComponent(loginbtn)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbtnActionPerformed
         String username = txtloginusername.getText();
         String pwd = new String(txtloginpwd.getPassword());
-
+        if(i==0){
+            JOptionPane.showMessageDialog(this, "Please select role!");
+            return;
+        }
         
         try{
-            if (isValidUser(username, pwd).getRole().equals("admin")&&isValidUser(username, pwd).isEnabled()) {
+            if (isValidUser(username, pwd).getRole().equals("admin")&&isValidUser(username, pwd).isEnabled()&&i==1) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
                 AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel( ViewContainer, controlPanel,  personList);
                 controlPanel.add(panel1);
@@ -132,15 +182,21 @@ public class LoginJPanel extends javax.swing.JPanel {
                 ViewContainer.add("AdminJPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
-            } else if (isValidUser(username, pwd).getRole().equals("user")&&isValidUser(username, pwd).isEnabled()) {
+            } else if (isValidUser(username, pwd).getRole().equals("professor")&&isValidUser(username, pwd).isEnabled()&&i==2) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-
+                FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                controlPanel.add(panel1);
+                CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+                layout1.next(controlPanel);
                 User user = isValidUser(username, pwd);
                 UserViewPanel panel = new UserViewPanel(ViewContainer,personList,user);
                 ViewContainer.add("UserViewPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
-            }else if(!isValidUser(username, pwd).isEnabled()){
+            }else if(isValidUser(username, pwd).getRole().equals("student")&&isValidUser(username, pwd).isEnabled()&&i==3){
+                    
+            }
+            else if(!isValidUser(username, pwd).isEnabled()){
                 JOptionPane.showMessageDialog(this, "Account unavailable! Please contact admin!");
             }
         }catch(Exception e){
@@ -166,7 +222,26 @@ public class LoginJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtloginusernameActionPerformed
 
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        // TODO add your handling code here:
+        i=1;
+    }//GEN-LAST:event_btnAdminActionPerformed
+
+    private void btnProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfessorActionPerformed
+        // TODO add your handling code here:
+        i=2;
+    }//GEN-LAST:event_btnProfessorActionPerformed
+
+    private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
+        // TODO add your handling code here:
+        i=3;
+    }//GEN-LAST:event_btnStudentActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton btnAdmin;
+    private javax.swing.JRadioButton btnProfessor;
+    private javax.swing.JRadioButton btnStudent;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel lblpwd;
     private javax.swing.JLabel lbltitle;
     private javax.swing.JLabel lblusername;
