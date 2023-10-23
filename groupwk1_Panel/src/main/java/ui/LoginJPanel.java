@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import model.PersonList;
 import model.Person;
 import model.User;
-import ui.MainJFrame;
+import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
 
 /**
  *
@@ -30,16 +30,13 @@ public class LoginJPanel extends javax.swing.JPanel {
 
     private JPanel ViewContainer;
     private PersonList personList;
-    private JLabel txtHi;
-    private JButton btnLogout;
-  
+    private JPanel controlPanel;
 
-    LoginJPanel(JPanel ViewContainer, PersonList personList, JLabel txtHi,JButton btnLogout) {
+    public LoginJPanel(JPanel ViewContainer, PersonList personList, JPanel controlPanel) {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.personList = personList;
-        this.txtHi = txtHi;
-        this.btnLogout = btnLogout;
+        this.controlPanel = controlPanel;
     }
 
     /**
@@ -126,8 +123,7 @@ public class LoginJPanel extends javax.swing.JPanel {
         try{
             if (isValidUser(username, pwd).getRole().equals("admin")&&isValidUser(username, pwd).isEnabled()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                txtHi.setText("Hi,Admin!");
-                btnLogout.setVisible(true);
+
                 User user = isValidUser(username, pwd);
                 AdminJPanel panel = new AdminJPanel(ViewContainer,personList,user);
                 ViewContainer.add("AdminJPanel",panel);
@@ -135,8 +131,7 @@ public class LoginJPanel extends javax.swing.JPanel {
                 layout.next(ViewContainer);
             } else if (isValidUser(username, pwd).getRole().equals("user")&&isValidUser(username, pwd).isEnabled()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                txtHi.setText("Hi,User!");
-                btnLogout.setVisible(true);
+
                 User user = isValidUser(username, pwd);
                 UserViewPanel panel = new UserViewPanel(ViewContainer,personList,user);
                 ViewContainer.add("UserViewPanel",panel);
@@ -148,7 +143,10 @@ public class LoginJPanel extends javax.swing.JPanel {
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Wrong Username/Wrong Password");
         }
-        
+                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                controlPanel.add(panel1);
+                CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+                layout1.next(controlPanel);
     }//GEN-LAST:event_loginbtnActionPerformed
 
     private User isValidUser(String username, String password) {
