@@ -123,7 +123,10 @@ public class LoginJPanel extends javax.swing.JPanel {
         try{
             if (isValidUser(username, pwd).getRole().equals("admin")&&isValidUser(username, pwd).isEnabled()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-
+                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                controlPanel.add(panel1);
+                CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+                layout1.next(controlPanel);
                 User user = isValidUser(username, pwd);
                 AdminJPanel panel = new AdminJPanel(ViewContainer,personList,user);
                 ViewContainer.add("AdminJPanel",panel);
@@ -143,10 +146,7 @@ public class LoginJPanel extends javax.swing.JPanel {
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Wrong Username/Wrong Password");
         }
-                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel( ViewContainer, controlPanel,  personList);
-                controlPanel.add(panel1);
-                CardLayout layout1 = (CardLayout)controlPanel.getLayout();
-                layout1.next(controlPanel);
+
     }//GEN-LAST:event_loginbtnActionPerformed
 
     private User isValidUser(String username, String password) {
