@@ -4,7 +4,7 @@
  */
 package ui;
 
-import javax.swing.*; 
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import model.PersonList;
 import model.Person;
 import model.User;
-
+import Tools.MySQLConnectionUtil;
 
 /**
  *
@@ -28,8 +28,8 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
-    public MainJFrame() { 
-        
+    public MainJFrame() {
+
 //        LoginJPanel login = new LoginJPanel();
         initComponents();
         Person person1 = new Person("Person1", "NUID1");
@@ -44,7 +44,7 @@ public class MainJFrame extends javax.swing.JFrame {
         User user0 = new User("user0", "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e", new ArrayList<>(), true, "admin");
         user0.getPwds().add("0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e");
         person0.addUser(user0);
-        
+
         Person person2 = new Person("Person2", "NUID2");
         User user3 = new User("user3", "5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764", new ArrayList<>(), false, "user");
         user3.getPwds().add("5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764");
@@ -54,13 +54,15 @@ public class MainJFrame extends javax.swing.JFrame {
         savepersonList.addPerson(person0);
         savepersonList.addPerson(person1);
         savepersonList.addPerson(person2);
+        MySQLConnectionUtil mySQLConnectionUtil= new MySQLConnectionUtil();
+        mySQLConnectionUtil.getConnection();
 
         // 将数据写入文件
         writeDataToFile(savepersonList, "personlist.txt");
 
         // 从文件中读取数据
         PersonList personList = readDataFromFile("personlist.txt");
-        
+
         txtHi.setText("Please Login in");
         btnLogout.setVisible(false);
         LoginJPanel panel = new LoginJPanel(ViewContainer,personList,txtHi,btnLogout);
@@ -68,7 +70,7 @@ public class MainJFrame extends javax.swing.JFrame {
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
 //        jSplitPane1.setRightComponent(login);
-        
+
     }
 
     /**
@@ -148,7 +150,7 @@ public class MainJFrame extends javax.swing.JFrame {
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);        // TODO add your handling code here:
         btnLogout.setVisible(false);
-       
+
     }//GEN-LAST:event_btnLogoutActionPerformed
     public static void writeDataToFile(PersonList personList, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
@@ -186,22 +188,22 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
             } else if (line.startsWith("pwds:")) {
                 if (currentUser != null) {
-                    currentUser.getPwds().add(line.substring(5)); 
-                    readingPwds = true; 
+                    currentUser.getPwds().add(line.substring(5));
+                    readingPwds = true;
                 }
             } else if (line.startsWith("pwdsend:")) {
-                if (currentUser != null ) { 
+                if (currentUser != null ) {
                     readingPwds = false;
                 }
             } else if (line.startsWith("enabled:")) {
-                if (currentUser != null ) { 
+                if (currentUser != null ) {
                     currentUser.setEnabled(Boolean.parseBoolean(line.substring(8)));
                 }
             } else if (line.startsWith("role:")) {
                 if (currentUser != null) {
                     currentUser.setRole(line.substring(5));
                 }
-            } else if (line.isEmpty() && readingPwds) { 
+            } else if (line.isEmpty() && readingPwds) {
                 readingPwds = false;
             }
         }
@@ -211,7 +213,7 @@ public class MainJFrame extends javax.swing.JFrame {
     return personList;
 }
 
-    
+
     /**
      * @param args the command line arguments
      */
@@ -219,7 +221,7 @@ public class MainJFrame extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -244,7 +246,7 @@ public class MainJFrame extends javax.swing.JFrame {
             public void run() {
 
                 new MainJFrame().setVisible(true);
-               
+
             }
         });
     }
