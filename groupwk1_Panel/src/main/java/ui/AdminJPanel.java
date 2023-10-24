@@ -26,7 +26,7 @@ public class AdminJPanel extends javax.swing.JPanel {
     private User user;
     private User selectuser;
 
-    AdminJPanel(JPanel ViewContainer, PersonList personList) {
+    public AdminJPanel(JPanel ViewContainer) {
 
         initComponents();
         this.ViewContainer = ViewContainer;

@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import Business.Person.Employee;
 import Business.Person.Professor;
 import Business.Person.Student;
@@ -153,7 +152,7 @@ public class LoginJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {                                         
+    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         String username = txtloginusername.getText();
         String password = Arrays.toString(txtloginpwd.getPassword());
         connection =  MySQLConnectionUtil.getConnection();
@@ -166,11 +165,11 @@ public class LoginJPanel extends javax.swing.JPanel {
 
         } else if (btnProfessor.isSelected()) {
             System.out.println("professor");
-            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Professor");
 
         } else if (btnStudent.isSelected()) {
             System.out.println("student");
-            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Student");
 
         }
 
@@ -178,41 +177,48 @@ public class LoginJPanel extends javax.swing.JPanel {
             // 根据用户身份切换到不同的界面
             if (btnAdmin.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel(ViewContainer, controlPanel,  personList);
-                controlPanel.add(panel1);
+
+                AdminWorkAreaJPanel admincontrolpanel = new AdminWorkAreaJPanel(ViewContainer, controlPanel);
+                controlPanel.add(admincontrolpanel);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
 
 
-                AdminJPanel panel = new AdminJPanel(ViewContainer,personList);
-
-                
-
-                ViewContainer.add("AdminJPanel",panel);
+                JPanel panel = new JPanel();
+                ViewContainer.add("Block",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
                 // 显示 Employee 界面
             } else if (btnProfessor.isSelected()) {
                 // 显示 Professor 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                
+
                 FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  personList);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
-                
-                UserViewPanel panel = new UserViewPanel(ViewContainer,personList);
-                ViewContainer.add("UserViewPanel",panel);
+
+                JPanel panel = new JPanel();
+                ViewContainer.add("Block",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
             } else if (btnStudent.isSelected()) {
                 // 显示 Student 界面
-                
-                UserViewPanel panel = new UserViewPanel(ViewContainer,personList);
-                ViewContainer.add("UserViewPanel",panel);
+                JOptionPane.showMessageDialog(this, "Succuss!");
+
+                StudentWorkAreaJPanel panel1 = new StudentWorkAreaJPanel(ViewContainer, controlPanel,  personList);
+                controlPanel.add(panel1);
+                CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+                layout1.next(controlPanel);
+
+
+                JPanel panel = new JPanel();
+                ViewContainer.add("Block",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");
         }
 
 

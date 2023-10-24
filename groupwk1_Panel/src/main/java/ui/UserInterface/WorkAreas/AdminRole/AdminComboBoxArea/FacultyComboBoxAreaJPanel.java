@@ -32,22 +32,22 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)tblProfessor.getModel();
         model.setRowCount(0);
-        
+
         for(Professor vs : professorlist){
 
                 Object[] row = new Object[4];
-                row[0] = vs.getName();
-                row[1] = vs.getNUID();
-                row[2] = vs.isEnabled();
-                row[4] = vs.getRating();
-            
+//                row[0] = vs.get();
+//                row[1] = vs.getNUID();
+//                row[2] = vs.isEnabled();
+//                row[4] = vs.getRating();
+
                 model.addRow(row);
 
         }
     }
-    
-    
-    
+
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -323,11 +323,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please enter!");
         }else{
             for(Professor vs : professorlist){
-                if(vs.getNUID().equals(search)){
+//                if(vs.getNUID().equals(search)){
                     //
-                    
+
                     return;
-                }
+//                }
             }
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
@@ -335,7 +335,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -349,10 +349,10 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select a row to delete.");
             return;
         }else{
-            
+
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
