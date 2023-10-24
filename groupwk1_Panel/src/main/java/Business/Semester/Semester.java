@@ -4,73 +4,65 @@
  */
 package Business.Semester;
 
-import java.sql.*;
 import java.time.LocalDateTime;
 
+/**
+ *
+ * @author 15469
+ */
 public class Semester {
-    private String id;
-    private String semesterName;
-    private LocalDateTime semesterStart;
-    private LocalDateTime semesterEnd;
+    LocalDateTime startTime;
+    LocalDateTime endTime;
+    String id;
+    String semName;
+    
+    public Semester(int year,String period,String id,String semName) {
+        int startmonth=0;
+        int endmonth=0;
+        if(period.equals("Spring")){
+            startmonth=1;
+            endmonth=6;
+        }else{
+            startmonth=9;
+            endmonth=11;            
+        }
+        this.id=id;
+        this.semName=semName;
+        startTime = LocalDateTime.of(year, startmonth, 1,0,0);
+        endTime = LocalDateTime.of(year, endmonth, 30,24,0);  
+    }
 
-    public Semester(String id, String semesterName, LocalDateTime semesterStart, LocalDateTime semesterEnd) {
-        this.id = id;
-        this.semesterName = semesterName;
-        this.semesterStart = semesterStart;
-        this.semesterEnd = semesterEnd;
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getSemesterName() {
-        return semesterName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public LocalDateTime getSemesterStart() {
-        return semesterStart;
+    public String getSemName() {
+        return semName;
     }
 
-    public LocalDateTime getSemesterEnd() {
-        return semesterEnd;
+    public void setSemName(String semName) {
+        this.semName = semName;
     }
-
-    public static Semester loadFromDatabase(Connection connection, String id) throws SQLException {
-        String query = "SELECT * FROM Semester WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                String semesterName = resultSet.getString("semstername");
-                LocalDateTime semesterStart = resultSet.getTimestamp("semesterstart").toLocalDateTime();
-                LocalDateTime semesterEnd = resultSet.getTimestamp("semesterend").toLocalDateTime();
-                return new Semester(id, semesterName, semesterStart, semesterEnd);
-            }
-        }
-        return null;
-    }
-
-    public void setSemesterDates(int year, String season) {
-        if (season.equalsIgnoreCase("Spring")) {
-            semesterName = "Spring " + year;
-            semesterStart = LocalDateTime.of(year, 1, 1, 0, 0);
-            semesterEnd = LocalDateTime.of(year, 5, 31, 23, 59);
-        } else if (season.equalsIgnoreCase("Fall")) {
-            semesterName = "Fall " + year;
-            semesterStart = LocalDateTime.of(year, 8, 1, 0, 0);
-            semesterEnd = LocalDateTime.of(year, 12, 31, 23, 59);
-        }
-    }
-
-    public void saveToDatabase(Connection connection) throws SQLException {
-        String query = "INSERT INTO Semester (id, semstername, semesterstart, semesterend) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, id);
-            statement.setString(2, semesterName);
-            statement.setTimestamp(3, Timestamp.valueOf(semesterStart));
-            statement.setTimestamp(4, Timestamp.valueOf(semesterEnd));
-            statement.executeUpdate();
-        }
-    }
+    
+    
 }
