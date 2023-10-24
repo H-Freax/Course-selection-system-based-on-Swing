@@ -7,35 +7,55 @@ package Business.Directory;
 import Business.Person.Student;
 import java.util.ArrayList;
 
-/**
- *
- * @author 15469
- */
-public class StudentDirectory{
-    ArrayList<Student> studentList;
-    
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentDirectory {
+    private List<Student> studentList;
+
     public StudentDirectory() {
-        studentList=new ArrayList<>();
-    }
-    
-    public boolean delete(Student p){
-        return studentList.remove(p);
+        studentList = new ArrayList<>();
     }
 
-    public Student newStudent(Student p) {
-        studentList.add(p);
-        return p;
+    // 添加学生到目录
+    public void addStudent(Student student) {
+        studentList.add(student);
     }
 
-    public Student findStudent(String id) {
+    // 从目录中移除学生
+    public void removeStudent(Student student) {
+        studentList.remove(student);
+    }
 
-        for (Student p : studentList) {
-
-            if (p.getUserbyName(id)!=null) {
-                return p;
+    // 通过学生ID查找学生
+    public Student findStudent(String personID) {
+        for (Student student : studentList) {
+            if (student.getPersonID().equals(personID)) {
+                return student;
             }
         }
-            return null; //not found after going through the whole list
-         }
-    
+        return null;
+    }
+
+    // 从数据库加载所有学生信息
+    public void loadStudentsFromDatabase(Connection connection) throws SQLException {
+        List<Student> studentsFromDB = Student.loadAllFromDatabase(connection);
+        studentList.addAll(studentsFromDB);
+    }
+
+    // 从目录中保存所有学生信息到数据库
+    public void saveStudentsToDatabase(Connection connection) throws SQLException {
+        for (Student student : studentList) {
+            student.saveToDatabase(connection);
+        }
+    }
+
+    // 从目录中更新所有学生信息到数据库
+    public void updateStudentsInDatabase(Connection connection) throws SQLException {
+        for (Student student : studentList) {
+            student.updateStudentInDatabase(connection);
+        }
+    }
 }

@@ -3,16 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Business.Person;
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-/**
- *
- * @author freax
- */
-
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Person {
     private String personName;
@@ -25,7 +19,7 @@ public class Person {
         this.role = role;
     }
 
-    public String getPersonName() {
+    public static String getPersonName() {
         return personName;
     }
 
@@ -48,24 +42,11 @@ public class Person {
     public void setRole(String role) {
         this.role = role;
     }
-    public static Person loadFromDatabase(Connection connection, String NUID) throws SQLException {
-        String query = "SELECT * FROM Person WHERE PersonID = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, NUID);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                String personName = resultSet.getString("PersonName");
-                String role = resultSet.getString("role");
-                Person person = new Person(personName, NUID, role);
-                return person;
-            }
-        }
-        return null;
-    }
 
     public void saveToDatabase(Connection connection) throws SQLException {
-        String query = "INSERT INTO Person (PersonName, PersonID, role) VALUES (?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        // 将 Person 对象保存到数据库
+        String insertPersonQuery = "INSERT INTO Person (PersonName, PersonID, role) VALUES (?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(insertPersonQuery)) {
             statement.setString(1, personName);
             statement.setString(2, personID);
             statement.setString(3, role);
@@ -73,10 +54,10 @@ public class Person {
         }
     }
 
-
     public void updateInDatabase(Connection connection) throws SQLException {
-        String query = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        // 更新数据库中的 Person 对象信息
+        String updatePersonQuery = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
             statement.setString(1, personName);
             statement.setString(2, role);
             statement.setString(3, personID);
@@ -84,4 +65,27 @@ public class Person {
         }
     }
 
+    public static Person loadFromDatabase(Connection connection, String personID) throws SQLException {
+        // 从数据库加载 Person 对象信息
+        String selectPersonQuery = "SELECT * FROM Person WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(selectPersonQuery)) {
+            statement.setString(1, personID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String personName = resultSet.getString("PersonName");
+                String role = resultSet.getString("role");
+                return new Person(personName, personID, role);
+            }
+        }
+        return null;
+    }
+
+    public static void deleteFromDatabase(Connection connection, String personID) throws SQLException {
+        // 从数据库删除指定 Person 对象
+        String deletePersonQuery = "DELETE FROM Person WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(deletePersonQuery)) {
+            statement.setString(1, personID);
+            statement.executeUpdate();
+        }
+    }
 }
