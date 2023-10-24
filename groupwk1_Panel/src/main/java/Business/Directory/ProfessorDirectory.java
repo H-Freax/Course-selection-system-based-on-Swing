@@ -25,6 +25,14 @@ public class ProfessorDirectory {
         professors.add(professor);
     }
 
+    public Professor getProfessorByusername(String username) {
+        for (Professor professor : professors) {
+            if (professor.getUsername().equals(username)) {
+                return professor;
+            }
+        }
+        return null;
+    }
     // 根据ID获取教授
     public Professor getProfessorById(String personID) {
         for (Professor professor : professors) {

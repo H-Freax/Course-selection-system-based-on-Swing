@@ -29,6 +29,14 @@ public class StudentDirectory {
         studentList.remove(student);
     }
 
+    public Student findStudentbyUsername(String username) {
+        for (Student student : studentList) {
+            if (student.getUsername().equals(username)) {
+                return student;
+            }
+        }
+        return null;
+    }
     // 通过学生ID查找学生
     public Student findStudent(String personID) {
         for (Student student : studentList) {

@@ -6,6 +6,8 @@ package ui.UserInterface.WorkAreas.FacultyRole;
 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+
+import Business.Person.Professor;
 import model.PersonList;
 import ui.LoginJPanel;
 import static ui.MainJFrame.readDataFromFile;
@@ -22,18 +24,18 @@ import ui.UserInterface.WorkAreas.General.GeneralJPanel;
  */
 public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     private JPanel controlPanel;
-    private PersonList personList; 
+    private PersonList personList;
     private JPanel ViewContainer;
 
+    private Professor professor;
     /**
      * Creates new form FacultyWorkAreaJPanel
      */
-    public FacultyWorkAreaJPanel(JPanel ViewContainer,JPanel controlPanel, PersonList personList) {
+    public FacultyWorkAreaJPanel(JPanel ViewContainer, JPanel controlPanel, Professor professor) {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.controlPanel = controlPanel;
-        this.personList=  personList;
-        this.ViewContainer=ViewContainer;
+        this.professor=  professor;
     }
 
     /**
@@ -239,7 +241,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         CardLayout layout1 = (CardLayout)controlPanel.getLayout();
         controlPanel.add(panel3);
         layout1.next(controlPanel);
-        
+
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);        // TODO add your handling code here:
         btnLogout.setVisible(false);

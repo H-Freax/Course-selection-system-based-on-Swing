@@ -13,13 +13,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Business.Directory.StudentDirectory;
 import Business.Person.Employee;
 import Business.Person.Professor;
 import Business.Person.Student;
 import Tools.MySQLConnectionUtil;
 import model.PersonList;
-import model.Person;
-import model.User;
+import Business.Directory.ProfessorDirectory;
 import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
 import ui.UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
@@ -192,8 +193,9 @@ public class LoginJPanel extends javax.swing.JPanel {
             } else if (btnProfessor.isSelected()) {
                 // 显示 Professor 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
-
-                FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                ProfessorDirectory prolist = new ProfessorDirectory();
+                Professor professor = prolist.getProfessorByusername(username);
+                FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  professor);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
@@ -206,7 +208,9 @@ public class LoginJPanel extends javax.swing.JPanel {
                 // 显示 Student 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
 
-                StudentWorkAreaJPanel panel1 = new StudentWorkAreaJPanel(ViewContainer, controlPanel,  personList);
+                StudentDirectory stulist = new StudentDirectory();
+                Student student = stulist.findStudentbyUsername(username);
+                StudentWorkAreaJPanel panel1 = new StudentWorkAreaJPanel(ViewContainer, controlPanel,  student);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
