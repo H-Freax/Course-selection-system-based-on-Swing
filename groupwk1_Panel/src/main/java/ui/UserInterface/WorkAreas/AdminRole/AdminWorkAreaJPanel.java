@@ -245,10 +245,10 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
         // TODO add your handling code here:
         if("Faculty".equals(selectedText)){
-            FacultyComboBoxAreaJPanel cPanel = new FacultyComboBoxAreaJPanel();
-            ViewContainer.add("FacultyComboBoxAreaJPanel", cPanel);
-            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-            layout.next(ViewContainer);
+//            FacultyComboBoxAreaJPanel cPanel = new FacultyComboBoxAreaJPanel();
+//            ViewContainer.add("FacultyComboBoxAreaJPanel", cPanel);
+//            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+//            layout.next(ViewContainer);
         }else if("Student".equals(selectedText)){
             StudentComboBoxAreaJPanel cPanel = new StudentComboBoxAreaJPanel();
             ViewContainer.add("StudentComboBoxAreaJPanel", cPanel);
@@ -291,7 +291,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnCreateIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateIdentifyEventsActionPerformed
         // TODO add your handling code here:
-            AdminJPanel cPanel = new AdminJPanel(ViewContainer,personList,user);
+            AdminJPanel cPanel = new AdminJPanel(ViewContainer,personList);
             ViewContainer.add("AdminJPanel", cPanel);
             CardLayout layout = (CardLayout)ViewContainer.getLayout();
             layout.next(ViewContainer);
