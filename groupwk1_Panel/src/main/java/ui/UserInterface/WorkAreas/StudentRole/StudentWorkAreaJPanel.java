@@ -4,17 +4,40 @@
  */
 package ui.UserInterface.WorkAreas.StudentRole;
 
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import model.PersonList;
+import ui.LoginJPanel;
+import static ui.MainJFrame.readDataFromFile;
+import ui.UserInterface.WorkAreas.FacultyRole.Ranking.FacultyRankingJPanel;
+import ui.UserInterface.WorkAreas.General.GeneralJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.GraduationStatus.StudentGraduationStatusJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.ManageProfile.StudentManageProfileJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.MyCourses.StudentManageCoursesJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.Registration.StudentRegisterJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.Transcript.StudentTranscriptJPanel;
+
 /**
  *
  * @author zhangjinming
  */
 public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
+    private JPanel controlPanel;
+    private PersonList personList; 
+    private JPanel ViewContainer;
     /**
      * Creates new form StudentWorkAreaJPanel
      */
-    public StudentWorkAreaJPanel() {
+    public StudentWorkAreaJPanel(JPanel ViewContainer,JPanel controlPanel, PersonList personList) {
         initComponents();
+        
+        this.controlPanel = controlPanel;
+        this.personList=  personList;
+        this.ViewContainer=ViewContainer;
+        
+        
+       
     }
 
     /**
@@ -32,6 +55,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         btnManageProfile = new javax.swing.JButton();
         btnGraduationStatus = new javax.swing.JButton();
         btnTranscript = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("My Student Profie");
@@ -101,6 +125,13 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnLogout.setText("Log out");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,7 +144,10 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnRegisrtation, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnManageProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMyCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTranscript, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTranscript, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(btnLogout)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -131,16 +165,26 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnGraduationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnTranscript, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(btnLogout)
+                .addGap(28, 28, 28))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMyCourseIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyCourseIdentifyEventsActionPerformed
         // TODO add your handling code here:
+        StudentManageCoursesJPanel mscPanel = new StudentManageCoursesJPanel();
+        ViewContainer.add("StudentManageCoursesJPanel", mscPanel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
     }//GEN-LAST:event_btnMyCourseIdentifyEventsActionPerformed
 
     private void btnRegisrtationIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisrtationIdentifyResourceAssetsActionPerformed
         // TODO add your handling code here:
+        StudentRegisterJPanel srPanel = new StudentRegisterJPanel();
+        ViewContainer.add("StudentManageCoursesJPanel", srPanel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
         //        CardSequencePanel.removeAll();
         //
         //        ManagePersonsJPanel aos = new ManagePersonsJPanel(business, CardSequencePanel);
@@ -151,6 +195,10 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageProfileActionPerformed
         // TODO add your handling code here:
+        StudentManageProfileJPanel smpPanel = new StudentManageProfileJPanel();
+        ViewContainer.add("StudentManageProfileJPanel", smpPanel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
 
         //       ManageSuppliersJPanel iet = new ManageSuppliersJPanel(business, CardSequencePanel);
 
@@ -160,6 +208,10 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnGraduationStatusIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraduationStatusIdentifyEventsActionPerformed
         // TODO add your handling code here:
+        StudentGraduationStatusJPanel sgsPanel = new StudentGraduationStatusJPanel();
+        ViewContainer.add("StudentManageProfileJPanel", sgsPanel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
         //        CardSequencePanel.removeAll();
         //        //    IdentifyEventTypes iet= new IdentifyEventTypes(businessunit, CardSequencePanel);
         //
@@ -170,17 +222,32 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnTranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTranscriptActionPerformed
         // TODO add your handling code here:
-
-        //        CardSequencePanel.removeAll();
-        //        //        ManageIncidents aos = new  ManageIncidents(businessunit, CardSequencePanel);
-        //        // aos.setAgenda(businessunit.getRiskManagementAgenda());
-        //        //        CardSequencePanel.add("RiskAgendaObjectives", aos);
-        //        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        StudentTranscriptJPanel stPanel = new StudentTranscriptJPanel();
+        ViewContainer.add("StudentManageProfileJPanel", stPanel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
+        
     }//GEN-LAST:event_btnTranscriptActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        this.personList = readDataFromFile("personlist.txt");
+        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+        ViewContainer.add("LoginJPanel",panel);
+        GeneralJPanel panel3 = new GeneralJPanel();
+        CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+        controlPanel.add(panel3);
+        layout1.next(controlPanel);
+        
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);        // TODO add your handling code here:
+        btnLogout.setVisible(false);
+
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGraduationStatus;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnManageProfile;
     private javax.swing.JButton btnMyCourse;
     private javax.swing.JButton btnRegisrtation;

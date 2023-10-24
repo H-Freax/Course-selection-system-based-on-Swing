@@ -5,20 +5,25 @@
 package ui;
 
 import java.awt.CardLayout;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Business.Person.Employee;
+import Business.Person.Professor;
+import Business.Person.Student;
+import Tools.MySQLConnectionUtil;
 import model.PersonList;
 import model.Person;
 import model.User;
-import ui.MainJFrame;
+import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
+import ui.UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 
 /**
  *
@@ -27,19 +32,17 @@ import ui.MainJFrame;
 
 
 public class LoginJPanel extends javax.swing.JPanel {
-
+    int i=0;
     private JPanel ViewContainer;
     private PersonList personList;
-    private JLabel txtHi;
-    private JButton btnLogout;
-  
+    private JPanel controlPanel;
 
-    LoginJPanel(JPanel ViewContainer, PersonList personList, JLabel txtHi,JButton btnLogout) {
+    Connection connection = MySQLConnectionUtil.getConnection();
+    public LoginJPanel(JPanel ViewContainer, PersonList personList, JPanel controlPanel) {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.personList = personList;
-        this.txtHi = txtHi;
-        this.btnLogout = btnLogout;
+        this.controlPanel = controlPanel;
     }
 
     /**
@@ -51,17 +54,25 @@ public class LoginJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         loginbtn = new javax.swing.JButton();
         lbltitle = new javax.swing.JLabel();
         txtloginusername = new javax.swing.JTextField();
         lblusername = new javax.swing.JLabel();
         lblpwd = new javax.swing.JLabel();
         txtloginpwd = new javax.swing.JPasswordField();
+        btnAdmin = new javax.swing.JRadioButton();
+        btnProfessor = new javax.swing.JRadioButton();
+        btnStudent = new javax.swing.JRadioButton();
 
         loginbtn.setText("Login");
         loginbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginbtnActionPerformed(evt);
+                try {
+                    loginbtnActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -79,6 +90,17 @@ public class LoginJPanel extends javax.swing.JPanel {
 
         lblpwd.setText("Password:");
 
+        buttonGroup1.add(btnAdmin);
+        btnAdmin.setText("Admin");
+
+
+        buttonGroup1.add(btnProfessor);
+        btnProfessor.setText("Faculty");
+
+
+        buttonGroup1.add(btnStudent);
+        btnStudent.setText("Student");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,15 +110,27 @@ public class LoginJPanel extends javax.swing.JPanel {
                 .addComponent(lbltitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(163, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblpwd)
-                    .addComponent(lblusername))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginbtn)
-                    .addComponent(txtloginusername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
+                        .addComponent(btnAdmin)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnProfessor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnStudent))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap(163, Short.MAX_VALUE)
+                                .addComponent(lblusername))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblpwd)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loginbtn)
+                            .addComponent(txtloginusername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
@@ -112,63 +146,83 @@ public class LoginJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblpwd)
                     .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdmin)
+                    .addComponent(btnProfessor)
+                    .addComponent(btnStudent))
+                .addGap(37, 37, 37)
                 .addComponent(loginbtn)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbtnActionPerformed
+    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_loginbtnActionPerformed
         String username = txtloginusername.getText();
-        String pwd = new String(txtloginpwd.getPassword());
+        String password = Arrays.toString(txtloginpwd.getPassword());
+        connection =  MySQLConnectionUtil.getConnection();
+        // 调用 Employee、Professor、Student 中的身份验证方法
+        boolean loginSuccess = false;
+        if (btnAdmin.isSelected()) {
 
-        
-        try{
-            if (isValidUser(username, pwd).getRole().equals("admin")&&isValidUser(username, pwd).isEnabled()) {
+            System.out.println("admin");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+
+        } else if (btnProfessor.isSelected()) {
+            System.out.println("professor");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+
+        } else if (btnStudent.isSelected()) {
+            System.out.println("student");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+
+        }
+
+        if (loginSuccess) {
+            // 根据用户身份切换到不同的界面
+            if (btnAdmin.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                txtHi.setText("Hi,Admin!");
-                btnLogout.setVisible(true);
-                User user = isValidUser(username, pwd);
-                AdminJPanel panel = new AdminJPanel(ViewContainer,personList,user);
+                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                controlPanel.add(panel1);
+                CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+                layout1.next(controlPanel);
+
+                AdminJPanel panel = new AdminJPanel(ViewContainer,personList);
                 ViewContainer.add("AdminJPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
-            } else if (isValidUser(username, pwd).getRole().equals("user")&&isValidUser(username, pwd).isEnabled()) {
+                // 显示 Employee 界面
+            } else if (btnProfessor.isSelected()) {
+                // 显示 Professor 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                txtHi.setText("Hi,User!");
-                btnLogout.setVisible(true);
-                User user = isValidUser(username, pwd);
-                UserViewPanel panel = new UserViewPanel(ViewContainer,personList,user);
+                FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                controlPanel.add(panel1);
+                CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+                layout1.next(controlPanel);
+
+                UserViewPanel panel = new UserViewPanel(ViewContainer,personList);
                 ViewContainer.add("UserViewPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
-            }else if(!isValidUser(username, pwd).isEnabled()){
-                JOptionPane.showMessageDialog(this, "Account unavailable! Please contact admin!");
+            } else if (btnStudent.isSelected()) {
+                // 显示 Student 界面
             }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Wrong Username/Wrong Password");
+        } else {
+            JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");
         }
-        
-    }//GEN-LAST:event_loginbtnActionPerformed
 
-    private User isValidUser(String username, String password) {
-        Person p = personList.searchPersonByusername(username);
-        ArrayList<User> users = p.getUsers();
-        for (User user : users) {
-          
-            if (user.getUsername().equals(username)
-                    && user.validatePassword(password)) {
-                
-                return user;
-            }
-        }
-        return null;
+
     }
     private void txtloginusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtloginusernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtloginusernameActionPerformed
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton btnAdmin;
+    private javax.swing.JRadioButton btnProfessor;
+    private javax.swing.JRadioButton btnStudent;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel lblpwd;
     private javax.swing.JLabel lbltitle;
     private javax.swing.JLabel lblusername;

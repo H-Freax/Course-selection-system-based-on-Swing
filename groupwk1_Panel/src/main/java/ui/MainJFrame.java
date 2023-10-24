@@ -4,7 +4,7 @@
  */
 package ui;
 
-import javax.swing.*; 
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,6 +17,12 @@ import model.PersonList;
 import model.Person;
 import model.User;
 
+import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
+import ui.UserInterface.WorkAreas.General.GeneralJPanel;
+
+
+import Tools.MySQLConnectionUtil;
+
 
 /**
  *
@@ -28,8 +34,8 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
-    public MainJFrame() { 
-        
+    public MainJFrame() {
+
 //        LoginJPanel login = new LoginJPanel();
         initComponents();
         Person person1 = new Person("Person1", "NUID1");
@@ -44,7 +50,7 @@ public class MainJFrame extends javax.swing.JFrame {
         User user0 = new User("user0", "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e", new ArrayList<>(), true, "admin");
         user0.getPwds().add("0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e");
         person0.addUser(user0);
-        
+
         Person person2 = new Person("Person2", "NUID2");
         User user3 = new User("user3", "5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764", new ArrayList<>(), false, "user");
         user3.getPwds().add("5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764");
@@ -54,22 +60,31 @@ public class MainJFrame extends javax.swing.JFrame {
         savepersonList.addPerson(person0);
         savepersonList.addPerson(person1);
         savepersonList.addPerson(person2);
+        MySQLConnectionUtil mySQLConnectionUtil= new MySQLConnectionUtil();
+        mySQLConnectionUtil.getConnection();
 
         // 将数据写入文件
         writeDataToFile(savepersonList, "personlist.txt");
 
         // 从文件中读取数据
         PersonList personList = readDataFromFile("personlist.txt");
+
         
-        txtHi.setText("Please Login in");
-        btnLogout.setVisible(false);
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,txtHi,btnLogout);
+
+        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+
         ViewContainer.add("LoginJPanel",panel);
+        GeneralJPanel panel3 = new GeneralJPanel();
+        CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+        controlPanel.add(panel3);
+        layout1.next(controlPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
 //        jSplitPane1.setRightComponent(login);
-        
+
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,46 +97,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jSplitPane1 = new javax.swing.JSplitPane();
         controlPanel = new javax.swing.JPanel();
-        txtHi = new javax.swing.JLabel();
-        btnLogout = new javax.swing.JButton();
         ViewContainer = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtHi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtHi.setText("Hi, ");
-
-        btnLogout.setText("Log out");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
-        controlPanel.setLayout(controlPanelLayout);
-        controlPanelLayout.setHorizontalGroup(
-            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(controlPanelLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(txtHi, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(controlPanelLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(btnLogout)))
-                .addGap(0, 32, Short.MAX_VALUE))
-        );
-        controlPanelLayout.setVerticalGroup(
-            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(txtHi, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
-                .addComponent(btnLogout)
-                .addGap(205, 205, 205))
-        );
-
+        controlPanel.setLayout(new java.awt.CardLayout());
         jSplitPane1.setLeftComponent(controlPanel);
 
         ViewContainer.setLayout(new java.awt.CardLayout());
@@ -135,21 +115,23 @@ public class MainJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         this.personList = readDataFromFile("personlist.txt");
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,txtHi,btnLogout);
+        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
         ViewContainer.add("LoginJPanel",panel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);        // TODO add your handling code here:
-        btnLogout.setVisible(false);
-       
+
+
     }//GEN-LAST:event_btnLogoutActionPerformed
+
     public static void writeDataToFile(PersonList personList, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write(personList.toText());
@@ -186,22 +168,22 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
             } else if (line.startsWith("pwds:")) {
                 if (currentUser != null) {
-                    currentUser.getPwds().add(line.substring(5)); 
-                    readingPwds = true; 
+                    currentUser.getPwds().add(line.substring(5));
+                    readingPwds = true;
                 }
             } else if (line.startsWith("pwdsend:")) {
-                if (currentUser != null ) { 
+                if (currentUser != null ) {
                     readingPwds = false;
                 }
             } else if (line.startsWith("enabled:")) {
-                if (currentUser != null ) { 
+                if (currentUser != null ) {
                     currentUser.setEnabled(Boolean.parseBoolean(line.substring(8)));
                 }
             } else if (line.startsWith("role:")) {
                 if (currentUser != null) {
                     currentUser.setRole(line.substring(5));
                 }
-            } else if (line.isEmpty() && readingPwds) { 
+            } else if (line.isEmpty() && readingPwds) {
                 readingPwds = false;
             }
         }
@@ -211,7 +193,7 @@ public class MainJFrame extends javax.swing.JFrame {
     return personList;
 }
 
-    
+
     /**
      * @param args the command line arguments
      */
@@ -219,7 +201,7 @@ public class MainJFrame extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -244,16 +226,14 @@ public class MainJFrame extends javax.swing.JFrame {
             public void run() {
 
                 new MainJFrame().setVisible(true);
-               
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ViewContainer;
-    private javax.swing.JButton btnLogout;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JLabel txtHi;
     // End of variables declaration//GEN-END:variables
 }

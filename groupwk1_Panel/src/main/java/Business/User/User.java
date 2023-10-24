@@ -19,12 +19,10 @@ public class User {
 
     private String username;
     private String nowpwd;
-    private LocalDateTime lastActivity;
-    private LocalDateTime lastUpdated;
     private ArrayList<String> pwds;
     private Boolean enabled;
 
-   
+
     public User(String username, String nowpwd, ArrayList<String> pwds, Boolean enabled) {
         this.username = username;
         this.nowpwd = nowpwd;
@@ -36,25 +34,8 @@ public class User {
         return username;
     }
 
-    public LocalDateTime getLastActivity() {
-        return lastActivity;
-    }
 
-    public void setLastActivity(LocalDateTime lastActivity) {
-        this.lastActivity = lastActivity;
-    }
 
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-    
-    
-    
     public void setUsername(String username) {
         this.username = username;
     }
@@ -64,7 +45,7 @@ public class User {
     }
 
     public Boolean setNowpwd(String nowpwd) {
-            System.out.println("nowpwd:");        
+            System.out.println("nowpwd:");
         System.out.println(nowpwd);
         for(String pwd:pwds){
             System.out.println("pwds:");
@@ -85,20 +66,20 @@ public class User {
         return hash;
     }
 
-    
+
     public ArrayList<String> getPwds() {
         return pwds;
     }
-    
+
     public void addNewPwd(String pwd){
         pwds.add(hashPassword(pwd));
     }
-    
-    
+
+
     public void deletePwd(String s){
         pwds.remove(s);
     }
-            
+
 
     public void setPwds(ArrayList<String> pwds) {
         this.pwds = pwds;
@@ -112,7 +93,7 @@ public class User {
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
- 
+
     public String toText() {
         StringBuilder text = new StringBuilder();
         text.append("username:").append(username).append("\n");
@@ -127,7 +108,7 @@ public class User {
         text.append("enabled:").append(enabled).append("\n");
         return text.toString();
     }
-    
+
     public boolean validatePassword(String password) {
         System.out.println(password);
         System.out.println(hashPassword(password));

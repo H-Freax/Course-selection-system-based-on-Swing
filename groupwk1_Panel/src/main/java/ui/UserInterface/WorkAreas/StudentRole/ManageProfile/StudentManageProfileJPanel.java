@@ -4,6 +4,9 @@
  */
 package ui.UserInterface.WorkAreas.StudentRole.ManageProfile;
 
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author zhangjinming
@@ -13,8 +16,11 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
     /**
      * Creates new form StudentManageProfileJPanel
      */
+    private JPanel ViewContainer;
+    
     public StudentManageProfileJPanel() {
         initComponents();
+        this.ViewContainer = ViewContainer;
     }
 
     /**
@@ -201,6 +207,9 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        ViewContainer.remove(this);
+        CardLayout layout  = (CardLayout) ViewContainer.getLayout();
+        layout.previous(ViewContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

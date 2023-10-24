@@ -25,6 +25,10 @@
                   <Component id="btnManageStudents" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
                   <Component id="btnSchedule" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
                   <Component id="btnRanking" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -45,7 +49,9 @@
               <Component id="btnMyProfile" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="btnRanking" min="-2" pref="40" max="-2" attributes="0"/>
-              <EmptySpace pref="140" max="32767" attributes="0"/>
+              <EmptySpace pref="64" max="32767" attributes="0"/>
+              <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -197,6 +203,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRankingActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnLogout">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Log out"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

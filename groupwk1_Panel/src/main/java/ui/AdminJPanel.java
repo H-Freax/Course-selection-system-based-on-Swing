@@ -26,11 +26,11 @@ public class AdminJPanel extends javax.swing.JPanel {
     private User user;
     private User selectuser;
 
-    AdminJPanel(JPanel ViewContainer, PersonList personList,User user) {
+    AdminJPanel(JPanel ViewContainer, PersonList personList) {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.personList = personList;
-        this.user = user;
+//        this.user = user;
         txtNUID.setEditable(false);
         txtName.setEditable(false);
         txtUserName.setEditable(false);
@@ -400,7 +400,7 @@ public class AdminJPanel extends javax.swing.JPanel {
                 break; // Exit the outer loop once a match is found
             }
         }
-        
+
         this.selectuser = selectedUser;
         if (selectedUser != null) {
             txtNUID.setText(String.valueOf(selectedPerson.getNUID()));
@@ -447,7 +447,7 @@ public class AdminJPanel extends javax.swing.JPanel {
                 break; // Exit the outer loop once a match is found
             }
         }
-        
+
         this.selectuser = selectedUser;
         if (selectedUser != null) {
             if(selectuser==this.user){
@@ -458,7 +458,7 @@ public class AdminJPanel extends javax.swing.JPanel {
                 }else{
                     personList.deletePerson(selectedPerson);
                 }
-              
+
                 JOptionPane.showMessageDialog(this, "Vital signs deleted.");
             }
         } else {
@@ -472,7 +472,7 @@ public class AdminJPanel extends javax.swing.JPanel {
         }
 
         writeDataToFile(personList, "personlist.txt");
-        PersonList personList = MainJFrame.readDataFromFile("personlist.txt"); 
+        PersonList personList = MainJFrame.readDataFromFile("personlist.txt");
         populateTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -501,7 +501,7 @@ public class AdminJPanel extends javax.swing.JPanel {
 
         if (existingPerson != null) {
             // If a person with the same NUID exists, add the user to that person
-            
+
             User user = new User(username, pwd,new ArrayList<>(), true, role);
             user.setNowpwd(user.hashPassword(pwd));
             user.getPwds().add(user.hashPassword(pwd));
@@ -517,7 +517,7 @@ public class AdminJPanel extends javax.swing.JPanel {
         }
         // TODO add your handling code here:
         writeDataToFile(personList, "personlist.txt");
-        PersonList personList = MainJFrame.readDataFromFile("personlist.txt"); 
+        PersonList personList = MainJFrame.readDataFromFile("personlist.txt");
         JOptionPane.showMessageDialog(this, "Success!");
         populateTable();
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -529,8 +529,8 @@ public class AdminJPanel extends javax.swing.JPanel {
         p.getUserbyName(selectuser.getUsername()).setUsername(txtUserName.getText());
         p.getUserbyName(selectuser.getUsername()).setRole(txtCharactor.getText());
         p.getUserbyName(selectuser.getUsername()).setEnabled(checkenabled.isSelected());
-        
-        
+
+
         writeDataToFile(personList, "personlist.txt");
         txtNUID.setEditable(false);
         txtName.setEditable(false);
@@ -539,7 +539,7 @@ public class AdminJPanel extends javax.swing.JPanel {
         checkenabled.setEnabled(false);
         btnsaveuser.setVisible(false);
         btnedit.setVisible(true);
-        this.personList = MainJFrame.readDataFromFile("personlist.txt"); 
+        this.personList = MainJFrame.readDataFromFile("personlist.txt");
         populateTable();// TODO add your handling code here:        // TODO add your handling code here:
     }//GEN-LAST:event_btnsaveuserActionPerformed
 
@@ -570,7 +570,7 @@ public class AdminJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please enter new password.");
         }
         Person p = personList.searchPersonByusername(selectuser.getUsername());
-        
+
         if(selectuser.setNowpwd(selectuser.hashPassword(changepwd.getText()))){
             JOptionPane.showMessageDialog(this, "Success");
             writeDataToFile(personList, "personlist.txt");
@@ -582,7 +582,7 @@ public class AdminJPanel extends javax.swing.JPanel {
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)tblUsers.getModel();
         model.setRowCount(0);
-        
+
         for(Person vs : personList.getPersonhistory()){
             ArrayList<User> users = vs.getUsers();
             for(User user:users){
@@ -592,17 +592,17 @@ public class AdminJPanel extends javax.swing.JPanel {
                 row[2] = user.isEnabled();
                 row[3] = user.getRole();
                 row[4] = user.getUsername();
-            
+
                 model.addRow(row);
             }
         }
     }
-    
+
     private void populateTablebyNUID(String nuid){
         DefaultTableModel model = (DefaultTableModel)tblUsers.getModel();
         model.setRowCount(0);
         Person vs = personList.searchPersonByNUID(nuid);
-        
+
         ArrayList<User> users = vs.getUsers();
         for(User user:users){
                 Object[] row = new Object[5];
@@ -611,12 +611,12 @@ public class AdminJPanel extends javax.swing.JPanel {
                 row[2] = user.isEnabled();
                 row[3] = user.getRole();
                 row[4] = user.getUsername();
-            
+
                 model.addRow(row);
         }
         writeDataToFile(personList, "personlist.txt");
-        this.personList = MainJFrame.readDataFromFile("personlist.txt"); 
-        
+        this.personList = MainJFrame.readDataFromFile("personlist.txt");
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
