@@ -14,6 +14,11 @@ public class EmployeeDirectory {
     private ArrayList<Employee> employeeList;
     private Connection connection; // 数据库连接
 
+    public EmployeeDirectory() {
+        this.connection = connection;
+        this.employeeList = new ArrayList<>();
+        loadEmployeesFromDatabase();
+    }
     public EmployeeDirectory(Connection connection) {
         this.connection = connection;
         this.employeeList = new ArrayList<>();
@@ -85,6 +90,15 @@ public class EmployeeDirectory {
         }
     }
 
+    public Employee findEmployeeByUsername(String username) {
+        for (Employee employee : employeeList) {
+            if (employee.getUsername().equals(username)) {
+                return employee;
+            }
+        }
+
+        return null;
+    }
     // 根据PersonID查询Employee对象
     public Employee findEmployeeByID(String personID) {
         for (Employee employee : employeeList) {

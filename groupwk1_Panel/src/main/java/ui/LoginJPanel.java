@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Business.Directory.EmployeeDirectory;
 import Business.Directory.StudentDirectory;
 import Business.Person.Employee;
 import Business.Person.Professor;
@@ -179,7 +180,10 @@ public class LoginJPanel extends javax.swing.JPanel {
             if (btnAdmin.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
 
-                AdminWorkAreaJPanel admincontrolpanel = new AdminWorkAreaJPanel(ViewContainer, controlPanel);
+                EmployeeDirectory adminlist = new EmployeeDirectory();
+                Employee employee = adminlist.findEmployeeByUsername(username);
+
+                AdminWorkAreaJPanel admincontrolpanel = new AdminWorkAreaJPanel(ViewContainer, controlPanel,employee);
                 controlPanel.add(admincontrolpanel);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);

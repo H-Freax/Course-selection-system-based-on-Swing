@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Business.Directory.ProfessorDirectory;
+import Business.Person.Employee;
 import model.PersonList;
 import model.User;
 import ui.AdminJPanel;
@@ -39,9 +40,11 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     private JPanel controlPanel;
     private PersonList personList;
     private JPanel ViewContainer;
+    private Employee employee;
     String selectedText="";
-    public AdminWorkAreaJPanel(JPanel ViewContainer,JPanel controlPanel) {
+    public AdminWorkAreaJPanel(JPanel ViewContainer, JPanel controlPanel, Employee employee) {
         initComponents();
+        this.employee = employee;
         this.controlPanel = controlPanel;
         this.ViewContainer=ViewContainer;
     }
