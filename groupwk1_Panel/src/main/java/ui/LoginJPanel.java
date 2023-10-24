@@ -110,28 +110,24 @@ public class LoginJPanel extends javax.swing.JPanel {
                 .addComponent(lbltitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(btnAdmin)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnProfessor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnStudent))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(163, Short.MAX_VALUE)
-                                .addComponent(lblusername))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblpwd)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(loginbtn)
-                            .addComponent(txtloginusername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblusername, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblpwd, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(loginbtn)
+                    .addComponent(txtloginusername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(158, 158, 158))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(205, 205, 205)
+                .addComponent(btnAdmin)
+                .addGap(18, 18, 18)
+                .addComponent(btnProfessor)
+                .addGap(18, 18, 18)
+                .addComponent(btnStudent)
+                .addGap(0, 136, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,12 +178,18 @@ public class LoginJPanel extends javax.swing.JPanel {
             // 根据用户身份切换到不同的界面
             if (btnAdmin.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                User user = isValidUser(username, pwd);
+                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel(user,ViewContainer, controlPanel,  personList);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
+<<<<<<< Updated upstream
 
                 AdminJPanel panel = new AdminJPanel(ViewContainer,personList);
+=======
+                
+                AdminJPanel panel = new AdminJPanel(ViewContainer,personList,user);
+>>>>>>> Stashed changes
                 ViewContainer.add("AdminJPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
@@ -195,10 +197,12 @@ public class LoginJPanel extends javax.swing.JPanel {
             } else if (btnProfessor.isSelected()) {
                 // 显示 Professor 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
+                User user = isValidUser(username, pwd);
                 FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  personList);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
+<<<<<<< Updated upstream
 
                 UserViewPanel panel = new UserViewPanel(ViewContainer,personList);
                 ViewContainer.add("UserViewPanel",panel);
@@ -206,6 +210,25 @@ public class LoginJPanel extends javax.swing.JPanel {
                 layout.next(ViewContainer);
             } else if (btnStudent.isSelected()) {
                 // 显示 Student 界面
+=======
+                
+                UserViewPanel panel = new UserViewPanel(ViewContainer,personList,user);
+                ViewContainer.add("UserViewPanel",panel);
+                CardLayout layout = (CardLayout)ViewContainer.getLayout();
+                layout.next(ViewContainer);
+            }else if(isValidUser(username, pwd).getRole().equals("student")&&isValidUser(username, pwd).isEnabled()&&i==3){
+                    JOptionPane.showMessageDialog(this, "Succuss!");
+                    User user = isValidUser(username, pwd);
+                    StudentWorkAreaJPanel panel2 = new StudentWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                    controlPanel.add(panel2);
+                    CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+                    layout1.next(controlPanel);
+                    
+                    UserViewPanel panel = new UserViewPanel(ViewContainer,personList,user);
+                    ViewContainer.add("UserViewPanel",panel);
+                    CardLayout layout = (CardLayout)ViewContainer.getLayout();
+                    layout.next(ViewContainer);
+>>>>>>> Stashed changes
             }
         } else {
             JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");

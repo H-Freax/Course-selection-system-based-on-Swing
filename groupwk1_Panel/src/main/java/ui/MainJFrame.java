@@ -39,9 +39,9 @@ public class MainJFrame extends javax.swing.JFrame {
 //        LoginJPanel login = new LoginJPanel();
         initComponents();
         Person person1 = new Person("Person1", "NUID1");
-        User user1 = new User("user1", "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e", new ArrayList<>(), true, "user");
+        User user1 = new User("user1", "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e", new ArrayList<>(), true, "professor");
         user1.getPwds().add("0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e");
-        User user2 = new User("user2", "6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4", new ArrayList<>(), true, "user");
+        User user2 = new User("user2", "6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4", new ArrayList<>(), true, "student");
         user2.getPwds().add("6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4");
         person1.addUser(user1);
         person1.addUser(user2);

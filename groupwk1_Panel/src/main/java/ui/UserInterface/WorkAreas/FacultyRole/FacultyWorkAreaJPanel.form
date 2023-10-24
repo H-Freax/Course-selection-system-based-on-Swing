@@ -16,15 +16,19 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
-                  <Component id="btnMyProfile" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                  <Component id="btnManageCourses" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                  <Component id="btnManageStudents" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                  <Component id="btnSchedule" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                  <Component id="btnRanking" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
+                          <Component id="btnMyProfile" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                          <Component id="btnManageCourses" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                          <Component id="btnManageStudents" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                          <Component id="btnSchedule" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                          <Component id="btnRanking" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
@@ -39,7 +43,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="45" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnSchedule" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="btnManageCourses" min="-2" pref="40" max="-2" attributes="0"/>
@@ -49,9 +53,9 @@
               <Component id="btnMyProfile" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="btnRanking" min="-2" pref="40" max="-2" attributes="0"/>
-              <EmptySpace pref="64" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+              <EmptySpace pref="135" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
