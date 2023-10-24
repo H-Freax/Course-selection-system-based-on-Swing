@@ -26,11 +26,8 @@ public class AdminJPanel extends javax.swing.JPanel {
     private User user;
     private User selectuser;
 
-<<<<<<< Updated upstream
     AdminJPanel(JPanel ViewContainer, PersonList personList) {
-=======
-   public  AdminJPanel(JPanel ViewContainer, PersonList personList,User user) {
->>>>>>> Stashed changes
+
         initComponents();
         this.ViewContainer = ViewContainer;
         this.personList = personList;

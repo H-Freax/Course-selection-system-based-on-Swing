@@ -153,7 +153,7 @@ public class LoginJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_loginbtnActionPerformed
+    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {                                         
         String username = txtloginusername.getText();
         String password = Arrays.toString(txtloginpwd.getPassword());
         connection =  MySQLConnectionUtil.getConnection();
@@ -178,18 +178,16 @@ public class LoginJPanel extends javax.swing.JPanel {
             // 根据用户身份切换到不同的界面
             if (btnAdmin.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                User user = isValidUser(username, pwd);
-                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel(user,ViewContainer, controlPanel,  personList);
+                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel(ViewContainer, controlPanel,  personList);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
-<<<<<<< Updated upstream
+
 
                 AdminJPanel panel = new AdminJPanel(ViewContainer,personList);
-=======
+
                 
-                AdminJPanel panel = new AdminJPanel(ViewContainer,personList,user);
->>>>>>> Stashed changes
+
                 ViewContainer.add("AdminJPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
@@ -197,41 +195,24 @@ public class LoginJPanel extends javax.swing.JPanel {
             } else if (btnProfessor.isSelected()) {
                 // 显示 Professor 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                User user = isValidUser(username, pwd);
+                
                 FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  personList);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
-<<<<<<< Updated upstream
-
+                
                 UserViewPanel panel = new UserViewPanel(ViewContainer,personList);
                 ViewContainer.add("UserViewPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
             } else if (btnStudent.isSelected()) {
                 // 显示 Student 界面
-=======
                 
-                UserViewPanel panel = new UserViewPanel(ViewContainer,personList,user);
+                UserViewPanel panel = new UserViewPanel(ViewContainer,personList);
                 ViewContainer.add("UserViewPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
-            }else if(isValidUser(username, pwd).getRole().equals("student")&&isValidUser(username, pwd).isEnabled()&&i==3){
-                    JOptionPane.showMessageDialog(this, "Succuss!");
-                    User user = isValidUser(username, pwd);
-                    StudentWorkAreaJPanel panel2 = new StudentWorkAreaJPanel( ViewContainer, controlPanel,  personList);
-                    controlPanel.add(panel2);
-                    CardLayout layout1 = (CardLayout)controlPanel.getLayout();
-                    layout1.next(controlPanel);
-                    
-                    UserViewPanel panel = new UserViewPanel(ViewContainer,personList,user);
-                    ViewContainer.add("UserViewPanel",panel);
-                    CardLayout layout = (CardLayout)ViewContainer.getLayout();
-                    layout.next(ViewContainer);
->>>>>>> Stashed changes
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");
         }
 
 

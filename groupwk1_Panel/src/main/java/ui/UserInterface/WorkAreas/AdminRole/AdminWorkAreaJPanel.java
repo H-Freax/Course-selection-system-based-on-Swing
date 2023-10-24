@@ -40,12 +40,12 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     private JPanel ViewContainer;
     private User user;
     String selectedText="";
-    public AdminWorkAreaJPanel(User user,JPanel ViewContainer,JPanel controlPanel, PersonList personList) {
+    public AdminWorkAreaJPanel(JPanel ViewContainer,JPanel controlPanel, PersonList personList) {
         initComponents();
         this.controlPanel = controlPanel;
         this.personList=  personList;
         this.ViewContainer=ViewContainer;
-        this.user=user;
+//        this.user=user;
     }
 
     /**
