@@ -8,8 +8,6 @@ import Business.Person.Professor;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Person;
-import model.User;
 
 /**
  *

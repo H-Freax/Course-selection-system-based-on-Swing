@@ -20,7 +20,6 @@ import Business.Person.Employee;
 import Business.Person.Professor;
 import Business.Person.Student;
 import Tools.MySQLConnectionUtil;
-import model.PersonList;
 import Business.Directory.ProfessorDirectory;
 import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
 import ui.UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
@@ -35,14 +34,12 @@ import ui.UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 public class LoginJPanel extends javax.swing.JPanel {
     int i=0;
     private JPanel ViewContainer;
-    private PersonList personList;
     private JPanel controlPanel;
 
     Connection connection = MySQLConnectionUtil.getConnection();
-    public LoginJPanel(JPanel ViewContainer, PersonList personList, JPanel controlPanel) {
+    public LoginJPanel(JPanel ViewContainer,  JPanel controlPanel) {
         initComponents();
         this.ViewContainer = ViewContainer;
-        this.personList = personList;
         this.controlPanel = controlPanel;
     }
 

@@ -8,9 +8,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 import Business.Person.Student;
-import model.PersonList;
 import ui.LoginJPanel;
-import static ui.MainJFrame.readDataFromFile;
 import ui.UserInterface.WorkAreas.FacultyRole.Ranking.FacultyRankingJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.GraduationStatus.StudentGraduationStatusJPanel;
@@ -26,7 +24,6 @@ import ui.UserInterface.WorkAreas.StudentRole.Transcript.StudentTranscriptJPanel
 public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private JPanel controlPanel;
-    private PersonList personList;
     private JPanel ViewContainer;
 
     private Student student;
@@ -233,8 +230,8 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTranscriptActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        this.personList = readDataFromFile("personlist.txt");
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+
+        LoginJPanel panel = new LoginJPanel(ViewContainer,controlPanel);
         ViewContainer.add("LoginJPanel",panel);
         GeneralJPanel panel3 = new GeneralJPanel();
         CardLayout layout1 = (CardLayout)controlPanel.getLayout();

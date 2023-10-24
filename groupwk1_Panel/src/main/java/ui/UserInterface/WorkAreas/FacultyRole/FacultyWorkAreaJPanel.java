@@ -8,9 +8,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 import Business.Person.Professor;
-import model.PersonList;
 import ui.LoginJPanel;
-import static ui.MainJFrame.readDataFromFile;
 import ui.UserInterface.WorkAreas.FacultyRole.ManageCourses.FacultyManageCoursesJPanel;
 import ui.UserInterface.WorkAreas.FacultyRole.ManageStudents.FacultyManageStudentsJPanel;
 import ui.UserInterface.WorkAreas.FacultyRole.MyProfile.FacultyProfileJPanel;
@@ -24,7 +22,6 @@ import ui.UserInterface.WorkAreas.General.GeneralJPanel;
  */
 public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     private JPanel controlPanel;
-    private PersonList personList;
     private JPanel ViewContainer;
 
     private Professor professor;
@@ -35,7 +32,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.controlPanel = controlPanel;
-        this.professor=  professor;
+        this.professor =  professor;
     }
 
     /**
@@ -173,11 +170,11 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnScheduleIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleIdentifyEventsActionPerformed
         // TODO add your handling code here:
-        FacultyScheduleJPanel fsPanel = new FacultyScheduleJPanel();
+        FacultyScheduleJPanel fsPanel = new FacultyScheduleJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyScheduleJPanel",fsPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
-    }//GEN-LAST:event_btnScheduleIdentifyEventsActionPerformed
+    }
 
     private void btnManageCoursesIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageCoursesIdentifyResourceAssetsActionPerformed
         // TODO add your handling code here:
@@ -185,12 +182,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         ViewContainer.add("FacultyManageCoursesJPanel",fmcPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
-        //        CardSequencePanel.removeAll();
-        //
-        //        ManagePersonsJPanel aos = new ManagePersonsJPanel(business, CardSequencePanel);
-        //
-        //        CardSequencePanel.add("ManageVulns", aos);
-//                ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
     }//GEN-LAST:event_btnManageCoursesIdentifyResourceAssetsActionPerformed
 
     private void btnManageStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStudentsActionPerformed
@@ -199,10 +191,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         ViewContainer.add("FacultyManageStudentsJPanel", fmsPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
-        //       ManageSuppliersJPanel iet = new ManageSuppliersJPanel(business, CardSequencePanel);
 
-        //        CardSequencePanel.add("FindResourceAsset", iet);
-        //        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnManageStudentsActionPerformed
 
     private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
@@ -211,12 +200,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         ViewContainer.add("FacultyProfileJPanel", ppPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
-        //        CardSequencePanel.removeAll();
-        //        //    IdentifyEventTypes iet= new IdentifyEventTypes(businessunit, CardSequencePanel);
-        //
-        //        //    CardSequencePanel.add("IdentifyEventTypes", iet);
-        //        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-        //        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
+
     }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
 
     private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
@@ -226,16 +210,11 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
 
-        //        CardSequencePanel.removeAll();
-        //        //        ManageIncidents aos = new  ManageIncidents(businessunit, CardSequencePanel);
-        //        // aos.setAgenda(businessunit.getRiskManagementAgenda());
-        //        //        CardSequencePanel.add("RiskAgendaObjectives", aos);
-        //        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
     }//GEN-LAST:event_btnRankingActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        this.personList = readDataFromFile("personlist.txt");
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+        LoginJPanel panel = new LoginJPanel(ViewContainer,controlPanel);
         ViewContainer.add("LoginJPanel",panel);
         GeneralJPanel panel3 = new GeneralJPanel();
         CardLayout layout1 = (CardLayout)controlPanel.getLayout();

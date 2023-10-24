@@ -11,12 +11,8 @@ import javax.swing.JPanel;
 
 import Business.Directory.ProfessorDirectory;
 import Business.Person.Employee;
-import model.PersonList;
-import model.User;
-import ui.AdminJPanel;
 import ui.LoginJPanel;
 import Business.Person.Professor;
-import static ui.MainJFrame.readDataFromFile;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.CourseComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.EmployeeComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.FacultyComboBoxAreaJPanel;
@@ -38,7 +34,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private ProfessorDirectory professorDirectory;
     private JPanel controlPanel;
-    private PersonList personList;
+
     private JPanel ViewContainer;
     private Employee employee;
     String selectedText="";
@@ -222,8 +218,8 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        this.personList = readDataFromFile("personlist.txt");
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+
+        LoginJPanel panel = new LoginJPanel(ViewContainer,controlPanel);
         ViewContainer.add("LoginJPanel",panel);
         GeneralJPanel panel3 = new GeneralJPanel();
         CardLayout layout1 = (CardLayout)controlPanel.getLayout();
@@ -292,10 +288,6 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnCreateIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateIdentifyEventsActionPerformed
         // TODO add your handling code here:
-            AdminJPanel cPanel = new AdminJPanel(ViewContainer);
-            ViewContainer.add("AdminJPanel", cPanel);
-            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-            layout.next(ViewContainer);
     }//GEN-LAST:event_btnCreateIdentifyEventsActionPerformed
 
 
