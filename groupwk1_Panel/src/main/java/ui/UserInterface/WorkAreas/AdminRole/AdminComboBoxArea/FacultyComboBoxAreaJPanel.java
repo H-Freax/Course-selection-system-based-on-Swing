@@ -13,8 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Person;
-import model.User;
 
 /**
  *
@@ -37,7 +35,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)tblProfessor.getModel();
         model.setRowCount(0);
-        
+
         for(Professor vs : professorlist){
                 Object[] row = new Object[6];
                 row[0] = vs.getUsername();
@@ -49,9 +47,9 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
 
         }
     }
-    
-    
-    
+
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -398,7 +396,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                 }
             }
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     //
@@ -421,8 +419,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             }
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -452,7 +450,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             p.setLanguage(language);
             p.setRegion(region);
             p.setTopics(stringSet);
-        } 
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 

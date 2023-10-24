@@ -7,11 +7,9 @@ package ui.UserInterface.WorkAreas.AdminRole;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import model.PersonList;
-import model.User;
-import ui.AdminJPanel;
+
+import Business.Person.Employee;
 import ui.LoginJPanel;
-import static ui.MainJFrame.readDataFromFile;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.CourseComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.EmployeeComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.FacultyComboBoxAreaJPanel;
@@ -35,17 +33,15 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 //        initComponents();
 //
 //    }
+    private Employee employee;
     private JPanel controlPanel;
-    private PersonList personList; 
     private JPanel ViewContainer;
-    private User user;
     String selectedText="";
-    public AdminWorkAreaJPanel(JPanel ViewContainer,JPanel controlPanel, PersonList personList) {
+    public AdminWorkAreaJPanel(JPanel ViewContainer, JPanel controlPanel, Employee employee) {
         initComponents();
         this.controlPanel = controlPanel;
-        this.personList=  personList;
+        this.employee=  employee;
         this.ViewContainer=ViewContainer;
-//        this.user=user;
     }
 
     /**
@@ -221,14 +217,14 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        this.personList = readDataFromFile("personlist.txt");
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+
+        LoginJPanel panel = new LoginJPanel(ViewContainer,controlPanel);
         ViewContainer.add("LoginJPanel",panel);
         GeneralJPanel panel3 = new GeneralJPanel();
         CardLayout layout1 = (CardLayout)controlPanel.getLayout();
         controlPanel.add(panel3);
         layout1.next(controlPanel);
-        
+
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);        // TODO add your handling code here:
         btnLogout.setVisible(false);
@@ -291,10 +287,6 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnCreateIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateIdentifyEventsActionPerformed
         // TODO add your handling code here:
-            AdminJPanel cPanel = new AdminJPanel(ViewContainer,personList);
-            ViewContainer.add("AdminJPanel", cPanel);
-            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-            layout.next(ViewContainer);
     }//GEN-LAST:event_btnCreateIdentifyEventsActionPerformed
 
 

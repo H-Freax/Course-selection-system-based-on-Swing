@@ -186,7 +186,7 @@ public class LoginJPanel extends javax.swing.JPanel {
                 layout1.next(controlPanel);
 
 
-                JPanel panel = new JPanel();
+                JPanel panel = new JPanel(c);
                 ViewContainer.add("Block",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
