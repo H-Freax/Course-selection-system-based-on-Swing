@@ -14,14 +14,15 @@ public class PasswordUtils {
         System.out.println("username"+username);
         System.out.println("hashedPassword"+hashedPassword);
 
-        String query = "SELECT nowpassword FROM " + role + " WHERE username = ?";
+        String query = "SELECT nowpassword,enabled FROM " + role + " WHERE username = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String storedHashedPassword = resultSet.getString("nowpassword");
+                String isenable = resultSet.getString("enabled");
                 System.out.println("storedHashedPassword"+storedHashedPassword);
-                return hashedPassword.equals(storedHashedPassword);
+                return hashedPassword.equals(storedHashedPassword)&&isenable.equals("1");
             }
             return false; // 用户名不存在
         }
