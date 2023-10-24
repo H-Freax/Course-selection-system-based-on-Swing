@@ -5,56 +5,75 @@
 package Business.Course;
 
 import java.time.LocalDateTime;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author 15469
- */
 public class CourseSchedule {
-    String course_id;
-    String weekday;
-    private LocalDateTime beginTime;
-    private LocalDateTime endTime;
+    private List<Course> courseSchedule;
+    private Connection connection;
 
-    public CourseSchedule(String course_id, String weekday, LocalDateTime beginTime, LocalDateTime endTime) {
-        this.course_id = course_id;
-        this.weekday = weekday;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
+    public CourseSchedule(Connection connection) {
+        courseSchedule = new ArrayList<>();
+        this.connection = connection;
     }
 
-    public String getCourse_id() {
-        return course_id;
+    public void addCourseToSchedule(Course course) throws SQLException {
+        // 添加到内存
+        courseSchedule.add(course);
+
+        // 添加到数据库
+        saveCourseToScheduleInDatabase(course);
     }
 
-    public void setCourse_id(String course_id) {
-        this.course_id = course_id;
+    public void removeCourseFromSchedule(Course course) throws SQLException {
+        // 从内存中删除
+        courseSchedule.remove(course);
+
+        // 从数据库中删除
+        deleteCourseFromScheduleInDatabase(course);
     }
 
-    public String getWeekday() {
-        return weekday;
+    public Course getCourseFromScheduleById(String courseId) {
+        for (Course course : courseSchedule) {
+            if (course.getId().equals(courseId)) {
+                return course;
+            }
+        }
+        return null;
     }
 
-    public void setWeekday(String weekday) {
-        this.weekday = weekday;
+    public void loadCourseScheduleFromDatabase() throws SQLException {
+        String query = "SELECT * FROM CourseSchedule";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Course course = Course.getCourseFromDatabase(connection, resultSet.getString("courseId"));
+                courseSchedule.add(course);
+            }
+        }
     }
 
-    public LocalDateTime getBeginTime() {
-        return beginTime;
+    public List<Course> getAllCoursesInSchedule() {
+        return courseSchedule;
     }
 
-    public void setBeginTime(LocalDateTime beginTime) {
-        this.beginTime = beginTime;
+    private void saveCourseToScheduleInDatabase(Course course) throws SQLException {
+        String query = "INSERT INTO CourseSchedule (courseId) VALUES (?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, course.getId());
+            statement.executeUpdate();
+        }
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    private void deleteCourseFromScheduleInDatabase(Course course) throws SQLException {
+        String query = "DELETE FROM CourseSchedule WHERE courseId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, course.getId());
+            statement.executeUpdate();
+        }
     }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-    
-    
-    
 }

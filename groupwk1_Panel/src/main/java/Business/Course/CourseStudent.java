@@ -3,45 +3,71 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Business.Course;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- *
- * @author 15469
- */
 public class CourseStudent {
-    String course_id;
-    String student_id;
-    double score;
+    private Map<String, Double> studentGrades;
+    private Connection connection;
 
-    public CourseStudent(String course_id, String student_id, double score) {
-        this.course_id = course_id;
-        this.student_id = student_id;
-        this.score = score;
+    public CourseStudent(Connection connection) {
+        studentGrades = new HashMap<>();
+        this.connection = connection;
     }
 
-    public String getCourse_id() {
-        return course_id;
+    public void enrollStudentInCourse(String studentId, Course course) throws SQLException {
+        // 添加到内存
+        studentGrades.put(studentId, 0.0); // 初始化成绩为0.0
+
+        // 添加到数据库
+        saveStudentEnrollmentInDatabase(studentId, course.getId());
     }
 
-    public void setCourse_id(String course_id) {
-        this.course_id = course_id;
+    public void unenrollStudentFromCourse(String studentId, Course course) throws SQLException {
+        // 从内存中删除
+        studentGrades.remove(studentId);
+
+        // 从数据库中删除
+        deleteStudentEnrollmentFromDatabase(studentId, course.getId());
     }
 
-    public String getStudent_id() {
-        return student_id;
+    public double getStudentGradeInCourse(String studentId, Course course) {
+        return studentGrades.getOrDefault(studentId, 0.0);
     }
 
-    public void setStudent_id(String student_id) {
-        this.student_id = student_id;
+    public void loadStudentEnrollmentsFromDatabase(Course course) throws SQLException {
+        String query = "SELECT * FROM CourseStudent WHERE course_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, course.getId());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String studentId = resultSet.getString("student_id");
+                double grade = resultSet.getDouble("score");
+                studentGrades.put(studentId, grade);
+            }
+        }
     }
 
-    public double getScore() {
-        return score;
+    private void saveStudentEnrollmentInDatabase(String studentId, String courseId) throws SQLException {
+        String query = "INSERT INTO CourseStudent (course_id, student_id, score) VALUES (?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, courseId);
+            statement.setString(2, studentId);
+            statement.setDouble(3, 0.0); // 初始化成绩为0.0
+            statement.executeUpdate();
+        }
     }
 
-    public void setScore(double score) {
-        this.score = score;
+    private void deleteStudentEnrollmentFromDatabase(String studentId, String courseId) throws SQLException {
+        String query = "DELETE FROM CourseStudent WHERE course_id = ? AND student_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, courseId);
+            statement.setString(2, studentId);
+            statement.executeUpdate();
+        }
     }
-    
-    
 }
