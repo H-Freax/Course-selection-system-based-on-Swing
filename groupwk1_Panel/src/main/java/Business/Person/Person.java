@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Person {
-    private String personName;
+    private static String personName;
     private String personID;
     private String role;
 

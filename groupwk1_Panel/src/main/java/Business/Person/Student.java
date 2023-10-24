@@ -89,7 +89,9 @@ public class Student extends Person {
     public void removeCourse(String courseID) {
         courseList.remove(courseID);
     }
-
+    public boolean checkLogin(Connection connection,String inputUsername, String inputPassword, String role) throws SQLException {
+        return PasswordUtils.verifyLogin(connection,inputUsername,inputPassword,role);
+    }
     public void saveToDatabase(Connection connection) throws SQLException {
         super.saveToDatabase(connection);
 

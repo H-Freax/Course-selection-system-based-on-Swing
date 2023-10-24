@@ -1,39 +1,40 @@
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Directory\ProfessorDirectory.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\model\Person.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\General\GeneralJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Course\Course.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\FacultyRole\ManageStudents\FacultyManageStudentsJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\StudentRole\Transcript\StudentTranscriptJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Course\CourseDirectory.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\model\PersonList.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\StudentRole\StudentWorkAreaJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\MainJFrame.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\FacultyRole\Schedule\FacultyScheduleJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Person\Employee.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\LoginJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Tools\MySQLConnectionUtil.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Semester\Semester.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Directory\EmployeeDirectory.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\model\User.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\FacultyRole\MyProfile\FacultyProfileJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserViewPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\ProfessorTopic\ProfessorTopic.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\FacultyRole\Ranking\FacultyRankingJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Person\Person.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Person\Professor.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Directory\Directory.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Course\CourseStudent.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\StudentRole\ManageProfile\StudentManageProfileJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\AdminRole\AdminWorkAreaJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Course\CourseTopic.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Course\CourseSchedule.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\User\User.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\FacultyRole\FacultyWorkAreaJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\StudentRole\Registration\StudentRegisterJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\StudentRole\GraduationStatus\StudentGraduationStatusJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\UserInterface\WorkAreas\FacultyRole\ManageCourses\FacultyManageCoursesJPanel.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Rate\Rate.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Person\Student.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\Business\Directory\StudentDirectory.java
-C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer & Dev\GroupWork\groupwork1\groupwk1_Panel\src\main\java\ui\AdminJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/FacultyRole/ManageCourses/FacultyManageCoursesJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/ProfessorTopic/ProfessorTopic.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/General/GeneralJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/FacultyRole/MyProfile/FacultyProfileJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Tools/MySQLConnectionUtil.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/FacultyRole/Ranking/FacultyRankingJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Rate/Rate.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Person/Professor.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Course/CourseDirectory.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/model/PersonList.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/FacultyRole/Schedule/FacultyScheduleJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserViewPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/StudentRole/StudentWorkAreaJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/User/User.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Directory/ProfessorDirectory.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/AdminRole/AdminWorkAreaJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/AdminJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Person/Employee.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Directory/StudentDirectory.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Course/CourseSchedule.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Person/Person.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/MainJFrame.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Course/CourseTopic.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Directory/EmployeeDirectory.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/LoginJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/FacultyRole/FacultyWorkAreaJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/FacultyRole/ManageStudents/FacultyManageStudentsJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Person/Student.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Directory/PersonDirectory.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/model/Person.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Course/CourseStudent.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/StudentRole/ManageProfile/StudentManageProfileJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Tools/PasswordUtils.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Semester/Semester.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/StudentRole/GraduationStatus/StudentGraduationStatusJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/StudentRole/Transcript/StudentTranscriptJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/StudentRole/MyCourses/StudentManageCoursesJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/Business/Course/Course.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/ui/UserInterface/WorkAreas/StudentRole/Registration/StudentRegisterJPanel.java
+/Users/freax/Downloads/gitee/groupwork1/groupwk1_Panel/src/main/java/model/User.java

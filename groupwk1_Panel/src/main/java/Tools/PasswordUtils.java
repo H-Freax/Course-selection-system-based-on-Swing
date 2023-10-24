@@ -11,6 +11,8 @@ public class PasswordUtils {
     // 根据username、nowpassword和role进行登录验证
     public static boolean verifyLogin(Connection connection, String username, String nowpassword, String role) throws SQLException {
         String hashedPassword = hashPassword(nowpassword);
+        System.out.println("username"+username);
+        System.out.println("hashedPassword"+hashedPassword);
 
         String query = "SELECT nowpassword FROM " + role + " WHERE username = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -18,6 +20,7 @@ public class PasswordUtils {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String storedHashedPassword = resultSet.getString("nowpassword");
+                System.out.println("storedHashedPassword"+storedHashedPassword);
                 return hashedPassword.equals(storedHashedPassword);
             }
             return false; // 用户名不存在

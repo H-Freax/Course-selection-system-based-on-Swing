@@ -5,16 +5,19 @@
 package ui;
 
 import java.awt.CardLayout;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Business.Person.Employee;
+import Business.Person.Professor;
+import Business.Person.Student;
+import Tools.MySQLConnectionUtil;
 import model.PersonList;
 import model.Person;
 import model.User;
@@ -34,6 +37,7 @@ public class LoginJPanel extends javax.swing.JPanel {
     private PersonList personList;
     private JPanel controlPanel;
 
+    Connection connection = MySQLConnectionUtil.getConnection();
     public LoginJPanel(JPanel ViewContainer, PersonList personList, JPanel controlPanel) {
         initComponents();
         this.ViewContainer = ViewContainer;
@@ -64,7 +68,11 @@ public class LoginJPanel extends javax.swing.JPanel {
         loginbtn.setText("Login");
         loginbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginbtnActionPerformed(evt);
+                try {
+                    loginbtnActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -84,27 +92,14 @@ public class LoginJPanel extends javax.swing.JPanel {
 
         buttonGroup1.add(btnAdmin);
         btnAdmin.setText("Admin");
-        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdminActionPerformed(evt);
-            }
-        });
+
 
         buttonGroup1.add(btnProfessor);
         btnProfessor.setText("Faculty");
-        btnProfessor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProfessorActionPerformed(evt);
-            }
-        });
+
 
         buttonGroup1.add(btnStudent);
         btnStudent.setText("Student");
-        btnStudent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStudentActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -162,80 +157,66 @@ public class LoginJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbtnActionPerformed
+    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_loginbtnActionPerformed
         String username = txtloginusername.getText();
-        String pwd = new String(txtloginpwd.getPassword());
-        if(i==0){
-            JOptionPane.showMessageDialog(this, "Please select role!");
-            return;
+        String password = Arrays.toString(txtloginpwd.getPassword());
+        connection =  MySQLConnectionUtil.getConnection();
+        // 调用 Employee、Professor、Student 中的身份验证方法
+        boolean loginSuccess = false;
+        if (btnAdmin.isSelected()) {
+
+            System.out.println("admin");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+
+        } else if (btnProfessor.isSelected()) {
+            System.out.println("professor");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+
+        } else if (btnStudent.isSelected()) {
+            System.out.println("student");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+
         }
-        
-        try{
-            if (isValidUser(username, pwd).getRole().equals("admin")&&isValidUser(username, pwd).isEnabled()&&i==1) {
+
+        if (loginSuccess) {
+            // 根据用户身份切换到不同的界面
+            if (btnAdmin.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
                 AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel( ViewContainer, controlPanel,  personList);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
-                User user = isValidUser(username, pwd);
-                AdminJPanel panel = new AdminJPanel(ViewContainer,personList,user);
+
+                AdminJPanel panel = new AdminJPanel(ViewContainer,personList);
                 ViewContainer.add("AdminJPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
-            } else if (isValidUser(username, pwd).getRole().equals("professor")&&isValidUser(username, pwd).isEnabled()&&i==2) {
+                // 显示 Employee 界面
+            } else if (btnProfessor.isSelected()) {
+                // 显示 Professor 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
                 FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  personList);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
-                User user = isValidUser(username, pwd);
-                UserViewPanel panel = new UserViewPanel(ViewContainer,personList,user);
+
+                UserViewPanel panel = new UserViewPanel(ViewContainer,personList);
                 ViewContainer.add("UserViewPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
-            }else if(isValidUser(username, pwd).getRole().equals("student")&&isValidUser(username, pwd).isEnabled()&&i==3){
-                    
+            } else if (btnStudent.isSelected()) {
+                // 显示 Student 界面
             }
-            else if(!isValidUser(username, pwd).isEnabled()){
-                JOptionPane.showMessageDialog(this, "Account unavailable! Please contact admin!");
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Wrong Username/Wrong Password");
+        } else {
+            JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");
         }
 
-    }//GEN-LAST:event_loginbtnActionPerformed
 
-    private User isValidUser(String username, String password) {
-        Person p = personList.searchPersonByusername(username);
-        ArrayList<User> users = p.getUsers();
-        for (User user : users) {
-          
-            if (user.getUsername().equals(username)
-                    && user.validatePassword(password)) {
-                
-                return user;
-            }
-        }
-        return null;
     }
     private void txtloginusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtloginusernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtloginusernameActionPerformed
 
-    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        // TODO add your handling code here:
-        i=1;
-    }//GEN-LAST:event_btnAdminActionPerformed
-
-    private void btnProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfessorActionPerformed
-        // TODO add your handling code here:
-        i=2;
-    }//GEN-LAST:event_btnProfessorActionPerformed
-
-    private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
-        // TODO add your handling code here:
-        i=3;
-    }//GEN-LAST:event_btnStudentActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton btnAdmin;

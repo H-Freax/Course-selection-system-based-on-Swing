@@ -23,12 +23,12 @@ public class UserViewPanel extends javax.swing.JPanel {
     private JPanel ViewContainer;
     private PersonList personList;
     private User user;
-    UserViewPanel(JPanel ViewContainer, PersonList personList,User user) {
+    UserViewPanel(JPanel ViewContainer, PersonList personList) {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.personList = personList;
-        this.user = user;
-        
+//        this.user = user;
+
         Person p = personList.searchPersonByusername(user.getUsername());
         txtNUID.setText(p.getNUID());
         txtCharactor.setText(user.getRole());
@@ -172,7 +172,7 @@ public class UserViewPanel extends javax.swing.JPanel {
         p.setNUID(txtNUID.getText());
         p.setName(txtName.getText());
         p.getUserbyName(user.getUsername()).setUsername(txtUserName.getText());
-        
+
         writeDataToFile(personList, "personlist.txt");
         txtNUID.setEditable(false);
         txtName.setEditable(false);
@@ -202,7 +202,7 @@ public class UserViewPanel extends javax.swing.JPanel {
         }else{
             JOptionPane.showMessageDialog(this, "Please not use history password.");
         }
-        
+
     }//GEN-LAST:event_btnusereditActionPerformed
 
 
