@@ -15,7 +15,7 @@ public class MySQLConnectionUtil {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/groupwork1?serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASSWORD = "root123456";
+    private static final String PASSWORD = "200312zjmZJM!";
 
     public static Connection getConnection() {
         Connection connection = null;
