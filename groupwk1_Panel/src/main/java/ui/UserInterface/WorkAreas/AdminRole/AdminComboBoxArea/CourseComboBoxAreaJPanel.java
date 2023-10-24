@@ -4,6 +4,11 @@
  */
 package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
+import Business.Course.Course;
+import Business.Course.CourseDirectory;
+import java.util.List;
+import Tools.MySQLConnectionUtil;
+import java.sql.Connection;
 /**
  *
  * @author 15469
@@ -13,8 +18,12 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form CourseComboBoxAreaJPanel
      */
+
+    private CourseDirectory courseDirectory;
+    private List<Course> courselist;
     public CourseComboBoxAreaJPanel() {
         initComponents();
+        courselist=courseDirectory.getAllCourses();
     }
 
     /**
@@ -59,6 +68,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         jLabel35 = new javax.swing.JLabel();
         txtCurrentStudentCount = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        btnUpdate = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -112,6 +122,8 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         jLabel35.setText("Student Count:");
 
         jLabel1.setText("待定");
+
+        btnUpdate.setText("Update");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,7 +201,9 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                                 .addComponent(btnView)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDelete)))
-                        .addGap(86, 86, 86))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUpdate)
+                        .addGap(8, 8, 8))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +218,8 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnView)
                     .addComponent(btnDelete)
                     .addComponent(btnSearch)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdate))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -273,6 +288,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel28;
