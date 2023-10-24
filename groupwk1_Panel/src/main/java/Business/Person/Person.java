@@ -3,12 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Business.Person;
-import Business.User.User;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+import java.util.List;
 /**
  *
  * @author freax
@@ -17,120 +15,30 @@ import java.util.ArrayList;
 
 
 public class Person {
-    
-    private String name;
-    private String NUID;
-    private ArrayList<User> users;
+    private String personName;
+    private String personID;
     private String role;
-    private LocalDateTime lastActive;
-    private LocalDateTime lastUpdate;
-    
-    public Person(String name, String NUID,String role) {
-        this.name = name;
-        this.NUID = NUID;
-        this.users = new ArrayList<>();
+
+    public Person(String personName, String personID, String role) {
+        this.personName = personName;
+        this.personID = personID;
         this.role = role;
     }
 
-    public static String encrypted(String input){
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(input.getBytes());
-            byte[] bytes = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for(byte aByte : bytes){
-                sb.append(Integer.toString((aByte & 0xff)+0x100,16).substring(1));
-            }
-            String str = sb.toString();
-            return sb.toString();
-        }catch (NoSuchAlgorithmException e){
-            e.printStackTrace();
-        return null;
-        }
-    }
-    
-    public LocalDateTime getLastActive() {
-        return lastActive;
+    public String getPersonName() {
+        return personName;
     }
 
-    public void setLastActive(LocalDateTime lastActive) {
-        this.lastActive = lastActive;
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
+    public String getPersonID() {
+        return personID;
     }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    
-    
-    
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNUID() {
-        return NUID;
-    }
-
-    public void setNUID(String NUID) {
-        this.NUID = NUID;
-    }
-
-    
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
-    }
-    
-    public User getUserbyName(String username){
-        ArrayList<User> findusers = this.users;
-        for(User us:findusers){
-            if(us.getUsername().equals(username)){
-                return us;
-            }
-        }
-        return null;
-    }
-    
-     public void addUser(User user){
-        users.add(user);
-    }
-    
-    public void deleteUser(User us){
-        users.remove(us);
-    }
-    
-    public boolean checkLogin(String username, String password) {
-        for (User user : users) {
-            if (user.getUsername().equals(username) && user.getNowpwd().equals(password)) {
-                return true;
-            }
-        }
-        return false;
-    }
-   
-    
-    public String toText() {
-        StringBuilder text = new StringBuilder();
-        text.append("name:").append(name).append("\n");
-        text.append("NUID:").append(NUID).append("\n");
-        text.append("Role:").append(role).append("\n");
-        text.append("users:\n");
-        for (User user : users) {
-            text.append(user.toText());
-        }
-        return text.toString();
+    public void setPersonID(String personID) {
+        this.personID = personID;
     }
 
     public String getRole() {
@@ -140,7 +48,40 @@ public class Person {
     public void setRole(String role) {
         this.role = role;
     }
-    
+    public static Person loadFromDatabase(Connection connection, String NUID) throws SQLException {
+        String query = "SELECT * FROM Person WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, NUID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String personName = resultSet.getString("PersonName");
+                String role = resultSet.getString("role");
+                Person person = new Person(personName, NUID, role);
+                return person;
+            }
+        }
+        return null;
+    }
+
+    public void saveToDatabase(Connection connection) throws SQLException {
+        String query = "INSERT INTO Person (PersonName, PersonID, role) VALUES (?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, personName);
+            statement.setString(2, personID);
+            statement.setString(3, role);
+            statement.executeUpdate();
+        }
+    }
+
+
+    public void updateInDatabase(Connection connection) throws SQLException {
+        String query = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, personName);
+            statement.setString(2, role);
+            statement.setString(3, personID);
+            statement.executeUpdate();
+        }
+    }
+
 }
-
-
