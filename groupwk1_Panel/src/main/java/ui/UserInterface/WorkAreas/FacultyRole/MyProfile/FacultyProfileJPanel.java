@@ -4,6 +4,8 @@
  */
 package ui.UserInterface.WorkAreas.FacultyRole.MyProfile;
 
+import Business.Person.Professor;
+
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -17,10 +19,11 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
      * Creates new form ProfessorProfileJPanel
      */
     private JPanel ViewContainer;
-    
-    public FacultyProfileJPanel() {
+    private Professor professor;
+    public FacultyProfileJPanel(JPanel ViewContainer, Professor professor) {
         initComponents();
         this.ViewContainer = ViewContainer;
+        this.professor = professor;
     }
 
     /**

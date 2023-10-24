@@ -178,7 +178,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageCoursesIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageCoursesIdentifyResourceAssetsActionPerformed
         // TODO add your handling code here:
-        FacultyManageCoursesJPanel fmcPanel = new FacultyManageCoursesJPanel();
+        FacultyManageCoursesJPanel fmcPanel = new FacultyManageCoursesJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyManageCoursesJPanel",fmcPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
@@ -187,7 +187,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStudentsActionPerformed
         // TODO add your handling code here:
-        FacultyManageStudentsJPanel fmsPanel = new FacultyManageStudentsJPanel();
+        FacultyManageStudentsJPanel fmsPanel = new FacultyManageStudentsJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyManageStudentsJPanel", fmsPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
@@ -196,7 +196,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
         // TODO add your handling code here:
-        FacultyProfileJPanel ppPanel = new FacultyProfileJPanel();
+        FacultyProfileJPanel ppPanel = new FacultyProfileJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyProfileJPanel", ppPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
@@ -205,7 +205,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
         // TODO add your handling code here:
-        FacultyRankingJPanel prPanel = new FacultyRankingJPanel();
+        FacultyRankingJPanel prPanel = new FacultyRankingJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyRankingJPanel", prPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);

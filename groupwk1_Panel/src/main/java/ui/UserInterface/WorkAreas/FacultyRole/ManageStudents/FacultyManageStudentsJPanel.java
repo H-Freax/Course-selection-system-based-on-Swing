@@ -4,17 +4,25 @@
  */
 package ui.UserInterface.WorkAreas.FacultyRole.ManageStudents;
 
+import Business.Person.Professor;
+
+import javax.swing.*;
+
 /**
  *
  * @author zhangjinming
  */
 public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
+    private JPanel ViewContainer;
+    private Professor professor;
 
     /**
      * Creates new form FacultyManageStudentsJPanel
      */
-    public FacultyManageStudentsJPanel() {
+    public FacultyManageStudentsJPanel(JPanel ViewContainer, Professor professor) {
         initComponents();
+        this.ViewContainer = ViewContainer;
+        this.professor = professor;
     }
 
     /**
