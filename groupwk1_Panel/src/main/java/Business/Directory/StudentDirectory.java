@@ -5,6 +5,8 @@
 package Business.Directory;
 
 import Business.Person.Student;
+import Tools.MySQLConnectionUtil;
+
 import java.util.ArrayList;
 
 import java.sql.Connection;
@@ -17,7 +19,18 @@ public class StudentDirectory {
 
     public StudentDirectory() {
         studentList = new ArrayList<>();
+
+        //给studentList赋值
+
+        try {
+            loadStudentsFromDatabase(MySQLConnectionUtil.getConnection());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
     }
+
+
 
     // 添加学生到目录
     public void addStudent(Student student) {

@@ -63,9 +63,9 @@
                                       <Component id="jLabel12" alignment="0" min="-2" pref="102" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jTextField9" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jProgressBar2" alignment="0" min="-2" pref="296" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txtCurrentProfessor" min="-2" pref="296" max="-2" attributes="0"/>
+                                      <Component id="txtCurrentProfessorRegion" min="-2" pref="296" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -224,12 +224,12 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField9" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCurrentProfessor" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jProgressBar2" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCurrentProfessorRegion" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="131" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -349,7 +349,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTextArea" name="createCourseIntroductionTextArea1">
+                    <Component class="javax.swing.JTextArea" name="currentCourseIntroductionTextArea">
                       <Properties>
                         <Property name="columns" type="int" value="20"/>
                         <Property name="rows" type="int" value="5"/>
@@ -378,17 +378,14 @@
                     <Property name="text" type="java.lang.String" value="Professor"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField9">
+                <Component class="javax.swing.JTextField" name="txtCurrentProfessor">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel12">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Professor Rating"/>
+                    <Property name="text" type="java.lang.String" value="Professor Region"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JProgressBar" name="jProgressBar2">
-                  <Properties>
-                    <Property name="value" type="int" value="90"/>
-                  </Properties>
+                <Component class="javax.swing.JTextField" name="txtCurrentProfessorRegion">
                 </Component>
               </SubComponents>
             </Container>
@@ -411,9 +408,7 @@
                       <Component id="jLabel1" min="-2" pref="120" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="selectSemesterComboBox" min="-2" pref="93" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnBackCurrentCourse1" min="-2" pref="99" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace min="35" pref="513" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
@@ -431,7 +426,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel4" min="-2" pref="87" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtCourseId1" max="32767" attributes="0"/>
+                                      <Component id="txtCourseScore" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
@@ -454,18 +449,10 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="selectSemesterComboBox" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                              <Component id="btnBackCurrentCourse1" min="-2" pref="45" max="-2" attributes="0"/>
-                          </Group>
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="selectSemesterComboBox" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                       <Component id="jScrollPane5" min="-2" pref="165" max="-2" attributes="0"/>
@@ -487,7 +474,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCourseId1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCourseScore" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="247" max="32767" attributes="0"/>
                   </Group>
@@ -544,9 +531,6 @@
               </SubComponents>
             </Container>
             <Component class="javax.swing.JTextField" name="txtSearchCourse">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Search Bar"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnSearchCourse">
               <Properties>
@@ -572,15 +556,7 @@
                 <Property name="text" type="java.lang.String" value="Course Score:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtCourseId1">
-            </Component>
-            <Component class="javax.swing.JButton" name="btnBackCurrentCourse1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Back"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackCurrentCourse1ActionPerformed"/>
-              </Events>
+            <Component class="javax.swing.JTextField" name="txtCourseScore">
             </Component>
           </SubComponents>
         </Container>

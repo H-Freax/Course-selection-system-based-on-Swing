@@ -34,11 +34,14 @@ public class Course {
     private List<String> topics; // Store course topics
     private List<String> enrolledStudents; // Store enrolled student IDs
 
+    private double score;
+
     public Course() {
     }
 
     public Course(String id, String name, String introduction, int point, String semesterId, String status,
-                  String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime) {
+                  String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime,
+                  double score) {
         this.id = id;
         this.name = name;
         this.introduction = introduction;
@@ -53,6 +56,7 @@ public class Course {
         this.endTime = endTime;
         this.topics = new ArrayList<>();
         this.enrolledStudents = new ArrayList<>();
+        this.score = score;
     }
 
     // Getter and Setter methods for class properties
@@ -161,6 +165,14 @@ public class Course {
         this.topics = topics;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
     public List<String> getEnrolledStudents() {
         return enrolledStudents;
     }
@@ -258,12 +270,14 @@ public class Course {
                 resultSet.getInt("point"),
                 resultSet.getString("semesterid"),
                 resultSet.getString("statue"),
-                resultSet.getString("professor"),
+//                resultSet.getString("professor"),
+                null,
                 resultSet.getString("location"),
                 resultSet.getInt("studentlimited"),
                 resultSet.getInt("studentcount"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
-                resultSet.getTimestamp("endtime").toLocalDateTime()
+                resultSet.getTimestamp("endtime").toLocalDateTime(),
+                0
         );
     }
     public void addTopic(Connection connection, String topic) throws SQLException {
