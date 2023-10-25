@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -35,7 +37,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)tblProfessor.getModel();
         model.setRowCount(0);
-
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+        tblProfessor.setRowSorter(sorter);
         for(Professor vs : professorlist){
                 Object[] row = new Object[6];
                 row[0] = vs.getUsername();
@@ -89,6 +92,9 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         txtuser = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JButton();
+        lblCourseEndTime3 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtHis = new javax.swing.JTextArea();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -166,6 +172,12 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblCourseEndTime3.setText("History Password");
+
+        txtHis.setColumns(20);
+        txtHis.setRows(5);
+        jScrollPane4.setViewportView(txtHis);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -211,9 +223,15 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                                     .addComponent(txtRaing, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
                             .addGap(101, 101, 101))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(lblCourseEndTime2)
-                            .addGap(35, 35, 35)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblCourseEndTime3)
+                                    .addGap(35, 35, 35)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblCourseEndTime2)
+                                    .addGap(35, 35, 35)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGap(141, 141, 141)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,17 +259,18 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)
+                        .addComponent(jButton4)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUpdate)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel28)
@@ -267,8 +286,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel32)
-                                    .addComponent(txtRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(67, 67, 67))
+                                    .addComponent(txtRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel33)
@@ -284,14 +302,20 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel35))
-                                .addGap(64, 64, 64)))
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(299, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel35))))
+                        .addGap(64, 64, 64)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
                         .addComponent(lblCourseEndTime2)
-                        .addGap(484, 484, 484))))
+                        .addGap(78, 78, 78)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCourseEndTime3)
+                        .addGap(66, 66, 66)))
+                .addGap(315, 315, 315))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -327,6 +351,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     String s1 = String.join(",", vs.getTopics());
                     txtTopic.setText(s1);
                     txtuser.setText(vs.getPersonName());
+                    String s2 = String.join(",", vs.getPasswordHistory());
+                    txtHis.setText(s2);
                     return;
                 }
             }
@@ -350,9 +376,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         String rate = txtRaing.getText();
         String user = txtuser.getText();
         String topic = txtTopic.getText();
+        String his = txtHis.getText();
         if(id!=""&&name!=""&&isEnabled!=""&&region!=""&pwd!=""&&language!=""&&rate!=""&&user!=""&&topic!=""){
             boolean isRight=false;
             Set<String> stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
+            Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(","))); 
             if(isEnabled=="true"){
                 isRight=true;
             }else if(isEnabled=="false"){
@@ -366,6 +394,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             p.setLanguage(language);
             p.setRegion(region);
             p.setTopics(stringSet);
+            p.setPasswordHistory(stringSet1);
+            populateTable();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -391,6 +421,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     String s1 = String.join(",", vs.getTopics());
                     txtTopic.setText(s1);
                     txtuser.setText(vs.getPersonName());
+                    String s2 = String.join(",", vs.getPasswordHistory());
+                    txtHis.setText(s2);
 
                     return;
                 }
@@ -404,7 +436,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRowIndex = tblProfessor.getSelectedRow();
         if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+            JOptionPane.showMessageDialog(this, "Please select a row to Disable.");
             return;
         }else{
                 DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
@@ -413,7 +445,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     if(vs.getPersonID().equals(selectedID)){
                     //
                     vs.setEnabled(false);
-                    JOptionPane.showMessageDialog(this, "Deleted!");
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Disabled!");
                     return;
                 }
             }
@@ -426,6 +459,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         String id = txtid.getText();
+        for(Professor vs : professorlist){
+            if(vs.getPersonID().equals(id)){
+                JOptionPane.showMessageDialog(this, "Already Exist ID");
+                return;
+            }}
         String name = txtname.getText();
         String isEnabled = txtisEnabled.getText();
         String region = txtRegion.getText();
@@ -434,9 +472,15 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         String rate = txtRaing.getText();
         String user = txtuser.getText();
         String topic = txtTopic.getText();
+        String his = txtHis.getText();
+        int selectedRowIndex = tblProfessor.getSelectedRow();
+        Set<String> stringSet= new HashSet<String>();
+        Set<String> stringSet1= new HashSet<String>();
+        boolean isRight=false;
         if(id!=""&&name!=""&&isEnabled!=""&&region!=""&pwd!=""&&language!=""&&rate!=""&&user!=""&&topic!=""){
-            boolean isRight=false;
-            Set<String> stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
+            isRight=false;
+            stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
+            stringSet1=new HashSet<>(Arrays.asList(his.split(",")));
             if(isEnabled=="true"){
                 isRight=true;
             }else if(isEnabled=="false"){
@@ -445,12 +489,30 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Please input true/false in isEnabled!");
                 return;
             }
-            Professor p = new Professor(name, id,  user, pwd,isRight , "professor");
-            professorlist.add(p);
-            p.setLanguage(language);
-            p.setRegion(region);
-            p.setTopics(stringSet);
         }
+        Professor p = new Professor(name, id,  user, pwd,isRight , "professor");
+        p.setLanguage(language);
+        p.setRegion(region);
+        p.setTopics(stringSet);     
+        p.setPasswordHistory(stringSet1);
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to update.");
+            return;
+        }else{
+                DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
+                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                for(Professor c : professorlist){
+                    if(c.getPersonID().equals(selectedID)){
+                    c=p;
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Updated!");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
+
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 
@@ -472,9 +534,12 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblCourseEndTime2;
+    private javax.swing.JLabel lblCourseEndTime3;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblProfessor;
+    private javax.swing.JTextArea txtHis;
     private javax.swing.JTextField txtLan;
     private javax.swing.JTextField txtRaing;
     private javax.swing.JTextField txtRegion;

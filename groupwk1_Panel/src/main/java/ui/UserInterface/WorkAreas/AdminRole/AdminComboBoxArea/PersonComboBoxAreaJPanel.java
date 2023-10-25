@@ -4,6 +4,16 @@
  */
 package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
+import Business.Directory.PersonDirectory;
+import Business.Person.Person;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author 15469
@@ -13,10 +23,31 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form PersonComboBoxAreaJPanel
      */
-    public PersonComboBoxAreaJPanel() {
+    private PersonDirectory personDirectory;
+    private ArrayList<Person> personlist;
+    Connection connection;
+    public PersonComboBoxAreaJPanel() throws SQLException {
         initComponents();
+        personDirectory.loadPersonsFromDatabase(connection);
+        personlist=personDirectory.listPersons();
+        populateTable();
     }
 
+    
+    private void populateTable(){
+        DefaultTableModel model = (DefaultTableModel)personTbl.getModel();
+        model.setRowCount(0);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+        personTbl.setRowSorter(sorter);
+        for(Person vs : personlist){
+                Object[] row = new Object[3];
+                row[0] = vs.getPersonID();
+                row[1] = vs.getPersonName();
+                row[2] = vs.getRole();
+                model.addRow(row);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,37 +61,128 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        personTbl = new javax.swing.JTable();
+        txtSearch = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtname = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtid = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtRole = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Person");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        personTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Name", "Role"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(personTbl);
+
+        txtSearch.setText("Search ID");
+
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("View");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Create");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Update");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Name");
+
+        txtname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnameActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("ID");
+
+        jLabel6.setText("Role");
+
+        jButton4.setText("Delete");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)))
-                .addContainerGap(167, Short.MAX_VALUE))
+                        .addGap(67, 67, 67))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGap(43, 43, 43)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSearch)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)))
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -69,7 +191,25 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(616, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSearch)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(435, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -86,12 +226,139 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        String search=txtSearch.getText();
+        if("".equals(search)){
+            JOptionPane.showMessageDialog(this, "Please enter!");
+        }else{
+            Person e = personDirectory.findPersonById(search);
+            if(e!=null){
+                txtname.setText(e.getPersonName());
+                txtid.setText(e.getPersonID());
+                txtRole.setText(e.getRole());
+            }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int selectedRowIndex = personTbl.getSelectedRow();
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to View.");
+            return;
+        }else{
+            DefaultTableModel model = (DefaultTableModel) personTbl.getModel();
+            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+            Person e = personDirectory.findPersonById(selectedID);
+            if(e!=null){
+                txtname.setText(e.getPersonName());
+                txtid.setText(e.getPersonID());
+                txtRole.setText(e.getRole());
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String id=txtid.getText();
+        if(personDirectory.findPersonById(id)!=null){
+            JOptionPane.showMessageDialog(this, "ID already existed!");
+            return;
+        }
+        String personName=txtname.getText();
+        String personID=txtid.getText();
+        String role=txtRole.getText();
+        if(personName==""||personID==""||role==""){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
+        Person e = new Person( personName,  personID,  role);
+        personlist.add(e);
+        populateTable();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String id=txtid.getText();
+        if(personDirectory.findPersonById(id)!=null){
+            JOptionPane.showMessageDialog(this, "ID already existed!");
+            return;
+        }
+        String personName=txtname.getText();
+        String personID=txtid.getText();
+        String role=txtRole.getText();
+        if(personName==""||personID==""||role==""){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
+        Person e = new Person( personName,  personID,  role);
+        int selectedRowIndex = personTbl.getSelectedRow();
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to update.");
+            return;
+        }else{
+            DefaultTableModel model = (DefaultTableModel) personTbl.getModel();
+            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+            for(Person d : personlist){
+                if(d.getPersonID().equals(selectedID)){
+                    d=e;
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Updated!");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnameActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int selectedRowIndex = personTbl.getSelectedRow();
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to Delete.");
+            return;
+        }else{
+            DefaultTableModel model = (DefaultTableModel) personTbl.getModel();
+            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+            for(Person vs : personlist){
+                if(vs.getPersonID().equals(selectedID)){
+                    //
+                    personlist.remove(vs);
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Deleted!");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable personTbl;
+    private javax.swing.JTextField txtRole;
+    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtid;
+    private javax.swing.JTextField txtname;
     // End of variables declaration//GEN-END:variables
 }

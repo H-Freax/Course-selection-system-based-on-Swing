@@ -5,16 +5,7 @@
 package ui.UserInterface.WorkAreas.StudentRole.ManageProfile;
 
 import java.awt.CardLayout;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
-
-import Business.Course.Course;
-import Business.Course.CourseDirectory;
-import Business.Person.Student;
-import Tools.MySQLConnectionUtil;
 
 /**
  *
@@ -26,34 +17,12 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
      * Creates new form StudentManageProfileJPanel
      */
     private JPanel ViewContainer;
-    private Student student;
-    Connection conn= MySQLConnectionUtil.getConnection();
-
-    private List<Course> allCourses;
-
-    public StudentManageProfileJPanel(JPanel ViewContainer, Student student) {
+    
+    public StudentManageProfileJPanel() {
         initComponents();
         this.ViewContainer = ViewContainer;
-        this.student = student;
-        initStudentProfile(student);
-        populateTable();
-
     }
 
-    public void initStudentProfile(Student student){
-        txtStudentGpa.setText(String.valueOf(student.getGpa()));
-        txtStudentId.setText(String.valueOf(student.getPersonID()));
-        txtStudentUsername.setText(String.valueOf(student.getUsername()));
-        txtStudentName.setText(Student.getPersonName());
-        CourseDirectory courseDirectory = new CourseDirectory(MySQLConnectionUtil.getConnection());//数据传到了courseList
-        try {
-            courseDirectory.loadCoursesFromDatabase(student.getPersonID());
-            allCourses = courseDirectory.getAllCourses();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("数据库异常！！");
-        }
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,11 +39,14 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtStudentGpa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtStudentUsername = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        StudentTextArea = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStudentProfile = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
@@ -87,6 +59,8 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         jLabel5.setText("Courses");
 
         jLabel6.setText("GPA:");
+
+        jLabel8.setText("Perosnal Signature");
 
         jButton5.setText("Edit");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +85,10 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
         jLabel10.setText("Username:");
 
+        StudentTextArea.setColumns(20);
+        StudentTextArea.setRows(5);
+        jScrollPane3.setViewportView(StudentTextArea);
+
         tblStudentProfile.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -126,6 +104,8 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
         jLabel11.setText("Password:");
 
+        txtStudentPassword.setText("88888888");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,14 +117,19 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                         .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(54, 54, 54)
                                     .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(81, 81, 81)
-                                    .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(38, 38, 38)
+                                        .addComponent(jScrollPane3))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(81, 81, 81)
+                                        .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(54, 54, 54)
@@ -190,7 +175,11 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -198,7 +187,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -225,6 +214,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea StudentTextArea;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton jButton5;
@@ -234,7 +224,9 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable tblStudentProfile;
     private javax.swing.JTextField txtStudentGpa;
     private javax.swing.JTextField txtStudentId;
@@ -242,21 +234,4 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtStudentPassword;
     private javax.swing.JTextField txtStudentUsername;
     // End of variables declaration//GEN-END:variables
-
-    private void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) tblStudentProfile.getModel(); //Have the access to the table;
-        model.setRowCount(0); //初始化？？
-
-        for(Course course : allCourses){
-
-            Object[] row = new Object[3];
-            row[0] = course.getName();
-            row[1] = course.getProfessor();
-            row[2] = course.getScore();
-            //设置3R对应
-
-            model.addRow(row);
-
-        }
-    }
 }

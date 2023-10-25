@@ -4,6 +4,8 @@
  */
 package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
+import Business.Rate.Rate;
+
 /**
  *
  * @author 15469
@@ -13,6 +15,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form RateComboBoxAreaJPanel
      */
+    Rate rate;
     public RateComboBoxAreaJPanel() {
         initComponents();
     }
@@ -44,7 +47,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Course ID", "Professor ID", "Student ID", "Score"
             }
         ));
         jScrollPane2.setViewportView(jTable1);
