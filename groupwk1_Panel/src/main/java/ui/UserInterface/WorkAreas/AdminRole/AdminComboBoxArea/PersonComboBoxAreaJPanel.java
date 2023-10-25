@@ -6,6 +6,8 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Directory.PersonDirectory;
 import Business.Person.Person;
+import Tools.MySQLConnectionUtil;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,12 +30,14 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
     Connection connection;
     public PersonComboBoxAreaJPanel() throws SQLException {
         initComponents();
+        connection = MySQLConnectionUtil.getConnection();
+        personDirectory = new PersonDirectory();
         personDirectory.loadPersonsFromDatabase(connection);
-        personlist=personDirectory.listPersons();
+        personlist=(ArrayList<Person>)personDirectory.listPersons();
         populateTable();
     }
 
-    
+
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)personTbl.getModel();
         model.setRowCount(0);
@@ -47,7 +51,7 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                 model.addRow(row);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

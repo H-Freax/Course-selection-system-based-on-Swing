@@ -9,21 +9,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Business.Person.Employee;
+import Tools.MySQLConnectionUtil;
 
 public class EmployeeDirectory {
     private ArrayList<Employee> employeeList;
     private Connection connection; // 数据库连接
 
     public EmployeeDirectory() {
-        this.connection = connection;
+        this.connection = MySQLConnectionUtil.getConnection();
         this.employeeList = new ArrayList<>();
         loadEmployeesFromDatabase();
     }
-    public EmployeeDirectory(Connection connection) {
-        this.connection = connection;
-        this.employeeList = new ArrayList<>();
-        loadEmployeesFromDatabase();
-    }
+
 
     // 从数据库加载Employee对象
     public void loadEmployeesFromDatabase() {
