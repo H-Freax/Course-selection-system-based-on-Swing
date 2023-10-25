@@ -36,8 +36,6 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
 
     private Student student;
 
-    private CourseVO selectCourseVO;
-
     public StudentRegisterJPanel(Student student) {
         courseDirectory = new CourseDirectory(MySQLConnectionUtil.getConnection());//数据传到了courseList
         initComponents();
@@ -53,19 +51,11 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
 
 
                 if(row != -1) { // 如果行已被选择
-//                    selectedPerson = new PreLogin(); //new PreLogin
+
                     Object id = model.getValueAt(row, 0); // 获取所选行的第1列值
-//                    Object nuid = model.getValueAt(row, 1); // 获取所选行的第2列值
-//                    Object major = model.getValueAt(row, 2);
-//                    Object role = model.getValueAt(row, 3);
-//                    System.out.println("Selected values: " + name + ", " + nuid);
-//                    selectedPerson.setName((String) name);
-//                    selectedPerson.setNuid((String) nuid);
-//                    selectedPerson.setMajor((String) major);
-//                    selectedPerson.setRole((String) role);
+
                     for (CourseVO courseVO:courseVOList){
                         if (courseVO.getId().equals((String)id)){
-                            selectCourseVO = courseVO;
                             txtCourseId.setText(courseVO.getId());
                             txtCourseName.setText(courseVO.getName());
                             txtSemester.setText(courseVO.getSemester());
@@ -308,16 +298,30 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
         // TODO add your handling code here:
-        Course course = getCourseInfoByID(txtCourseId.getText());
+        try {
+            Course course = getCourseInfoByID(txtCourseId.getText());
 
-        if(course.getStudentLimit()<= course.getStudentCount()){
+            if(course.getStudentLimit()<= course.getStudentCount()){
             //mention
-            JOptionPane.showMessageDialog(this, "Cannot be assigned into the class!");
-            return;
-        }
+                JOptionPane.showMessageDialog(this, "Cannot be assigned into the class!");
+                return;
+            }
+            boolean enrolledStudentInCourseById = course.isEnrolledStudentInCourseById(MySQLConnectionUtil.getConnection(), student);
+            if (enrolledStudentInCourseById){
+                JOptionPane.showMessageDialog(this, "Already enrolled.");
+            }else {
+                //enroll
+                enrollCourseForStudent(course, student);
 
-        //enroll
-        enrollCourseForStudent(course, student);
+                course.updateStudentCountInCourse(MySQLConnectionUtil.getConnection(),1);
+                JOptionPane.showMessageDialog(this, "Successfully enrolled!");
+            }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
 
     }//GEN-LAST:event_btnEnrollActionPerformed
 

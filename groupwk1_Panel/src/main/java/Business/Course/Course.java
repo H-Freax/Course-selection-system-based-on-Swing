@@ -4,6 +4,8 @@
  */
 package Business.Course;
 
+import Business.Person.Student;
+
 import java.time.LocalDateTime;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -243,6 +245,7 @@ public class Course {
         }
     }
 
+
     public void deleteFromDatabase(Connection connection) throws SQLException {
         String query = "DELETE FROM Course WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -318,7 +321,7 @@ public class Course {
             statement.setString(2, studentId);
             statement.executeUpdate();
         }
-        enrolledStudents.remove(studentId);
+//        enrolledStudents.remove(studentId);
     }
 
     public int calculateStudentCount(Connection connection) throws SQLException {
@@ -345,4 +348,32 @@ public class Course {
         }
     }
 
+    //update Student-Edition
+    //Student Enroll
+    public void updateStudentCountInCourse(Connection connection, int count) throws SQLException {
+        String query = "UPDATE Course SET studentcount = studentcount + ? WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, count);
+            statement.setString(2, id);
+            //去数据库执行
+            statement.executeUpdate();
+        }
+    }
+
+    public boolean isEnrolledStudentInCourseById(Connection connection, Student student) throws SQLException {
+        String query = "select cs.studuent_id from Course c left join CourseStudent cs " +
+                "on c.id = cs.course_id " +
+                "where cs.course_id =? and cs.studuent_id =? ";
+        String studentId = null;
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, id);
+            statement.setString(2, student.getPersonID());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                studentId = resultSet.getString("studuent_id");
+            }
+        }
+        return studentId != null;
+    }
 }

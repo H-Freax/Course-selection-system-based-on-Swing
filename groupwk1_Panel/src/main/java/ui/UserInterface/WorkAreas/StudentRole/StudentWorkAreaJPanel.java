@@ -178,7 +178,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnMyCourseIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyCourseIdentifyEventsActionPerformed
         // TODO add your handling code here:
-        StudentManageCoursesJPanel mscPanel = new StudentManageCoursesJPanel();
+        StudentManageCoursesJPanel mscPanel = new StudentManageCoursesJPanel(student);
         ViewContainer.add("StudentManageCoursesJPanel", mscPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);

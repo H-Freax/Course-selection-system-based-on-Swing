@@ -313,7 +313,7 @@ public class CourseVO {
                 resultSet.getInt("studentcount"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
                 resultSet.getTimestamp("endtime").toLocalDateTime(),
-               null,
+                resultSet.getDouble("score"),
                 resultSet.getString("region"),
                 resultSet.getString("language"),
                 resultSet.getString("topics"),
