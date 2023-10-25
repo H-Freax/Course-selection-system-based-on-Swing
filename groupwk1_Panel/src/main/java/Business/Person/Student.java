@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import Business.Course.Course;
 import Tools.PasswordUtils;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Student extends Person {
 
@@ -23,9 +23,8 @@ public class Student extends Person {
     private boolean enabled;
     private double gpa;
     private List<String> courseList; // 用于存储学生的课程信息
-
-
-
+    private Set<String> passwordHistory;
+    
     public Student(String personName, String personID, String username, String nowPassword, boolean enabled, double gpa) {
         super(personName, personID, "Student");
         this.nowPassword = PasswordUtils.hashPassword(nowPassword);
@@ -33,8 +32,19 @@ public class Student extends Person {
         this.enabled = enabled;
         this.gpa = gpa;
         this.courseList = new ArrayList<>();
+        this.passwordHistory = new HashSet<>();
     }
 
+    public Set<String> getPasswordHistory() {
+        return passwordHistory;
+    }
+
+    public void setPasswordHistory(Set<String> passwordHistory) {
+        this.passwordHistory = passwordHistory;
+    }
+
+    
+    
     public String getUsername() {
         return username;
     }
@@ -161,7 +171,7 @@ public class Student extends Person {
     }
 
     public void loadCourses(Connection connection) throws SQLException {
-        String selectCoursesQuery = "SELECT course_id FROM CourseStudent WHERE studuent_id = ?";
+        String selectCoursesQuery = "SELECT course_id FROM CourseStudent WHERE student_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(selectCoursesQuery)) {
             statement.setString(1, getPersonID());
             ResultSet resultSet = statement.executeQuery();
@@ -174,19 +184,17 @@ public class Student extends Person {
 
     public static List<Student> loadAllFromDatabase(Connection connection) throws SQLException {
         List<Student> students = new ArrayList<>();
-        String selectStudentsQuery = "SELECT s.*, p.* FROM Student s left join Person p " +
-                "on s.id = p.PersonID";
+        String selectStudentsQuery = "SELECT * FROM Student";
         try (PreparedStatement statement = connection.prepareStatement(selectStudentsQuery)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String personID = resultSet.getString("id");
                 String username = resultSet.getString("username");
-                String personName = resultSet.getString("PersonName");
                 String password = resultSet.getString("nowpassword");
                 boolean enabled = resultSet.getString("enabled").equals("1");
                 double gpa = resultSet.getDouble("gpa");
 
-                Student student = new Student(personName, personID, username, password, enabled, gpa);
+                Student student = new Student(getPersonName(), personID, username, password, enabled, gpa);
                 student.loadCourses(connection);
                 students.add(student);
             }

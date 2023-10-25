@@ -26,7 +26,7 @@ public class EmployeeDirectory {
     }
 
     // 从数据库加载Employee对象
-    private void loadEmployeesFromDatabase() {
+    public void loadEmployeesFromDatabase() {
         try {
             String selectQuery = "SELECT * FROM Employee";
             PreparedStatement statement = connection.prepareStatement(selectQuery);

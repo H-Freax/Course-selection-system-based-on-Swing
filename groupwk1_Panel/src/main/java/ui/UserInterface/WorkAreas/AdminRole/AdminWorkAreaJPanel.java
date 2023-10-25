@@ -246,10 +246,10 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 //            CardLayout layout = (CardLayout)ViewContainer.getLayout();
 //            layout.next(ViewContainer);
         }else if("Student".equals(selectedText)){
-            StudentComboBoxAreaJPanel cPanel = new StudentComboBoxAreaJPanel();
-            ViewContainer.add("StudentComboBoxAreaJPanel", cPanel);
-            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-            layout.next(ViewContainer);
+//            StudentComboBoxAreaJPanel cPanel = new StudentComboBoxAreaJPanel();
+//            ViewContainer.add("StudentComboBoxAreaJPanel", cPanel);
+//            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+//            layout.next(ViewContainer);
         }else if("Course".equals(selectedText)){
             CourseComboBoxAreaJPanel cPanel = new CourseComboBoxAreaJPanel();
             ViewContainer.add("CourseComboBoxAreaJPanel", cPanel);
@@ -261,10 +261,10 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             CardLayout layout = (CardLayout)ViewContainer.getLayout();
             layout.next(ViewContainer);
         }else if("Person".equals(selectedText)){
-            PersonComboBoxAreaJPanel cPanel = new PersonComboBoxAreaJPanel();
-            ViewContainer.add("PersonComboBoxAreaJPanel", cPanel);
-            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-            layout.next(ViewContainer);
+//            PersonComboBoxAreaJPanel cPanel = new PersonComboBoxAreaJPanel();
+//            ViewContainer.add("PersonComboBoxAreaJPanel", cPanel);
+//            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+//            layout.next(ViewContainer);
         }else if("Employee".equals(selectedText)){
             EmployeeComboBoxAreaJPanel cPanel = new EmployeeComboBoxAreaJPanel();
             ViewContainer.add("EmployeeComboBoxAreaJPanel", cPanel);

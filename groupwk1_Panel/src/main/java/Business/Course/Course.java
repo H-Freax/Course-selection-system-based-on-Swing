@@ -4,8 +4,6 @@
  */
 package Business.Course;
 
-import Business.Person.Student;
-
 import java.time.LocalDateTime;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,14 +34,11 @@ public class Course {
     private List<String> topics; // Store course topics
     private List<String> enrolledStudents; // Store enrolled student IDs
 
-    private double score;
-
     public Course() {
     }
 
     public Course(String id, String name, String introduction, int point, String semesterId, String status,
-                  String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime,
-                  double score) {
+                  String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime) {
         this.id = id;
         this.name = name;
         this.introduction = introduction;
@@ -58,7 +53,6 @@ public class Course {
         this.endTime = endTime;
         this.topics = new ArrayList<>();
         this.enrolledStudents = new ArrayList<>();
-        this.score = score;
     }
 
     // Getter and Setter methods for class properties
@@ -167,14 +161,6 @@ public class Course {
         this.topics = topics;
     }
 
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
     public List<String> getEnrolledStudents() {
         return enrolledStudents;
     }
@@ -245,7 +231,6 @@ public class Course {
         }
     }
 
-
     public void deleteFromDatabase(Connection connection) throws SQLException {
         String query = "DELETE FROM Course WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -273,14 +258,12 @@ public class Course {
                 resultSet.getInt("point"),
                 resultSet.getString("semesterid"),
                 resultSet.getString("statue"),
-//                resultSet.getString("professor"),
-                null,
+                resultSet.getString("professor"),
                 resultSet.getString("location"),
                 resultSet.getInt("studentlimited"),
                 resultSet.getInt("studentcount"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
-                resultSet.getTimestamp("endtime").toLocalDateTime(),
-                0
+                resultSet.getTimestamp("endtime").toLocalDateTime()
         );
     }
     public void addTopic(Connection connection, String topic) throws SQLException {
@@ -321,7 +304,7 @@ public class Course {
             statement.setString(2, studentId);
             statement.executeUpdate();
         }
-//        enrolledStudents.remove(studentId);
+        enrolledStudents.remove(studentId);
     }
 
     public int calculateStudentCount(Connection connection) throws SQLException {
@@ -348,32 +331,4 @@ public class Course {
         }
     }
 
-    //update Student-Edition
-    //Student Enroll
-    public void updateStudentCountInCourse(Connection connection, int count) throws SQLException {
-        String query = "UPDATE Course SET studentcount = studentcount + ? WHERE id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, count);
-            statement.setString(2, id);
-            //去数据库执行
-            statement.executeUpdate();
-        }
-    }
-
-    public boolean isEnrolledStudentInCourseById(Connection connection, Student student) throws SQLException {
-        String query = "select cs.studuent_id from Course c left join CourseStudent cs " +
-                "on c.id = cs.course_id " +
-                "where cs.course_id =? and cs.studuent_id =? ";
-        String studentId = null;
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, id);
-            statement.setString(2, student.getPersonID());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                studentId = resultSet.getString("studuent_id");
-            }
-        }
-        return studentId != null;
-    }
 }
