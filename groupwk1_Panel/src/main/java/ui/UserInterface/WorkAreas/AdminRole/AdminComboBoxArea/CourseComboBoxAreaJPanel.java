@@ -9,6 +9,7 @@ import Business.Course.CourseDirectory;
 import java.util.List;
 import Tools.MySQLConnectionUtil;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -32,10 +33,11 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     private CourseDirectory courseDirectory;
     private List<Course> courselist;
 
-    public CourseComboBoxAreaJPanel() {
+    public CourseComboBoxAreaJPanel() throws SQLException {
         initComponents();
         Connection connection = MySQLConnectionUtil.getConnection();
         courseDirectory=new CourseDirectory(connection);
+        courseDirectory.loadCoursesFromDatabase();
         courselist=courseDirectory.getAllCourses();
         populateTable();
     }

@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Person {
-    private static String personName;
+    private String personName;
     private String personID;
     private String role;
 
@@ -19,7 +19,11 @@ public class Person {
         this.role = role;
     }
 
-    public static String getPersonName() {
+    Person() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getPersonName() {
         return personName;
     }
 

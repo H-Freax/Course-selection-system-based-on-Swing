@@ -132,8 +132,8 @@ public class Employee extends Person {
                 String username = resultSet.getString("username");
                 String passwordHash = resultSet.getString("nowpassword");
                 boolean enabled = resultSet.getString("enabled").equals("1");
-
-                Employee employee = new Employee(person.getPersonName(), personID, username, "", enabled, person.getRole());
+                Person p = Person.loadFromDatabase(connection, personID);
+                Employee employee = new Employee(p.getPersonName(), personID, username, "", enabled, person.getRole());
                 employee.setNowPassword(""); // 不直接保存明文密码
                 employee.setPwdHash(passwordHash);
 

@@ -44,7 +44,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         txtStudentGpa.setText(String.valueOf(student.getGpa()));
         txtStudentId.setText(String.valueOf(student.getPersonID()));
         txtStudentUsername.setText(String.valueOf(student.getUsername()));
-        txtStudentName.setText(Student.getPersonName());
+        txtStudentName.setText(student.getPersonName());
         CourseDirectory courseDirectory = new CourseDirectory(MySQLConnectionUtil.getConnection());//数据传到了courseList
         try {
             courseDirectory.loadCoursesFromDatabase(student.getPersonID());

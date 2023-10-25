@@ -181,8 +181,8 @@ public class Professor extends Person {
                 double rate = resultSet.getDouble("rate");
                 String language = resultSet.getString("language");
                 String region = resultSet.getString("region");
-
-                Professor professor = new Professor(person.getPersonName(), personID, username, "", enabled, person.getRole());
+                Person p = Person.loadFromDatabase(connection, personID);
+                Professor professor = new Professor(p.getPersonName(), personID, username, "", enabled, person.getRole());
                 professor.setNowPassword(""); // 不直接保存明文密码
                 professor.setPwdHash(passwordHash);
                 professor.setRate(rate);

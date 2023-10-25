@@ -193,8 +193,8 @@ public class Student extends Person {
                 String password = resultSet.getString("nowpassword");
                 boolean enabled = resultSet.getString("enabled").equals("1");
                 double gpa = resultSet.getDouble("gpa");
-
-                Student student = new Student(getPersonName(), personID, username, password, enabled, gpa);
+                Person p = Person.loadFromDatabase(connection, personID);
+                Student student = new Student(p.getPersonName(), personID, username, password, enabled, gpa);
                 student.loadCourses(connection);
                 students.add(student);
             }

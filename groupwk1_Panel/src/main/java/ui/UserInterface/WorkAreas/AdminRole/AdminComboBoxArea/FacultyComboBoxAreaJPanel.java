@@ -47,12 +47,13 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
         tblProfessor.setRowSorter(sorter);
         for(Professor vs : professorlist){
-                Object[] row = new Object[6];
-                row[0] = vs.getUsername();
-                row[1] = vs.getPersonID();
+            
+                Object[] row = new Object[5];
+                row[0] = vs.getPersonID();
+                row[1] = vs.getUsername();
                 row[2] = vs.isEnabled();
-                row[4] = vs.getRate();
-                row[5] = vs.getRegion();
+                row[3] = vs.getRate();
+                row[4] = vs.getRegion();
                 model.addRow(row);
 
         }
@@ -388,9 +389,9 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             boolean isRight=false;
             Set<String> stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
             Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(","))); 
-            if(isEnabled=="true"){
+            if("true".equals(isEnabled)){
                 isRight=true;
-            }else if(isEnabled=="false"){
+            }else if("false".equals(isEnabled)){
                 isRight=false;
             }else{
                 JOptionPane.showMessageDialog(this, "Please input true/false in isEnabled!");
@@ -415,9 +416,9 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                for(Professor vs : professorlist){
-                    if(vs.getPersonID().equals(selectedID)){
-                    //  show detail
+                            
+                Professor vs = professorDirectory.getProfessorById(selectedID);
+                if(vs!=null){
                     txtid.setText(vs.getPersonID());
                     txtname.setText(vs.getUsername());
                     txtisEnabled.setText(String.valueOf(vs.isEnabled()));
@@ -430,10 +431,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     txtuser.setText(vs.getPersonName());
                     String s2 = String.join(",", vs.getPasswordHistory());
                     txtHis.setText(s2);
-
                     return;
                 }
-            }
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -488,9 +487,9 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             isRight=false;
             stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
             stringSet1=new HashSet<>(Arrays.asList(his.split(",")));
-            if(isEnabled=="true"){
+            if("true".equals(isEnabled)){
                 isRight=true;
-            }else if(isEnabled=="false"){
+            }else if("false".equals(isEnabled)){
                 isRight=false;
             }else{
                 JOptionPane.showMessageDialog(this, "Please input true/false in isEnabled!");
@@ -508,6 +507,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                
                 for(Professor c : professorlist){
                     if(c.getPersonID().equals(selectedID)){
                     c=p;
