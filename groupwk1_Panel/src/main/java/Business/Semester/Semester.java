@@ -6,6 +6,8 @@ package Business.Semester;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Semester {
     private String id;
@@ -36,6 +38,22 @@ public class Semester {
         return semesterEnd;
     }
 
+    public static List<Semester> getAllSemestersFromDatabase(Connection connection) throws SQLException {
+        List<Semester> semesters = new ArrayList<>();
+        String query = "SELECT * FROM Semester";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String semesterName = resultSet.getString("semstername");
+                LocalDateTime semesterStart = resultSet.getTimestamp("semesterstart").toLocalDateTime();
+                LocalDateTime semesterEnd = resultSet.getTimestamp("semesterend").toLocalDateTime();
+                Semester semester = new Semester(id, semesterName, semesterStart, semesterEnd);
+                semesters.add(semester);
+            }
+        }
+        return semesters;
+    }
     public static Semester loadFromDatabase(Connection connection, String id) throws SQLException {
         String query = "SELECT * FROM Semester WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {

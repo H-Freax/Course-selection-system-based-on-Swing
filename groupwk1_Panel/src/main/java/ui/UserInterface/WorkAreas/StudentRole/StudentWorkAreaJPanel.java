@@ -5,6 +5,7 @@
 package ui.UserInterface.WorkAreas.StudentRole;
 
 import java.awt.CardLayout;
+import java.sql.SQLException;
 import javax.swing.JPanel;
 
 import Business.Person.Student;
@@ -74,7 +75,11 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         btnMyCourse.setPreferredSize(new java.awt.Dimension(240, 25));
         btnMyCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMyCourseIdentifyEventsActionPerformed(evt);
+                try {
+                    btnMyCourseIdentifyEventsActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -176,7 +181,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMyCourseIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyCourseIdentifyEventsActionPerformed
+    private void btnMyCourseIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnMyCourseIdentifyEventsActionPerformed
         // TODO add your handling code here:
         StudentManageCoursesJPanel mscPanel = new StudentManageCoursesJPanel(student);
         ViewContainer.add("StudentManageCoursesJPanel", mscPanel);
