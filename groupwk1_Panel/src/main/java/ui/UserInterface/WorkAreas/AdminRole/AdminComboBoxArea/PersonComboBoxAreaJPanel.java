@@ -6,6 +6,8 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Directory.PersonDirectory;
 import Business.Person.Person;
+import Tools.MySQLConnectionUtil;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
     Connection connection;
     public PersonComboBoxAreaJPanel() throws SQLException {
         initComponents();
+        personDirectory=new PersonDirectory();
+        connection= MySQLConnectionUtil.getConnection();
         personDirectory.loadPersonsFromDatabase(connection);
         personlist=personDirectory.listPersons();
         populateTable();

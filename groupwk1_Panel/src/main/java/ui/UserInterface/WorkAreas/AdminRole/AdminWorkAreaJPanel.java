@@ -5,10 +5,13 @@
 package ui.UserInterface.WorkAreas.AdminRole;
 
 import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Business.Person.Employee;
+import Tools.MySQLConnectionUtil;
 import ui.LoginJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.CourseComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.EmployeeComboBoxAreaJPanel;
@@ -137,7 +140,11 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         btnGo.setText("Go");
         btnGo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGoActionPerformed(evt);
+                try {
+                    btnGoActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -238,18 +245,18 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9IdentifyEventsActionPerformed
 
-    private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
+    private void btnGoActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnGoActionPerformed
         // TODO add your handling code here:
         if("Faculty".equals(selectedText)){
-//            FacultyComboBoxAreaJPanel cPanel = new FacultyComboBoxAreaJPanel();
-//            ViewContainer.add("FacultyComboBoxAreaJPanel", cPanel);
-//            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-//            layout.next(ViewContainer);
+            FacultyComboBoxAreaJPanel cPanel = new FacultyComboBoxAreaJPanel();
+            ViewContainer.add("FacultyComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
         }else if("Student".equals(selectedText)){
-//            StudentComboBoxAreaJPanel cPanel = new StudentComboBoxAreaJPanel();
-//            ViewContainer.add("StudentComboBoxAreaJPanel", cPanel);
-//            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-//            layout.next(ViewContainer);
+            StudentComboBoxAreaJPanel cPanel = new StudentComboBoxAreaJPanel();
+            ViewContainer.add("StudentComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
         }else if("Course".equals(selectedText)){
             CourseComboBoxAreaJPanel cPanel = new CourseComboBoxAreaJPanel();
             ViewContainer.add("CourseComboBoxAreaJPanel", cPanel);
@@ -261,10 +268,10 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             CardLayout layout = (CardLayout)ViewContainer.getLayout();
             layout.next(ViewContainer);
         }else if("Person".equals(selectedText)){
-//            PersonComboBoxAreaJPanel cPanel = new PersonComboBoxAreaJPanel();
-//            ViewContainer.add("PersonComboBoxAreaJPanel", cPanel);
-//            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-//            layout.next(ViewContainer);
+            PersonComboBoxAreaJPanel cPanel = new PersonComboBoxAreaJPanel();
+            ViewContainer.add("PersonComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
         }else if("Employee".equals(selectedText)){
             EmployeeComboBoxAreaJPanel cPanel = new EmployeeComboBoxAreaJPanel();
             ViewContainer.add("EmployeeComboBoxAreaJPanel", cPanel);

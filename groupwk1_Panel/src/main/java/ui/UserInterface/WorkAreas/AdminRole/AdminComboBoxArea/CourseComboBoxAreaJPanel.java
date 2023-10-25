@@ -34,6 +34,8 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
 
     public CourseComboBoxAreaJPanel() {
         initComponents();
+        Connection connection = MySQLConnectionUtil.getConnection();
+        courseDirectory=new CourseDirectory(connection);
         courselist=courseDirectory.getAllCourses();
         populateTable();
     }

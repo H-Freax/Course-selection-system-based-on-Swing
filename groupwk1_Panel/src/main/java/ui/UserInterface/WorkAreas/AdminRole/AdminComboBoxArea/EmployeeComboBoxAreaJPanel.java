@@ -30,6 +30,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
 
     public EmployeeComboBoxAreaJPanel() {
         initComponents();
+        employeeDirectory=new EmployeeDirectory();
         employeeDirectory.loadEmployeesFromDatabase();
         employeeList=employeeDirectory.getAllEmployees();
         populateTable();

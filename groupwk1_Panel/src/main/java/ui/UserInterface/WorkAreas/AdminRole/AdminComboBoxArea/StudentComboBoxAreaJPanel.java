@@ -6,6 +6,8 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Directory.StudentDirectory;
 import Business.Person.Student;
+import Tools.MySQLConnectionUtil;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -44,6 +46,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
     public StudentComboBoxAreaJPanel() throws SQLException {
         initComponents();
         studentdirectory = new StudentDirectory();
+        connection= MySQLConnectionUtil.getConnection();
         studentdirectory.loadStudentsFromDatabase(connection);
         studentList=studentdirectory.getStudentList();
         populateTable();

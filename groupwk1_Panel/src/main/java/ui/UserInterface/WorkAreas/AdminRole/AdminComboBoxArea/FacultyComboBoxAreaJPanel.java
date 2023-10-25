@@ -6,7 +6,11 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Directory.ProfessorDirectory;
 import Business.Person.Professor;
+import Tools.MySQLConnectionUtil;
 import com.mysql.cj.util.StringUtils;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,11 +30,14 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
      * Creates new form ComboBoxAreaJPanel
      */
     private ArrayList<Professor>professorlist;
+    private ProfessorDirectory professorDirectory;
 
-
-    public FacultyComboBoxAreaJPanel(ArrayList<Professor>professorlist) {
+    public FacultyComboBoxAreaJPanel() throws SQLException {
         initComponents();
-        this.professorlist=professorlist;
+        Connection connection = MySQLConnectionUtil.getConnection();
+        professorDirectory = new ProfessorDirectory();
+        professorDirectory.loadAllProfessorsFromDatabase(connection);
+        professorlist=(ArrayList<Professor>)professorDirectory.getProfessors();
         populateTable();
     }
 
