@@ -6,11 +6,7 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Directory.ProfessorDirectory;
 import Business.Person.Professor;
-import Tools.MySQLConnectionUtil;
 import com.mysql.cj.util.StringUtils;
-
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,15 +26,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
      * Creates new form ComboBoxAreaJPanel
      */
     private ArrayList<Professor>professorlist;
-    Connection connection;
 
 
-    public FacultyComboBoxAreaJPanel() throws SQLException {
+    public FacultyComboBoxAreaJPanel(ArrayList<Professor>professorlist) {
         initComponents();
-        connection = MySQLConnectionUtil.getConnection();
-        ProfessorDirectory professorDirectory = new ProfessorDirectory();
-        professorDirectory.loadAllProfessorsFromDatabase(connection);
-        this.professorlist=(ArrayList<Professor>) professorDirectory.getProfessors();
+        this.professorlist=professorlist;
         populateTable();
     }
 
@@ -388,7 +380,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         if(id!=""&&name!=""&&isEnabled!=""&&region!=""&pwd!=""&&language!=""&&rate!=""&&user!=""&&topic!=""){
             boolean isRight=false;
             Set<String> stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
-            Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(",")));
+            Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(","))); 
             if(isEnabled=="true"){
                 isRight=true;
             }else if(isEnabled=="false"){
@@ -501,7 +493,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         Professor p = new Professor(name, id,  user, pwd,isRight , "professor");
         p.setLanguage(language);
         p.setRegion(region);
-        p.setTopics(stringSet);
+        p.setTopics(stringSet);     
         p.setPasswordHistory(stringSet1);
         if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");

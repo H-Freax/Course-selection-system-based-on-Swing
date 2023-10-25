@@ -33,21 +33,22 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
     StudentDirectory studentdirectory;
     Connection connection;
     private List<Student> studentList;
-    
+
         String personName;
         String personID;
         String username;
         String nowPassword;
         boolean enabled;
         double gpa;
-        
+
     public StudentComboBoxAreaJPanel() throws SQLException {
         initComponents();
+        studentdirectory = new StudentDirectory();
         studentdirectory.loadStudentsFromDatabase(connection);
-        studentList=studentdirectory.getStudent();
+        studentList=studentdirectory.getStudentList();
         populateTable();
     }
-    
+
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)stuTable.getModel();
         model.setRowCount(0);
@@ -378,7 +379,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         Student stu1 = new Student( personName,  personID,  username,  nowPassword,  enabled,  gpa);
         Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
         stu1.setPasswordHistory(stringSet1);
-        
+
        int selectedRowIndex = stuTable.getSelectedRow();
        if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");

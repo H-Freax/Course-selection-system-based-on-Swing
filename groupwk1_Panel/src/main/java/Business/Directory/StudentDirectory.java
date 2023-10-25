@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDirectory {
+
+
     private List<Student> studentList;
+
 
     public StudentDirectory() {
         studentList = new ArrayList<>();
@@ -30,7 +33,13 @@ public class StudentDirectory {
         }
     }
 
+    public List<Student> getStudentList() {
+        return studentList;
+    }
 
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
 
     // 添加学生到目录
     public void addStudent(Student student) {

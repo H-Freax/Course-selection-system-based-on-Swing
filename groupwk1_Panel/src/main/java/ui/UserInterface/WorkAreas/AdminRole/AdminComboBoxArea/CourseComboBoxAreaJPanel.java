@@ -38,7 +38,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         populateTable();
     }
 
-    
+
         private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)courseTable.getModel();
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
@@ -455,7 +455,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         List<String> topics=stringSet; // Store course topics
         List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
         if(id!=""&&name!=""&&semesterId!=""&&status!=""&&professor!=""&&location!=""&&studentLimit!=0&&studentCount!=0){
-            Course c = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime);
+            Course c = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime,0);
             c.setTopics(topics);
             c.setEnrolledStudents(enrolledStudents);
             courselist.add(c);
@@ -464,8 +464,8 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
             return;
         }
         JOptionPane.showMessageDialog(this, "Please Input!");
-        
-        
+
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void txtProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProActionPerformed
@@ -475,7 +475,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
        int selectedRowIndex = courseTable.getSelectedRow();
-       
+
         String id=txtCurrentCourseId.getText();
         if(courseDirectory.getCourseById(id)!=null){
             JOptionPane.showMessageDialog(this, "ID already existed!");
@@ -499,7 +499,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         List<String> stringSet2 = new ArrayList<>(Arrays.asList(txtEnrolled.getText().split(",")));
         List<String> topics=stringSet; // Store course topics
         List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
-        Course c = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime);
+        Course c = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime,0);
         c.setTopics(topics);
         c.setEnrolledStudents(enrolledStudents);
         if(id==""||name==""||semesterId!=""||status==""||professor==""||location==""||studentLimit==0||studentCount==0){
@@ -522,9 +522,9 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
             }
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
-        
-        
-        
+
+
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -548,15 +548,15 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         List<String> stringSet2 = new ArrayList<>(Arrays.asList(txtEnrolled.getText().split(",")));
         List<String> topics=stringSet; // Store course topics
         List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
-        
+
         if(id==""||name==""||semesterId!=""||status==""||professor==""||location==""||studentLimit==0||studentCount==0){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
-        Course f = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime);
+        Course f = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime,0);
         f.setTopics(topics);
         f.setEnrolledStudents(enrolledStudents);
-        
+
         int selectedRowIndex = courseTable.getSelectedRow();
         if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to View.");
@@ -573,11 +573,11 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Not Existed!");
                 }
         }
-        
-        
-        
-        
-        
+
+
+
+
+
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
