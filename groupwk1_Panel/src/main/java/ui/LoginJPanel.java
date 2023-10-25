@@ -211,7 +211,7 @@ public class LoginJPanel extends javax.swing.JPanel {
 
                 StudentDirectory stulist = new StudentDirectory();
                 Student student = stulist.findStudentbyUsername(username);
-                StudentWorkAreaJPanel panel1 = new StudentWorkAreaJPanel(ViewContainer, controlPanel,  student);
+                StudentWorkAreaJPanel panel1 = new StudentWorkAreaJPanel(ViewContainer, controlPanel, student);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);

@@ -4,8 +4,20 @@
  */
 package ui.UserInterface.WorkAreas.StudentRole.MyCourses;
 
+import Business.Course.Course;
+import Business.Course.CourseDirectory;
+import Business.Course.CourseVO;
+import Business.Person.Student;
+import Tools.MySQLConnectionUtil;
+
 import java.awt.CardLayout;
-import javax.swing.JPanel;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,10 +29,104 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
      * Creates new form StudentManageCoursesJPanel
      */
     private JPanel ViewContainer;
+
+    private CourseDirectory courseDirectory ;
+
+    private List<CourseVO> myCourseVOList = new ArrayList<>();
+
+    private List<CourseVO> historyCourseVOList = new ArrayList<>();
+
+    private Student student;
+
+    private CourseVO selectedCourse;
+
     
-    public StudentManageCoursesJPanel() {
+    public StudentManageCoursesJPanel(Student student) {
+        courseDirectory = new CourseDirectory(MySQLConnectionUtil.getConnection());//数据传到了courseList
         initComponents();
         this.ViewContainer = ViewContainer;
+        this.student = student;
+
+        getEnrolledCourses(null);
+        getHistoryCourses(null);
+
+        populateTable();
+        historyTable();
+
+        tblCurrentCourses.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tblCurrentCourses.getSelectedRow(); // 获取所点选行的索引
+                DefaultTableModel model = (DefaultTableModel) tblCurrentCourses.getModel(); //Have the access to the table;
+
+                //时间格式转化为String
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+
+
+                if(row != -1) { // 如果行已被选择
+
+                    Object id = model.getValueAt(row, 0); // 获取所选行的第1列值
+
+                    for (CourseVO courseVO:myCourseVOList){
+                        if (courseVO.getId().equals((String)id)){
+                            selectedCourse = courseVO;
+                            txtCurrentCourseId.setText(courseVO.getId());
+                            txtCurrentCourseName.setText(courseVO.getName());
+                            txtCurrentCourseTopic.setText(courseVO.getTopics().toString());
+                            txtCurrentSemester.setText(courseVO.getSemester());
+                            txtCurrentProfessor.setText(courseVO.getProfessor());
+                            txtCurrentProfessorRegion.setText(courseVO.getRegion());
+                            txtCurrentCourseLocation.setText(courseVO.getLocation());
+                            currentCourseIntroductionTextArea.setText(courseVO.getIntroduction());
+                            txtCurrentStudentLimited.setText(courseVO.getStudentLimit() + "");
+                            txtCurrentStudentCount.setText(courseVO.getStudentCount() + "");
+                            txtCurrentCoursePoint.setText(courseVO.getPoint() + "");
+                            txtCurrentCourseStartTime.setText(courseVO.getBeginTime().format(formatter));
+                            txtCurrentCourseEndTime.setText(courseVO.getEndTime().format(formatter));
+                        }
+                    }
+                }
+            }
+        });
+
+        tblCoursesHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tblCoursesHistory.getSelectedRow(); // 获取所点选行的索引
+                DefaultTableModel model = (DefaultTableModel) tblCoursesHistory.getModel(); //Have the access to the table;
+
+                //时间格式转化为String
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+
+
+                if(row != -1) { // 如果行已被选择
+
+                    Object id = model.getValueAt(row, 0); // 获取所选行的第1列值
+
+                    for (CourseVO courseVO:historyCourseVOList){
+                        if (courseVO.getId().equals((String)id)){
+                            selectedCourse = courseVO;
+                            txtCourseId.setText(courseVO.getId());
+
+                            txtProfessor.setText(courseVO.getProfessor());
+                            txtCourseScore.setText(courseVO.getScore() + "");
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private List<CourseVO> getHistoryCourses(String keyWords) {
+
+        try {
+            historyCourseVOList = courseDirectory.loadCourseListByStudentIdFromDatabase(keyWords,student.getPersonID(), "Closed");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
+        return historyCourseVOList;
     }
 
     /**
@@ -59,13 +165,12 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         txtCurrentStudentCount = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        createCourseIntroductionTextArea1 = new javax.swing.JTextArea();
-        btnBackCurrentCourse = new javax.swing.JButton();
+        currentCourseIntroductionTextArea = new javax.swing.JTextArea();
         btnDrop = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        txtCurrentProfessor = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        txtCurrentProfessorRegion = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         selectSemesterComboBox = new javax.swing.JComboBox<>();
@@ -78,21 +183,21 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         txtProfessor = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtCourseId1 = new javax.swing.JTextField();
-        btnBackCurrentCourse1 = new javax.swing.JButton();
+        txtCourseScore = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 255));
         jTabbedPane1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
 
         tblCurrentCourses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Course ID", "Couse Name", "Course Topic", "Course Status", "Course Capacity"
+                "Course ID", "Couse Name", "Professor", "Course Status"
             }
         ));
         jScrollPane8.setViewportView(tblCurrentCourses);
@@ -119,16 +224,9 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
         jLabel36.setText("Course Introduction");
 
-        createCourseIntroductionTextArea1.setColumns(20);
-        createCourseIntroductionTextArea1.setRows(5);
-        jScrollPane9.setViewportView(createCourseIntroductionTextArea1);
-
-        btnBackCurrentCourse.setText("Back");
-        btnBackCurrentCourse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackCurrentCourseActionPerformed(evt);
-            }
-        });
+        currentCourseIntroductionTextArea.setColumns(20);
+        currentCourseIntroductionTextArea.setRows(5);
+        jScrollPane9.setViewportView(currentCourseIntroductionTextArea);
 
         btnDrop.setText("Drop");
         btnDrop.addActionListener(new java.awt.event.ActionListener() {
@@ -139,9 +237,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
         jLabel11.setText("Professor");
 
-        jLabel12.setText("Professor Rating");
-
-        jProgressBar2.setValue(90);
+        jLabel12.setText("Professor Region");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -155,9 +251,9 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(54, 54, 54)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField9)
-                            .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCurrentProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCurrentProfessorRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -216,9 +312,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(233, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(btnBackCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(61, 600, Short.MAX_VALUE)
                 .addComponent(btnDrop, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(275, 275, 275))
         );
@@ -276,15 +370,13 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCurrentProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBackCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDrop, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel12)
+                    .addComponent(txtCurrentProfessorRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addComponent(btnDrop, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
 
@@ -310,9 +402,12 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         ));
         jScrollPane5.setViewportView(tblCoursesHistory);
 
-        txtSearchCourse.setText("Search Bar");
-
         btnSearchCourse.setText("Search");
+        btnSearchCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchCourseActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Course ID:");
 
@@ -320,10 +415,10 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Course Score:");
 
-        btnBackCurrentCourse1.setText("Back");
-        btnBackCurrentCourse1.addActionListener(new java.awt.event.ActionListener() {
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackCurrentCourse1ActionPerformed(evt);
+                btnSaveActionPerformed(evt);
             }
         });
 
@@ -332,51 +427,49 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(selectSemesterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBackCurrentCourse1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(txtSearchCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnSearchCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(selectSemesterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(54, 54, 54)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCourseId1))
+                                .addGap(98, 98, 98)
+                                .addComponent(txtSearchCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(btnSearchCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                .addGap(113, 113, 113)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCourseId)
-                                    .addComponent(txtProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(59, Short.MAX_VALUE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCourseScore))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtCourseId)
+                                            .addComponent(txtProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                .addGap(35, 59, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(selectSemesterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnBackCurrentCourse1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(49, 49, 49)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectSemesterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -394,8 +487,10 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtCourseId1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(247, Short.MAX_VALUE))
+                    .addComponent(txtCourseScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73))
         );
 
         jTabbedPane1.addTab("Courses History", jPanel2);
@@ -414,29 +509,40 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
     private void btnDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDropActionPerformed
         // TODO add your handling code here:
+        dropCourse(selectedCourse,student);
+        JOptionPane.showMessageDialog(this, "Successfully dropped!");
+        //c重新加载数据
+        getEnrolledCourses(null);
+        populateTable();
+
     }//GEN-LAST:event_btnDropActionPerformed
 
-    private void btnBackCurrentCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackCurrentCourseActionPerformed
-        // TODO add your handling code here:
-        ViewContainer.remove(this);
-        CardLayout layout  = (CardLayout) ViewContainer.getLayout();
-        layout.previous(ViewContainer);
-    }//GEN-LAST:event_btnBackCurrentCourseActionPerformed
+    private void dropCourse(CourseVO selectedCourse, Student student) {
+        try {
+            courseDirectory.dropCourse(selectedCourse.getId(), student.getPersonID());
 
-    private void btnBackCurrentCourse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackCurrentCourse1ActionPerformed
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
+    }
+
+    private void btnSearchCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCourseActionPerformed
         // TODO add your handling code here:
-        ViewContainer.remove(this);
-        CardLayout layout  = (CardLayout) ViewContainer.getLayout();
-        layout.previous(ViewContainer);
-    }//GEN-LAST:event_btnBackCurrentCourse1ActionPerformed
+        getHistoryCourses(txtSearchCourse.getText());
+        historyTable();
+    }//GEN-LAST:event_btnSearchCourseActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBackCurrentCourse;
-    private javax.swing.JButton btnBackCurrentCourse1;
     private javax.swing.JButton btnDrop;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearchCourse;
-    private javax.swing.JTextArea createCourseIntroductionTextArea1;
+    private javax.swing.JTextArea currentCourseIntroductionTextArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -454,20 +560,18 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lblCourseEndTime2;
     private javax.swing.JLabel lblStudentLimited2;
     private javax.swing.JComboBox<String> selectSemesterComboBox;
     private javax.swing.JTable tblCoursesHistory;
     private javax.swing.JTable tblCurrentCourses;
     private javax.swing.JTextField txtCourseId;
-    private javax.swing.JTextField txtCourseId1;
+    private javax.swing.JTextField txtCourseScore;
     private javax.swing.JTextField txtCurrentCourseEndTime;
     private javax.swing.JTextField txtCurrentCourseId;
     private javax.swing.JTextField txtCurrentCourseLocation;
@@ -475,10 +579,65 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtCurrentCoursePoint;
     private javax.swing.JTextField txtCurrentCourseStartTime;
     private javax.swing.JTextField txtCurrentCourseTopic;
+    private javax.swing.JTextField txtCurrentProfessor;
+    private javax.swing.JTextField txtCurrentProfessorRegion;
     private javax.swing.JTextField txtCurrentSemester;
     private javax.swing.JTextField txtCurrentStudentCount;
     private javax.swing.JTextField txtCurrentStudentLimited;
     private javax.swing.JTextField txtProfessor;
     private javax.swing.JTextField txtSearchCourse;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblCurrentCourses.getModel(); //Have the access to the table;
+        model.setRowCount(0); //初始化？？
+
+        for(CourseVO course : myCourseVOList){
+
+            Object[] row = new Object[4];
+            row[0] = course.getId();
+            row[1] = course.getName();
+            row[2] = course.getProfessor();
+            row[3] = course.getStatus();
+
+            //设置3R对应
+
+            model.addRow(row);
+
+        }
+    }
+
+    private void historyTable() {
+        DefaultTableModel model = (DefaultTableModel) tblCoursesHistory.getModel(); //Have the access to the table;
+        model.setRowCount(0); //初始化？？
+
+        for(CourseVO course : historyCourseVOList){
+
+            Object[] row = new Object[4];
+            row[0] = course.getId();
+            row[1] = course.getName();
+            row[2] = course.getStatus();
+            row[3] = course.getScore();
+
+            //设置3R对应
+
+            model.addRow(row);
+
+        }
+    }
+
+    public List<CourseVO> getEnrolledCourses(String keyWords){
+
+        try {
+            myCourseVOList = courseDirectory.loadCourseListByStudentIdFromDatabase(keyWords,student.getPersonID(), "Open");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
+        return myCourseVOList;
+    }
+
+
+
 }

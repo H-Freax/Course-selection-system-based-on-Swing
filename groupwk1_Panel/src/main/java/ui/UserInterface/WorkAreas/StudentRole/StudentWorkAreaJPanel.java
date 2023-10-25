@@ -30,6 +30,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form StudentWorkAreaJPanel
      */
+
     public StudentWorkAreaJPanel(JPanel ViewContainer,JPanel controlPanel, Student student) {
         initComponents();
         this.student = student;
@@ -38,6 +39,10 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
 
 
+    }
+
+    public Student getStudent() {
+        return student;
     }
 
     /**
@@ -173,7 +178,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnMyCourseIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyCourseIdentifyEventsActionPerformed
         // TODO add your handling code here:
-        StudentManageCoursesJPanel mscPanel = new StudentManageCoursesJPanel();
+        StudentManageCoursesJPanel mscPanel = new StudentManageCoursesJPanel(student);
         ViewContainer.add("StudentManageCoursesJPanel", mscPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
@@ -181,7 +186,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnRegisrtationIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisrtationIdentifyResourceAssetsActionPerformed
         // TODO add your handling code here:
-        StudentRegisterJPanel srPanel = new StudentRegisterJPanel();
+        StudentRegisterJPanel srPanel = new StudentRegisterJPanel(student);
         ViewContainer.add("StudentManageCoursesJPanel", srPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
@@ -195,7 +200,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageProfileActionPerformed
         // TODO add your handling code here:
-        StudentManageProfileJPanel smpPanel = new StudentManageProfileJPanel();
+        StudentManageProfileJPanel smpPanel = new StudentManageProfileJPanel(ViewContainer,student);
         ViewContainer.add("StudentManageProfileJPanel", smpPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
