@@ -1,15 +1,22 @@
 package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
+import Business.Course.CourseDirectory;
+import Business.Course.CourseStudent;
+import Business.Course.CourseVO;
 import Business.Directory.StudentDirectory;
 import Business.Person.Student;
+import Business.Semester.Semester;
 import Tools.MySQLConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -31,7 +38,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
     StudentDirectory studentdirectory;
     Connection connection;
     private List<Student> studentList;
-
+        CourseStudent courseStu;
         String personName;
         String personID;
         String username;
@@ -44,10 +51,17 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         initComponents();
         studentdirectory = new StudentDirectory();
         studentList=studentdirectory.getStudentList();
+        connection = MySQLConnectionUtil.getConnection();
+        courseStu = new CourseStudent(connection);
+
         populateTable();
     }
 
+    
+    
+    
     private void populateTable(){
+        
         DefaultTableModel model = (DefaultTableModel)stuTable.getModel();
         model.setRowCount(0);
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
@@ -199,11 +213,6 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jButton3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(177, 177, 177)
-                        .addComponent(jLabel7)
-                        .addGap(28, 28, 28)
-                        .addComponent(txtHis, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(117, 117, 117)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -227,7 +236,12 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(36, 36, 36)
-                                .addComponent(txtpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addComponent(jLabel7)
+                        .addGap(28, 28, 28)
+                        .addComponent(txtHis, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
