@@ -226,12 +226,15 @@ public class validationJPanel extends javax.swing.JPanel {
             if(ed.findEmployeeByID(personid)!=null||pd.getProfessorById(personid)!=null||sd.findStudent(personid)!=null){
                 JOptionPane.showMessageDialog(this, "You have the account now! Please Log in!");
 
-            }else{
+            }else if(ed.findEmployeeByID(personid).getPersonID()!=null||pd.getProfessorById(personid).getPersonID()!=null||sd.findStudent(personid).getPersonID()!=null){
                 Person p = new Person(personname,personid,varole);
                 registerJPanel panel = new registerJPanel(ViewContainer,controlPanel,p);
                 ViewContainer.add("registerJPanel",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);        // TODO add your handling code here:
+            }else{
+                JOptionPane.showMessageDialog(this, "Sorry Your Validation Not Pass!");
+
             }
 
         }else{

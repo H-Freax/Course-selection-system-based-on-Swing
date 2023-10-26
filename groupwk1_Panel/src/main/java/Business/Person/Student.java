@@ -187,7 +187,7 @@ public class Student extends Person {
 
     public static List<Student> loadAllFromDatabase(Connection connection) throws SQLException {
         List<Student> students = new ArrayList<>();
-        String selectStudentsQuery = "SELECT * FROM Student";
+        String selectStudentsQuery = "SELECT * FROM Student where username != null";
         try (PreparedStatement statement = connection.prepareStatement(selectStudentsQuery)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
