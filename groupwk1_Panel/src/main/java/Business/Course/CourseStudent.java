@@ -35,6 +35,21 @@ public class CourseStudent {
         return studentGrades.getOrDefault(studentId, 0.0);
     }
 
+    public boolean isStudentEnrolledInCourse(String studentId, String courseID) throws SQLException {
+        String query = "SELECT COUNT(*) FROM CourseStudent WHERE course_id = ? AND studuent_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, courseID);
+            statement.setString(2, studentId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // 如果行存在，count将大于0
+            }
+        }
+
+        return false; // 如果查询失败或未找到行，则默认返回false
+    }
     public void loadStudentEnrollmentsFromDatabase(Course course) throws SQLException {
         String query = "SELECT * FROM CourseStudent WHERE course_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {

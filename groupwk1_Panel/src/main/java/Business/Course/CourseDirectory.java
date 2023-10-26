@@ -114,10 +114,10 @@ public class CourseDirectory {
 
     public List<CourseVO> loadCourseListFromDatabase(String keyWords) throws SQLException{
         List<CourseVO> list = new ArrayList<>();
-        String query = "SELECT max(c.id) id , max(c.statue) statue , max(c.begintime) begintime , max(c.endtime) endtime ," +
-                " max(c.location) location , max(c.introduction) introduction , max(c.point) point , " +
-                "max(c.studentlimited) studentlimited , max(c.studentcount) studentcount, s.semstername" +
-                " c.name, p.language, p.region, person.PersonName professor, group_concat(ct.topic) topics FROM Course c " +
+        String query = "SELECT max(c.id) id, max(c.statue) statue, max(c.begintime) begintime, max(c.endtime) endtime, " +
+                "max(c.location) location, max(c.introduction) introduction, max(c.point) point, " +
+                "max(c.studentlimited) studentlimited, max(c.studentcount) studentcount, s.semstername, " +
+                "c.name, p.language, p.region, person.PersonName professor, group_concat(ct.topic) topics FROM Course c " +
                 "left join CourseProfessor cp on c.id  = cp.course_id " +
                 "left join Professor p on cp.professor_id = p.id " +
                 "left join Person person on p.id = person.PersonID " +

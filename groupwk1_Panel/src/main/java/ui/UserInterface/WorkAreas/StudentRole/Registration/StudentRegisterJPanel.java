@@ -6,6 +6,7 @@ package ui.UserInterface.WorkAreas.StudentRole.Registration;
 
 import Business.Course.Course;
 import Business.Course.CourseDirectory;
+import Business.Course.CourseStudent;
 import Business.Course.CourseVO;
 import Business.Person.Student;
 import Tools.MySQLConnectionUtil;
@@ -173,7 +174,7 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(74, 74, 74)
                         .addComponent(btnSearch)
-                        .addGap(0, 158, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -218,10 +219,9 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
                                         .addComponent(jScrollPane5)
                                         .addComponent(txtStudentLimited)
                                         .addComponent(txtStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(185, 185, 185))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnEnroll, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65))))
+                        .addGap(58, 58, 58))
+                    .addComponent(btnEnroll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(77, 77, 77))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,8 +231,8 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
                     .addComponent(txtSearch)
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -270,7 +270,7 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
                     .addComponent(txtStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnEnroll, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(240, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel3);
@@ -315,6 +315,16 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
 
                 course.updateStudentCountInCourse(MySQLConnectionUtil.getConnection(),1);
                 JOptionPane.showMessageDialog(this, "Successfully enrolled!");
+                getOpenCourses(null);
+                populateTable();
+                txtCourseId.setText("");
+                txtCourseName.setText("");
+                txtSemester.setText("");
+                txtProfessor.setText("");
+                txtCourseLocation.setText("");
+                courseIntroductionTextArea.setText("");
+                txtStudentLimited.setText("");
+                txtStudentCount.setText("");
             }
 
         } catch (SQLException e) {
@@ -399,9 +409,18 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
 
     public List<CourseVO> getOpenCourses(String keyWords){
         CourseDirectory courseDirectory = new CourseDirectory(MySQLConnectionUtil.getConnection());//数据传到了courseList
+        List<CourseVO> cvs= new ArrayList<>();;
         try {
             courseVOList = courseDirectory.loadCourseListFromDatabase(keyWords);
+            CourseStudent cs = new CourseStudent(MySQLConnectionUtil.getConnection());
 
+
+            for(CourseVO cv : courseVOList){
+                if(!cs.isStudentEnrolledInCourse(student.getPersonID(),cv.getId())){
+                    cvs.add(cv);
+                }
+            }
+            courseVOList=cvs;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("数据库异常！！");
