@@ -116,7 +116,7 @@ public class CourseDirectory {
         List<CourseVO> list = new ArrayList<>();
         String query = "SELECT max(c.id) id , max(c.statue) statue , max(c.begintime) begintime , max(c.endtime) endtime ," +
                 " max(c.location) location , max(c.introduction) introduction , max(c.point) point , " +
-                "max(c.studentlimited) studentlimited , max(c.studentcount) studentcount, s.semstername," +
+                "max(c.studentlimited) studentlimited , max(c.studentcount) studentcount, s.semstername" +
                 " c.name, p.language, p.region, person.PersonName professor, group_concat(ct.topic) topics FROM Course c " +
                 "left join CourseProfessor cp on c.id  = cp.course_id " +
                 "left join Professor p on cp.professor_id = p.id " +
@@ -172,17 +172,19 @@ public class CourseDirectory {
 
     public List<CourseVO> loadCourseListByStudentIdSemFromDatabase(String keyWords, String studentId, String semester ) throws SQLException{
         List<CourseVO> list = new ArrayList<>();
-        String query = "SELECT max(c.id) id , max(c.statue) statue , max(cs.score) score , max(c.begintime) begintime , max(c.endtime) endtime ," +
-                " max(c.location) location , max(c.introduction) introduction , max(c.point) point , " +
-                "max(c.studentlimited) studentlimited , max(c.studentcount) studentcount, s.semstername," +
-                " c.name, p.language, p.region, person.PersonName professor, group_concat(ct.topic) topics FROM Course c " +
-                "left join CourseProfessor cp on c.id  = cp.course_id " +
-                "left join Professor p on cp.professor_id = p.id " +
-                "left join Person person on p.id = person.PersonID " +
-                "left join CourseTopic ct on c.id = ct.course_id " +
-                "left join Semester s on s.id = c.semesterid " +
-                "left join CourseStudent cs on cs.course_id = c.id " +
-                "where s.semstername = ? and cs.studuent_id = ?";
+        String query = "SELECT max(c.id) id, max(c.statue) statue, max(cs.score) score, max(c.begintime) begintime, max(c.endtime) endtime, " +
+                "max(c.location) location, max(c.introduction) introduction, max(c.point) point, " +
+                "max(c.studentlimited) studentlimited, max(c.studentcount) studentcount, s.semstername, " +
+                "c.name, p.language, p.region, person.PersonName professor, group_concat(ct.topic) topics, " +
+                "max(s.id) semesterid " +
+                "FROM Course c " +
+                "LEFT JOIN CourseProfessor cp ON c.id = cp.course_id " +
+                "LEFT JOIN Professor p ON cp.professor_id = p.id " +
+                "LEFT JOIN Person person ON p.id = person.PersonID " +
+                "LEFT JOIN CourseTopic ct ON c.id = ct.course_id " +
+                "LEFT JOIN Semester s ON s.id = c.semesterid " +
+                "LEFT JOIN CourseStudent cs ON cs.course_id = c.id " +
+                "WHERE s.semstername = ? AND cs.studuent_id = ?";
 
         if(keyWords != null){
             query = query  +
@@ -221,6 +223,7 @@ public class CourseDirectory {
             course.setName(vo.getName());
             course.setBeginTime(vo.getBeginTime());
             course.setEndTime(vo.getEndTime());
+            course.setSemesterId(vo.getSemesterId());
             course.setIntroduction(vo.getIntroduction());
             course.setLocation(vo.getLocation());
             course.setPoint(vo.getPoint());

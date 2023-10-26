@@ -11,6 +11,9 @@ public class Semester {
     private LocalDateTime semesterStart;
     private LocalDateTime semesterEnd;
 
+    public Semester(){
+
+    }
     public Semester(String id, String semesterName, LocalDateTime semesterStart, LocalDateTime semesterEnd) {
         this.id = id;
         this.semesterName = semesterName;
@@ -50,9 +53,9 @@ public class Semester {
     public void setSemesterEnd(LocalDateTime semesterEnd) {
         this.semesterEnd = semesterEnd;
     }
-    
-    
-    
+
+
+
 
     public static List<Semester> getAllSemestersFromDatabase(Connection connection) throws SQLException {
         List<Semester> semesters = new ArrayList<>();

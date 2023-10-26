@@ -106,32 +106,6 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
             }
         });
 
-        tblCoursesHistory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = tblCoursesHistory.getSelectedRow(); // 获取所点选行的索引
-                DefaultTableModel model = (DefaultTableModel) tblCoursesHistory.getModel(); //Have the access to the table;
-
-                //时间格式转化为String
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-
-
-                if(row != -1) { // 如果行已被选择
-
-                    Object id = model.getValueAt(row, 0); // 获取所选行的第1列值
-
-                    for (CourseVO courseVO:historyCourseVOList){
-                        if (courseVO.getId().equals((String)id)){
-                            selectedCourse = courseVO;
-                            txtCourseId.setText(courseVO.getId());
-
-                            txtProfessor.setText(courseVO.getProfessor());
-                            txtCourseScore.setText(courseVO.getScore() + "");
-                        }
-                    }
-                }
-            }
-        });
     }
 
     private List<CourseVO> getHistoryCourses(String keyWords,String semester) {
@@ -194,37 +168,23 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtSearchCourses = new javax.swing.JTextField();
         btnSearchCourses = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        selectSemesterComboBox = new javax.swing.JComboBox<>();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tblCoursesHistory = new javax.swing.JTable();
-        txtSearchCourse = new javax.swing.JTextField();
-        btnSearchCourse = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        txtCourseId = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txtProfessor = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtCourseScore = new javax.swing.JTextField();
-        btnSave = new javax.swing.JButton();
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 255));
         jTabbedPane1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
 
         tblCurrentCourses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Course ID", "Couse Name", "Professor", "Course Status", "Score"
+                "Course ID", "Couse Name", "Professor", "Course Status", "Score", "Semester"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -283,7 +243,11 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         btnDrop.setText("Drop");
         btnDrop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDropActionPerformed(evt);
+                try {
+                    btnDropActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -301,12 +265,20 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
         selectSemComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                selectSemComboBoxItemStateChanged(evt);
+                try {
+                    selectSemComboBoxItemStateChanged(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         selectSemComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectSemComboBoxActionPerformed(evt);
+                try {
+                    selectSemComboBoxActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -487,114 +459,6 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Current Course", jScrollPane2);
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jLabel1.setText("Select Semester:");
-
-
-
-        tblCoursesHistory.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Course ID", "Couse Name", "Course Status", "Course Score"
-            }
-        ));
-        jScrollPane5.setViewportView(tblCoursesHistory);
-
-        btnSearchCourse.setText("Search");
-        btnSearchCourse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchCourseActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Course ID:");
-
-        jLabel6.setText("Professor:");
-
-        jLabel4.setText("Course Score:");
-
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(selectSemesterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(txtSearchCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnSearchCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCourseScore))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCourseId)
-                                    .addComponent(txtProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(selectSemesterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSearchCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearchCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtCourseScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
-        );
-
-        jTabbedPane1.addTab("Courses History", jPanel2);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -607,101 +471,16 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDropActionPerformed
-        // TODO add your handling code here:
-        dropCourse(selectedCourse,student);
-        JOptionPane.showMessageDialog(this, "Successfully dropped!");
-        //c重新加载数据
-        getEnrolledCourses("",thisterm);
-        populateTable(thisterm);
-
-    }//GEN-LAST:event_btnDropActionPerformed
-
-    private void dropCourse(CourseVO selectedCourse, Student student) {
-        try {
-            courseDirectory.dropCourse(selectedCourse.getId(), student.getPersonID());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Database is not work");
-        }
-    }
-
-    private void btnSearchCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCourseActionPerformed
-        // TODO add your handling code here:
-        getHistoryCourses(txtSearchCourse.getText(),selectSemesterComboBox.getSelectedItem().toString());
-        historyTable(selectSemesterComboBox.getSelectedItem().toString());
-    }//GEN-LAST:event_btnSearchCourseActionPerformed
-
-    private void populateTable(String semester) {
-        DefaultTableModel model = (DefaultTableModel) tblCurrentCourses.getModel(); //Have the access to the table;
-        model.setRowCount(0); //初始化
-        myCourseVOList = getEnrolledCourses("",semester);
-
-        for(CourseVO course : myCourseVOList){
-            System.out.println("semcoursename:"+course.getName());
-
-            Object[] row = new Object[5];
-            row[0] = course.getId();
-            row[1] = course.getName();
-            row[2] = course.getProfessor();
-            row[3] = course.getStatus();
-            row[4] = course.getScore();
-
-            //设置3R对应
-
-            model.addRow(row);
-
-        }
-    }
-
-    private void historyTable(String semester) {
-        DefaultTableModel model = (DefaultTableModel) tblCoursesHistory.getModel(); //Have the access to the table;
-        model.setRowCount(0); //初始化
-
-        for(CourseVO course : historyCourseVOList){
-
-            Object[] row = new Object[4];
-            row[0] = course.getId();
-            row[1] = course.getName();
-            row[2] = course.getStatus();
-            row[3] = course.getScore();
-
-            //设置3R对应
-
-            model.addRow(row);
-
-        }
-    }
-
-    public List<CourseVO> getEnrolledCourses(String keyWords,String semester){
-
-        try {
-            myCourseVOList = courseDirectory.loadCourseListByStudentIdSemFromDatabase(keyWords,student.getPersonID(),semester);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Database is not work");
-        }
-        return myCourseVOList;
-    }
-
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSaveActionPerformed
-
-
-    private void selectSemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectSemComboBoxActionPerformed
-        // TODO add your handling code here:
-        populateTable(thisterm);
-    }//GEN-LAST:event_selectSemComboBoxActionPerformed
-
     private void btnSearchCoursesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCoursesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSearchCoursesActionPerformed
 
-    private void selectSemComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selectSemComboBoxItemStateChanged
+    private void selectSemComboBoxActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_selectSemComboBoxActionPerformed
+        // TODO add your handling code here:
+//        populateTable(thisterm);
+    }//GEN-LAST:event_selectSemComboBoxActionPerformed
+
+    private void selectSemComboBoxItemStateChanged(java.awt.event.ItemEvent evt) throws SQLException {//GEN-FIRST:event_selectSemComboBoxItemStateChanged
         // TODO add your handling code here:
         System.out.println("selectSemComboBox.getSelectedItem().toString():"+selectSemComboBox.getSelectedItem().toString());
         populateTable(selectSemComboBox.getSelectedItem().toString());
@@ -722,22 +501,97 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         txtCurrentProfessorLanguage.setText("");
     }//GEN-LAST:event_selectSemComboBoxItemStateChanged
 
+    private void btnDropActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnDropActionPerformed
+        // TODO add your handling code here:
+        dropCourse(selectedCourse,student);
+        JOptionPane.showMessageDialog(this, "Successfully dropped!");
+        //c重新加载数据
+        getEnrolledCourses("",thisterm);
+        populateTable(thisterm);
+    }//GEN-LAST:event_btnDropActionPerformed
+
+    private void dropCourse(CourseVO selectedCourse, Student student) {
+        try {
+            courseDirectory.dropCourse(selectedCourse.getId(), student.getPersonID());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Database is not work");
+        }
+    }
+
+    private void populateTable(String semester) throws SQLException {
+        DefaultTableModel model = (DefaultTableModel) tblCurrentCourses.getModel(); //Have the access to the table;
+        model.setRowCount(0); //初始化
+        myCourseVOList = getEnrolledCourses("",semester);
+//        Semester sem = Semester.loadFromDatabaseByName(MySQLConnectionUtil.getConnection(),semester);
+
+        for(CourseVO course : myCourseVOList){
+            System.out.println("semcoursename:"+course.getName());
+            System.out.println("semester:"+semester);
+            if(course.getSemester().equals(semester)){
+                Object[] row = new Object[6];
+                row[0] = course.getId();
+                row[1] = course.getName();
+                row[2] = course.getProfessor();
+                row[3] = course.getStatus();
+                row[4] = course.getScore();
+                row[5] =course.getSemester();
+
+                //设置3R对应
+
+                model.addRow(row);
+            }
+
+
+        }
+    }
+
+//    private void historyTable(String semester) {
+//        DefaultTableModel model = (DefaultTableModel) tblCoursesHistory.getModel(); //Have the access to the table;
+//        model.setRowCount(0); //初始化
+//
+//        for(CourseVO course : historyCourseVOList){
+//
+//            Object[] row = new Object[4];
+//            row[0] = course.getId();
+//            row[1] = course.getName();
+//            row[2] = course.getStatus();
+//            row[3] = course.getScore();
+//
+//            //设置3R对应
+//
+//            model.addRow(row);
+//
+//        }
+//    }
+
+    public List<CourseVO> getEnrolledCourses(String keyWords,String semester){
+
+        try {
+            myCourseVOList = courseDirectory.loadCourseListByStudentIdSemFromDatabase(keyWords,student.getPersonID(),semester);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Database is not work");
+        }
+        return myCourseVOList;
+    }
+
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDrop;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSearchCourse;
     private javax.swing.JButton btnSearchCourses;
     private javax.swing.JTextArea currentCourseIntroductionTextArea;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -745,23 +599,15 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblCourseEndTime2;
     private javax.swing.JLabel lblStudentLimited2;
     private javax.swing.JComboBox<String> selectSemComboBox;
-    private javax.swing.JComboBox<String> selectSemesterComboBox;
-    private javax.swing.JTable tblCoursesHistory;
     private javax.swing.JTable tblCurrentCourses;
-    private javax.swing.JTextField txtCourseId;
-    private javax.swing.JTextField txtCourseScore;
     private javax.swing.JTextField txtCurrentCourseEndTime;
     private javax.swing.JTextField txtCurrentCourseId;
     private javax.swing.JTextField txtCurrentCourseLocation;
@@ -775,8 +621,6 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtCurrentSemester;
     private javax.swing.JTextField txtCurrentStudentCount;
     private javax.swing.JTextField txtCurrentStudentLimited;
-    private javax.swing.JTextField txtProfessor;
-    private javax.swing.JTextField txtSearchCourse;
     private javax.swing.JTextField txtSearchCourses;
     // End of variables declaration//GEN-END:variables
 
