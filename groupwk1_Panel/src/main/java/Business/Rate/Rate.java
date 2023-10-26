@@ -23,7 +23,7 @@ public class Rate {
     private String score;
 
     public Rate(String professorId, String studentId, String courseId, String scorePart1, String scorePart2,
-                String scorePart3, String scorePart4, String comment, String score) {
+                String scorePart3, String scorePart4, String comment, String score) throws SQLException {
         this.professorId = professorId;
         this.studentId = studentId;
         this.courseId = courseId;
@@ -33,6 +33,7 @@ public class Rate {
         this.scorePart4 = scorePart4;
         this.comment = comment;
         this.score = score;
+        
     }
 
     public String getProfessorId() {
@@ -71,6 +72,30 @@ public class Rate {
         return score;
     }
 
+    
+    public static List<Rate> loadAllRatesFromDatabase(Connection connection) throws SQLException {
+        List<Rate> rates = new ArrayList<>();
+        String query = "SELECT * FROM Rate";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String professorId = resultSet.getString("professor_id");
+                String studentId = resultSet.getString("student_id");
+                String courseId = resultSet.getString("course_id");
+                String scorePart1 = resultSet.getString("scorepart1");
+                String scorePart2 = resultSet.getString("scorepart2");
+                String scorePart3 = resultSet.getString("scorepart3");
+                String scorePart4 = resultSet.getString("scorepart4");
+                String comment = resultSet.getString("comment");
+                String score = resultSet.getString("score");
+                Rate rate = new Rate(professorId, studentId, courseId, scorePart1, scorePart2, scorePart3, scorePart4, comment, score);
+                rates.add(rate);
+            }
+        }
+        return rates;
+    }
+    
+    
     public void saveToDatabase(Connection connection) throws SQLException {
         String query = "INSERT INTO Rate (professor_id, student_id, course_id, scorepart1, scorepart2, scorepart3, scorepart4, comment, score) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -91,6 +116,7 @@ public class Rate {
     public static List<Rate> getAllRatesFromDatabase() throws SQLException {
         List<Rate> rates = new ArrayList<>();
         Connection connection = MySQLConnectionUtil.getConnection();
+        rates = loadAllRatesFromDatabase(connection);
         String query = "SELECT * FROM Rate";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
