@@ -160,7 +160,7 @@ public class CourseDirectory {
         return list;
     }
 
-    public List<CourseVO> loadCourseListByStudentIdFromDatabase(String keyWords, String studentId, String statue ) throws SQLException{
+            public List<CourseVO> loadCourseListByStudentIdSemFromDatabase(String keyWords, String studentId, String semester ) throws SQLException{
         List<CourseVO> list = new ArrayList<>();
         String query = "SELECT max(c.id) id , max(c.statue) statue , max(cs.score) score , max(c.begintime) begintime , max(c.endtime) endtime ," +
                 " max(c.location) location , max(c.introduction) introduction , max(c.point) point , " +
@@ -172,7 +172,7 @@ public class CourseDirectory {
                 "left join CourseTopic ct on c.id = ct.course_id " +
                 "left join Semester s on s.id = c.semesterid " +
                 "left join CourseStudent cs on cs.course_id = c.id " +
-                "where c.statue = ? and cs.studuent_id = ?";
+                "where s.semstername = ? and cs.studuent_id = ?";
 
         if(keyWords != null){
             query = query  +
@@ -185,7 +185,7 @@ public class CourseDirectory {
         query = query + " group by language, region, professor, c.name, s.semstername ";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, statue);
+            statement.setString(1, semester);
             statement.setString(2, studentId);
             if(keyWords != null){
                 statement.setString(3, keyWords);
