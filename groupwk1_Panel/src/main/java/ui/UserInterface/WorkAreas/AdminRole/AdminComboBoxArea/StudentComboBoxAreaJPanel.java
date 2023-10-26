@@ -4,6 +4,7 @@
  */
 package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
+import Business.Course.CourseStudent;
 import Business.Directory.StudentDirectory;
 import Business.Person.Student;
 import Tools.MySQLConnectionUtil;
@@ -14,6 +15,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -35,7 +38,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
     StudentDirectory studentdirectory;
     Connection connection;
     private List<Student> studentList;
-
+        CourseStudent courseStu;
         String personName;
         String personID;
         String username;
@@ -48,10 +51,25 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         initComponents();
         studentdirectory = new StudentDirectory();
         studentList=studentdirectory.getStudentList();
+        connection = MySQLConnectionUtil.getConnection();
+        courseStu = new CourseStudent(connection);
         populateTable();
     }
 
+
+    
+    private void setCourse(String id,String input) throws SQLException{
+        List<CourseStudent.CourseData> courseSt = courseStu.getAllCoursesDataForStudent(id);
+        for(CourseStudent.CourseData c : courseSt){
+            c.setCourseId("12");
+            c.setGrade(Double.parseDouble("12"));
+        }
+        return ;
+    }
+    
+    
     private void populateTable(){
+        
         DefaultTableModel model = (DefaultTableModel)stuTable.getModel();
         model.setRowCount(0);
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
