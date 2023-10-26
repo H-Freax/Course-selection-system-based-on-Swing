@@ -170,6 +170,17 @@ public class CourseDirectory {
         return list;
     }
 
+    public List<CourseVO> loadCourseListByStudentIdListSemFromDatabase(String keyWords, String studentId, List<String> semesters ) throws SQLException {
+        List<CourseVO> list = new ArrayList<>();
+        for(String s :semesters){
+            List<CourseVO> cv = loadCourseListByStudentIdSemFromDatabase(keyWords,studentId,s);
+           for(CourseVO courseVO: cv){
+               list.add(courseVO);
+           }
+        }
+        return list;
+    }
+
     public List<CourseVO> loadCourseListByStudentIdSemFromDatabase(String keyWords, String studentId, String semester ) throws SQLException{
         List<CourseVO> list = new ArrayList<>();
         String query = "SELECT max(c.id) id, max(c.statue) statue, max(cs.score) score, max(c.begintime) begintime, max(c.endtime) endtime, " +

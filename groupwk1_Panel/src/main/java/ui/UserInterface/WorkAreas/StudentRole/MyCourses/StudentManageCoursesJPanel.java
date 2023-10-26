@@ -635,6 +635,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
     public List<CourseVO> getEnrolledCourses(String keyWords,String semester){
 
         try {
+
             myCourseVOList = courseDirectory.loadCourseListByStudentIdSemFromDatabase(keyWords,student.getPersonID(),semester);
 
         } catch (SQLException e) {
