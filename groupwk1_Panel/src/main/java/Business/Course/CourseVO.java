@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Course;
 
 import java.sql.*;
@@ -31,6 +27,7 @@ public class CourseVO {
     private int studentLimit;
     private int studentCount;
     private LocalDateTime beginTime;
+
     private LocalDateTime endTime;
     private List<String> topics; // Store course topics
     private List<String> enrolledStudents; // Store enrolled student IDs
@@ -93,6 +90,7 @@ public class CourseVO {
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
     }
+
 
     public int getPoint() {
         return point;
@@ -305,7 +303,7 @@ public class CourseVO {
                 resultSet.getString("name"),
                 resultSet.getString("introduction"),
                 resultSet.getInt("point"),
-                null,
+                 null,
                 resultSet.getString("statue"),
                 resultSet.getString("professor"),
                 resultSet.getString("location"),
@@ -313,7 +311,7 @@ public class CourseVO {
                 resultSet.getInt("studentcount"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
                 resultSet.getTimestamp("endtime").toLocalDateTime(),
-                resultSet.getDouble("score"),
+                0d,
                 resultSet.getString("region"),
                 resultSet.getString("language"),
                 resultSet.getString("topics"),

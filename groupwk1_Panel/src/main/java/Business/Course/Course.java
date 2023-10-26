@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Course;
 
 import Business.Person.Student;
@@ -206,8 +202,8 @@ public class Course {
 
 
     public void saveToDatabase(Connection connection) throws SQLException {
-        String query = "INSERT INTO Course (id, name, introduction, point, semesterid, statue, professor, location, studentlimited, studentcount, begintime, endtime) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Course (id, name, introduction, point, semesterid, statue, location, studentlimited, studentcount) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, id);
             statement.setString(2, name);
@@ -215,12 +211,11 @@ public class Course {
             statement.setInt(4, point);
             statement.setString(5, semesterId);
             statement.setString(6, status);
-            statement.setString(7, professor);
-            statement.setString(8, location);
-            statement.setInt(9, studentLimit);
-            statement.setInt(10, studentCount);
-            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
-            statement.setTimestamp(12, Timestamp.valueOf(endTime));
+            statement.setString(7, location);
+            statement.setInt(8, studentLimit);
+            statement.setInt(9, studentCount);
+//            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
+//            statement.setTimestamp(12, Timestamp.valueOf(endTime));
             statement.executeUpdate();
         }
     }
@@ -375,5 +370,29 @@ public class Course {
             }
         }
         return studentId != null;
+    }
+
+//    Starttime
+//    EndTime暂定
+    public void updateCourseToDatabase(Connection connection) throws SQLException {
+        String query = "UPDATE Course SET name = ?, introduction = ?, point = ?, semesterid = ?, statue = ?, " +
+                "location = ?, studentlimited = ?, studentcount = ? WHERE id = ?";
+//        String query = "UPDATE Course SET name = ?, introduction = ?, point = ?, semesterid = ?, statue = ?, " +
+//                "location = ?, studentlimited = ?, studentcount = ?, begintime = ?, endtime = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, name);
+            statement.setString(2, introduction);
+            statement.setInt(3, point);
+            statement.setString(4, semesterId);
+            statement.setString(5, status);
+            statement.setString(6, location);
+            statement.setInt(7, studentLimit);
+            statement.setInt(8, studentCount);
+//            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
+//            statement.setTimestamp(12, Timestamp.valueOf(endTime));
+            statement.setString(9, id);
+            statement.executeUpdate();
+        }
     }
 }

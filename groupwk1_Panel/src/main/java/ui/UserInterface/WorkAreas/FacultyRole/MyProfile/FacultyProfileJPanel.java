@@ -20,6 +20,11 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
      */
     private JPanel ViewContainer;
     private Professor professor;
+
+    public FacultyProfileJPanel() {
+        initComponents();
+    }
+
     public FacultyProfileJPanel(JPanel ViewContainer, Professor professor) {
         initComponents();
         this.ViewContainer = ViewContainer;

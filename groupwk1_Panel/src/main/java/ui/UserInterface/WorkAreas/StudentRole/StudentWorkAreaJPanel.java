@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package ui.UserInterface.WorkAreas.StudentRole;
 
 import java.awt.CardLayout;
@@ -10,7 +6,6 @@ import javax.swing.JPanel;
 
 import Business.Person.Student;
 import ui.LoginJPanel;
-import ui.UserInterface.WorkAreas.FacultyRole.Ranking.FacultyRankingJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.GraduationStatus.StudentGraduationStatusJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.ManageProfile.StudentManageProfileJPanel;
@@ -31,15 +26,15 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form StudentWorkAreaJPanel
      */
+    public StudentWorkAreaJPanel() {
+        initComponents();
+    }
 
     public StudentWorkAreaJPanel(JPanel ViewContainer,JPanel controlPanel, Student student) {
         initComponents();
         this.student = student;
         this.controlPanel = controlPanel;
         this.ViewContainer=ViewContainer;
-
-
-
     }
 
     public Student getStudent() {
