@@ -31,7 +31,7 @@ public class PasswordUtils {
     // 对nowpassword进行哈希加密
     public static String hashPassword(String password) {
         try {
-            System.out.println("password:"+password);
+//            System.out.println("password:"+password);
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] bytes = md.digest(password.getBytes());
             StringBuilder sb = new StringBuilder();
@@ -39,7 +39,7 @@ public class PasswordUtils {
                 sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
 
-            System.out.println("hashpwd:"+sb.toString());
+//            System.out.println("hashpwd:"+sb.toString());
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
