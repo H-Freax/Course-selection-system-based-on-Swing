@@ -4,6 +4,10 @@
  */
 package ui;
 
+import Business.Person.Person;
+
+import javax.swing.*;
+
 /**
  *
  * @author zhangjinming
@@ -13,8 +17,14 @@ public class registerJPanel extends javax.swing.JPanel {
     /**
      * Creates new form registerJPanel
      */
-    public registerJPanel() {
+    private JPanel ViewContainer;
+    private JPanel controlPanel;
+    private  Person p;
+    public registerJPanel(JPanel ViewContainer, JPanel controlPanel, Person p) {
         initComponents();
+        this.ViewContainer = ViewContainer;
+        this.controlPanel = controlPanel;
+        this.p = p;
     }
 
     /**

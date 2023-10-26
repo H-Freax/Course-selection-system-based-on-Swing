@@ -17,6 +17,9 @@ public class Employee extends Person {
     private String pwdHash;
     private Set<String> passwordHistory; // 用于存储密码历史
 
+    public Employee(){
+
+    }
     public Employee(String personName, String personID, String username, String nowPassword, boolean enabled, String role) {
         super(personName, personID, role);
         this.nowPassword = Tools.PasswordUtils.hashPassword(nowPassword);

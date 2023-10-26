@@ -4,9 +4,16 @@
  */
 package ui;
 
+import Business.Directory.EmployeeDirectory;
+import Business.Directory.ProfessorDirectory;
+import Business.Directory.StudentDirectory;
+import Business.Person.Employee;
 import Business.Person.Person;
+import Business.Person.Professor;
+import Business.Person.Student;
 import Tools.MySQLConnectionUtil;
 
+import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
@@ -21,8 +28,12 @@ public class validationJPanel extends javax.swing.JPanel {
     /**
      * Creates new form validationJPanel
      */
-    public validationJPanel() {
+    private JPanel ViewContainer;
+    private JPanel controlPanel;
+    public validationJPanel(JPanel ViewContainer, JPanel controlPanel) {
         initComponents();
+        this.ViewContainer = ViewContainer;
+        this.controlPanel = controlPanel;
     }
 
     /**
@@ -43,6 +54,7 @@ public class validationJPanel extends javax.swing.JPanel {
         btnProfessor = new javax.swing.JRadioButton();
         btnStudent = new javax.swing.JRadioButton();
         validationregister = new javax.swing.JButton();
+        backtologin = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -94,7 +106,18 @@ public class validationJPanel extends javax.swing.JPanel {
         validationregister.setText("Register");
         validationregister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                validationregisterActionPerformed(evt);
+                try {
+                    validationregisterActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        backtologin.setText("Back");
+        backtologin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backtologinActionPerformed(evt);
             }
         });
 
@@ -120,7 +143,9 @@ public class validationJPanel extends javax.swing.JPanel {
                                     .addComponent(txtPersonId, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(248, 248, 248)
-                                .addComponent(validationregister)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(validationregister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(backtologin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 98, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +173,9 @@ public class validationJPanel extends javax.swing.JPanel {
                     .addComponent(txtPersonName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(82, 82, 82)
                 .addComponent(validationregister)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(backtologin)
+                .addContainerGap(74, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(189, 189, 189)
@@ -192,18 +219,36 @@ public class validationJPanel extends javax.swing.JPanel {
         }else if(btnStudent.isSelected()){
             varole="Student";
         }
+        EmployeeDirectory ed = new EmployeeDirectory();
+        ProfessorDirectory pd = new ProfessorDirectory();
+        StudentDirectory sd = new StudentDirectory();
         if(isPersonExists(MySQLConnectionUtil.getConnection(),personid,personname,varole)){
-            Person p = new Person(personname,personid,varole);
-//            registerJPanel panel = new registerJPanel(ViewContainer,controlPanel,p);
-//            ViewContainer.add("registerJPanel",panel);
-//            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-//            layout.next(ViewContainer);        // TODO add your handling code here:
+            if(ed.findEmployeeByID(personid)!=null||pd.getProfessorById(personid)!=null||sd.findStudent(personid)!=null){
+                JOptionPane.showMessageDialog(this, "You have the account now! Please Log in!");
 
+            }else{
+                Person p = new Person(personname,personid,varole);
+                registerJPanel panel = new registerJPanel(ViewContainer,controlPanel,p);
+                ViewContainer.add("registerJPanel",panel);
+                CardLayout layout = (CardLayout)ViewContainer.getLayout();
+                layout.next(ViewContainer);        // TODO add your handling code here:
+            }
+
+        }else{
+            JOptionPane.showMessageDialog(this, "Validation failed. Please check your credentials.");
         }
     }//GEN-LAST:event_validationregisterActionPerformed
 
+    private void backtologinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backtologinActionPerformed
+        // TODO add your handling code here:
+
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.previous(ViewContainer);        // TODO add your handling code here:
+    }//GEN-LAST:event_backtologinActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backtologin;
     private javax.swing.JRadioButton btnAdmin;
     private javax.swing.JRadioButton btnProfessor;
     private javax.swing.JRadioButton btnStudent;

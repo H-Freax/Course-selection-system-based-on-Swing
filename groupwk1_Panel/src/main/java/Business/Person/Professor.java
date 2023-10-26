@@ -24,7 +24,9 @@ public class Professor extends Person {
     private String region;
     private Set<String> topics;
     private Set<String> passwordHistory;
-    
+    public Professor(){
+
+    }
     public Professor(String personName, String personID, String username, String nowPassword, boolean enabled, String role) {
         super(personName, personID, role);
         this.nowPassword = Tools.PasswordUtils.hashPassword(nowPassword);
@@ -46,7 +48,7 @@ public class Professor extends Person {
         this.passwordHistory = passwordHistory;
     }
 
-    
+
     public String getUsername() {
         return username;
     }

@@ -14,6 +14,13 @@
         <exec.mainClass>ui.MainJFrame</exec.mainClass>
     </properties>
     <name>groupwk1</name>
+    <repositories>
+        <repository>
+            <id>unknown-jars-temp-repo</id>
+            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+            <url>file:${project.basedir}/lib</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
@@ -21,5 +28,10 @@
             <version>8.0.21</version> <!-- 请使用你的驱动程序版本 -->
         </dependency>
         <!-- 其他依赖项 -->
+        <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
