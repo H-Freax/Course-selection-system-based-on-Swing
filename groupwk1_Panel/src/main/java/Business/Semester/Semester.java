@@ -22,6 +22,10 @@ public class Semester {
         this.semesterEnd = semesterEnd;
     }
 
+    public Semester() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public String getId() {
         return id;
     }
@@ -37,6 +41,25 @@ public class Semester {
     public LocalDateTime getSemesterEnd() {
         return semesterEnd;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setSemesterName(String semesterName) {
+        this.semesterName = semesterName;
+    }
+
+    public void setSemesterStart(LocalDateTime semesterStart) {
+        this.semesterStart = semesterStart;
+    }
+
+    public void setSemesterEnd(LocalDateTime semesterEnd) {
+        this.semesterEnd = semesterEnd;
+    }
+    
+    
+    
 
     public static List<Semester> getAllSemestersFromDatabase(Connection connection) throws SQLException {
         List<Semester> semesters = new ArrayList<>();
