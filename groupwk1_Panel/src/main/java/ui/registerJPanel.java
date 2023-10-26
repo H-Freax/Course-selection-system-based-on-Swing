@@ -168,13 +168,13 @@ public class registerJPanel extends javax.swing.JPanel {
         if(b){//Todo
             if(role=="Employee"){
                 Employee e = new Employee(p.getPersonName(),p.getPersonID(),un, PasswordUtils.hashPassword(pwd),true,role);
-                e.updateEmployeeInDatabase(MySQLConnectionUtil.getConnection());
+                e.saveToDatabase(MySQLConnectionUtil.getConnection());
             }else if(role=="Professor"){
                 Professor pro = new Professor(p.getPersonName(),p.getPersonID(),un,PasswordUtils.hashPassword(pwd),true,role);
-                pro.updateProfessorInDatabase(MySQLConnectionUtil.getConnection());
+                pro.saveToDatabase(MySQLConnectionUtil.getConnection());
             }else if(role=="Student"){
                 Student stu = new Student(p.getPersonName(),p.getPersonID(),un,PasswordUtils.hashPassword(pwd),true,0);
-                stu.updateStudentInDatabase(MySQLConnectionUtil.getConnection());
+                stu.saveToDatabase(MySQLConnectionUtil.getConnection());
             }
 
             JOptionPane.showMessageDialog(this,"Register Success! Please Log in!");

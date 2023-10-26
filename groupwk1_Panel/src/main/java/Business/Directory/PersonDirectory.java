@@ -41,7 +41,7 @@ public class PersonDirectory {
     }
 
     public void loadPersonsFromDatabase(Connection connection) throws SQLException {
-        String query = "SELECT * FROM Person where username != null";
+        String query = "SELECT * FROM Person ";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

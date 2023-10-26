@@ -82,7 +82,7 @@ public class ProfessorDirectory {
 
     // 从数据库加载所有教授
     public void loadAllProfessorsFromDatabase(Connection connection) throws SQLException {
-        String query = "SELECT * FROM Professor where username != null";
+        String query = "SELECT * FROM Professor";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

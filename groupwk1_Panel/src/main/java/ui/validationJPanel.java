@@ -223,7 +223,7 @@ public class validationJPanel extends javax.swing.JPanel {
         ProfessorDirectory pd = new ProfessorDirectory();
         StudentDirectory sd = new StudentDirectory();
         if(isPersonExists(MySQLConnectionUtil.getConnection(),personid,personname,varole)){
-            if(ed.findEmployeeByID(personid)!=null||pd.getProfessorById(personid)!=null||sd.findStudent(personid)!=null){
+            if(ed.findEmployeeByID(personid).getUsername()!=null||pd.getProfessorById(personid).getUsername()!=null||sd.findStudent(personid).getUsername()!=null){
                 JOptionPane.showMessageDialog(this, "You have the account now! Please Log in!");
 
             }else if(ed.findEmployeeByID(personid).getPersonID()!=null||pd.getProfessorById(personid).getPersonID()!=null||sd.findStudent(personid).getPersonID()!=null){
