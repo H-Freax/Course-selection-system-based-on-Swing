@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Course;
 import Tools.MySQLConnectionUtil;
 
@@ -18,6 +14,11 @@ public class CourseDirectory {
 
     private Connection connection;
 
+
+    public CourseDirectory() {
+        courses = new ArrayList<>();
+        this.connection = MySQLConnectionUtil.getConnection();
+    }
 
     public CourseDirectory(Connection connection) {
         courses = new ArrayList<>();
@@ -95,6 +96,15 @@ public class CourseDirectory {
                 Course course = Course.resultSetToCourse(resultSet);
                 courses.add(course);
             }
+        }
+    }
+
+    public void addCourseProfessor(Connection connection, String courseId, String professorId) throws SQLException {
+        String query = "INSERT INTO CourseProfessor (course_id, professor_id) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, courseId);
+            statement.setString(2, professorId);
+            statement.executeUpdate();
         }
     }
 
@@ -236,6 +246,70 @@ public class CourseDirectory {
 
         getCourseById(id).removeEnrolledStudent(MySQLConnectionUtil.getConnection(),personID);
 
+    }
+
+    //FacultyCurrentCourse
+    public List<CourseVO>  loadCourseListByProfessorIdFromDatabase(String keyWords, String professorId, String semester) throws SQLException {
+        List<CourseVO> list = new ArrayList<>();
+        String query = "SELECT max(c.id) id , max(c.statue) statue , max(c.begintime) begintime , max(c.endtime) endtime ," +
+                " max(c.location) location , max(c.introduction) introduction , max(c.point) point , " +
+                "max(c.studentlimited) studentlimited , max(c.studentcount) studentcount, s.semstername," +
+                " c.name, p.language, p.region, person.PersonName professor, group_concat(ct.topic) topics FROM Course c " +
+                "left join CourseProfessor cp on c.id  = cp.course_id " +
+                "left join Professor p on cp.professor_id = p.id " +
+                "left join Person person on p.id = person.PersonID " +
+                "left join CourseTopic ct on c.id = ct.course_id " +
+                "left join Semester s on s.id = c.semesterid " +
+                "where c.statue ='Open' and s.semstername = ? and p.id = ?";
+
+
+        if(keyWords != null){
+            query = query  +
+                    "and ( person.PersonName like concat('%',?,'%') " +
+                    "or p.language like concat('%',?,'%') " +
+                    "or p.region like concat('%',?,'%') " +
+                    "or c.name like concat('%',?,'%') " +
+                    "or ct.topic like concat('%',?,'%'))" ;
+        }
+        query = query + " group by language, region, professor, c.name, s.semstername ";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, semester);
+            statement.setString(2, professorId);
+            if(keyWords != null){
+                statement.setString(3, keyWords);
+                statement.setString(4, keyWords);
+                statement.setString(5, keyWords);
+                statement.setString(6, keyWords);
+                statement.setString(7, keyWords);
+            }
+
+            System.out.println(statement.toString());
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                CourseVO course = CourseVO.resultSetToCourseVO(resultSet);
+                list.add(course);
+                System.out.println("course.getName():"+course.getName());
+            }
+        }
+
+        courses = list.stream().map(vo ->{
+            Course course = new Course();
+            course.setId(vo.getId());
+            course.setName(vo.getName());
+            course.setBeginTime(vo.getBeginTime());
+            course.setEndTime(vo.getEndTime());
+            course.setIntroduction(vo.getIntroduction());
+            course.setLocation(vo.getLocation());
+            course.setPoint(vo.getPoint());
+            course.setProfessor(vo.getProfessor());
+            course.setStatus(vo.getStatus());
+            course.setTopics(vo.getTopics());
+            course.setScore(vo.getScore());
+            return course;
+        }).collect(Collectors.toList());
+        return list;
     }
 }
 
