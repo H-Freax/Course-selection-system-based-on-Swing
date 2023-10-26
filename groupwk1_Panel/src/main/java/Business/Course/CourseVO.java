@@ -305,7 +305,7 @@ public class CourseVO {
                 resultSet.getString("name"),
                 resultSet.getString("introduction"),
                 resultSet.getInt("point"),
-                null,
+                resultSet.getString("semesterId"),
                 resultSet.getString("statue"),
                 resultSet.getString("professor"),
                 resultSet.getString("location"),
