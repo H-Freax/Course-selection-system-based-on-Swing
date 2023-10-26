@@ -42,7 +42,8 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         String nowPassword;
         boolean enabled;
         double gpa;
-
+        //coursestudent c_id s_id score
+        //
     public StudentComboBoxAreaJPanel() throws SQLException {
         initComponents();
         studentdirectory = new StudentDirectory();
