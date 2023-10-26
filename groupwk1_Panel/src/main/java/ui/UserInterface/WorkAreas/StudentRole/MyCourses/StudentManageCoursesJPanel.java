@@ -477,7 +477,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
     private void selectSemComboBoxActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_selectSemComboBoxActionPerformed
         // TODO add your handling code here:
-        populateTable(thisterm);
+//        populateTable(thisterm);
     }//GEN-LAST:event_selectSemComboBoxActionPerformed
 
     private void selectSemComboBoxItemStateChanged(java.awt.event.ItemEvent evt) throws SQLException {//GEN-FIRST:event_selectSemComboBoxItemStateChanged
@@ -528,6 +528,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
         for(CourseVO course : myCourseVOList){
             System.out.println("semcoursename:"+course.getName());
+            System.out.println("semester:"+semester);
             if(course.getSemester().equals(semester)){
                 Object[] row = new Object[6];
                 row[0] = course.getId();
