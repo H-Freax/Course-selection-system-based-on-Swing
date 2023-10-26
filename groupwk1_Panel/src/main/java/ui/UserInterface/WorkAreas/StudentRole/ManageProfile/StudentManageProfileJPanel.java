@@ -49,6 +49,9 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         try {
             courseDirectory.loadCoursesFromDatabase(student.getPersonID());
             allCourses = courseDirectory.getAllCourses();
+            for(Course course:allCourses){
+                System.out.println("course.getProfessor()"+course.getProfessor());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("数据库异常！！");
@@ -82,9 +85,15 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Student ID:");
 
+        txtStudentId.setEditable(false);
+
         jLabel4.setText("Student Name:");
 
+        txtStudentName.setEditable(false);
+
         jLabel5.setText("Courses");
+
+        txtStudentGpa.setEditable(false);
 
         jLabel6.setText("GPA:");
 
