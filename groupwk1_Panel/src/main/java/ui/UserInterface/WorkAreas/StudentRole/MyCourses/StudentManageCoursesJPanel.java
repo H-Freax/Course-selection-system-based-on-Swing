@@ -66,7 +66,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         getEnrolledCourses("",thisterm);
 //        getHistoryCourses(null);
 
-        populateTable(thisterm);
+        populateTable("",thisterm);
 //        historyTable();
 
         tblCurrentCourses.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -76,7 +76,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
                 //时间格式转化为String
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+                DateTimeFormatter startformatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
 
                 if(row != -1) { // 如果行已被选择
@@ -97,8 +97,8 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
                             txtCurrentStudentLimited.setText(courseVO.getStudentLimit() + "");
                             txtCurrentStudentCount.setText(courseVO.getStudentCount() + "");
                             txtCurrentCoursePoint.setText(courseVO.getPoint() + "");
-                            txtCurrentCourseStartTime.setText(courseVO.getBeginTime().format(formatter));
-                            txtCurrentCourseEndTime.setText(courseVO.getEndTime().format(formatter));
+                            txtCurrentCourseStartTime.setText(courseVO.getBeginTime().format(startformatter));
+                            txtCurrentCourseEndTime.setText(courseVO.getEndTime().format(startformatter));
                             txtCurrentProfessorLanguage.setText(courseVO.getLanguage());
                         }
                     }
@@ -168,6 +168,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtSearchCourses = new javax.swing.JTextField();
         btnSearchCourses = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 255));
         jTabbedPane1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
@@ -285,19 +286,32 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel2.setText("Select Semester:");
 
+        txtSearchCourses.setToolTipText("");
+        txtSearchCourses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchCoursesActionPerformed(evt);
+            }
+        });
+
         btnSearchCourses.setText("Search");
         btnSearchCourses.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchCoursesActionPerformed(evt);
+                try {
+                    btnSearchCoursesActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
+
+        jLabel1.setText("ProfessorName/language/Region/CourseName/CouseTopic");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(61, 600, Short.MAX_VALUE)
+                .addGap(61, 810, Short.MAX_VALUE)
                 .addComponent(btnDrop, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(275, 275, 275))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -319,16 +333,20 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
                                 .addComponent(txtCurrentProfessorLanguage, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(52, 52, 52)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(selectSemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSearchCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(btnSearchCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(selectSemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(txtSearchCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(btnSearchCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -383,14 +401,20 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSearchCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(selectSemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSearchCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(selectSemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearchCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearchCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(11, 11, 11)))
+                .addGap(36, 36, 36)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -471,8 +495,24 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchCoursesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCoursesActionPerformed
+    private void btnSearchCoursesActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnSearchCoursesActionPerformed
         // TODO add your handling code here:
+        populateTable(txtSearchCourses.getText(),selectSemComboBox.getSelectedItem().toString());
+
+        txtCurrentCourseId.setText("");
+        txtCurrentCourseName.setText("");
+        txtCurrentCourseTopic.setText("");
+        txtCurrentSemester.setText("");
+        txtCurrentProfessor.setText("");
+        txtCurrentProfessorRegion.setText("");
+        txtCurrentCourseLocation.setText("");
+        currentCourseIntroductionTextArea.setText("");
+        txtCurrentStudentLimited.setText("");
+        txtCurrentStudentCount.setText("");
+        txtCurrentCoursePoint.setText("");
+        txtCurrentCourseStartTime.setText("");
+        txtCurrentCourseEndTime.setText("");
+        txtCurrentProfessorLanguage.setText("");
     }//GEN-LAST:event_btnSearchCoursesActionPerformed
 
     private void selectSemComboBoxActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_selectSemComboBoxActionPerformed
@@ -483,7 +523,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
     private void selectSemComboBoxItemStateChanged(java.awt.event.ItemEvent evt) throws SQLException {//GEN-FIRST:event_selectSemComboBoxItemStateChanged
         // TODO add your handling code here:
         System.out.println("selectSemComboBox.getSelectedItem().toString():"+selectSemComboBox.getSelectedItem().toString());
-        populateTable(selectSemComboBox.getSelectedItem().toString());
+        populateTable("",selectSemComboBox.getSelectedItem().toString());
 
         txtCurrentCourseId.setText("");
         txtCurrentCourseName.setText("");
@@ -507,8 +547,12 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Successfully dropped!");
         //c重新加载数据
         getEnrolledCourses("",thisterm);
-        populateTable(thisterm);
+        populateTable("",thisterm);
     }//GEN-LAST:event_btnDropActionPerformed
+
+    private void txtSearchCoursesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchCoursesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchCoursesActionPerformed
 
     private void dropCourse(CourseVO selectedCourse, Student student) {
         try {
@@ -520,10 +564,10 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         }
     }
 
-    private void populateTable(String semester) throws SQLException {
+    private void populateTable(String keywords,String semester) throws SQLException {
         DefaultTableModel model = (DefaultTableModel) tblCurrentCourses.getModel(); //Have the access to the table;
         model.setRowCount(0); //初始化
-        myCourseVOList = getEnrolledCourses("",semester);
+        myCourseVOList = getEnrolledCourses(keywords,semester);
 //        Semester sem = Semester.loadFromDatabaseByName(MySQLConnectionUtil.getConnection(),semester);
 
         for(CourseVO course : myCourseVOList){
@@ -586,6 +630,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnDrop;
     private javax.swing.JButton btnSearchCourses;
     private javax.swing.JTextArea currentCourseIntroductionTextArea;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
