@@ -282,10 +282,7 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
-        if(personDirectory.findPersonById(id)!=null){
-            JOptionPane.showMessageDialog(this, "ID already existed!");
-            return;
-        }
+
         String personName=txtname.getText();
         String personID=txtid.getText();
         String role=txtRole.getText();
