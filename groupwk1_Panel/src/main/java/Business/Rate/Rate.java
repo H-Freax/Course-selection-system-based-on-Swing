@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Business.Rate;
+import Tools.MySQLConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Rate {
     private String professorId;
@@ -85,6 +88,32 @@ public class Rate {
         }
     }
 
+    public static List<Rate> getAllRatesFromDatabase() throws SQLException {
+        List<Rate> rates = new ArrayList<>();
+        Connection connection = MySQLConnectionUtil.getConnection();
+        String query = "SELECT * FROM Rate";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String professorId = resultSet.getString("professor_id");
+                String studentId = resultSet.getString("student_id");
+                String courseId = resultSet.getString("course_id");
+                String scorePart1 = resultSet.getString("scorepart1");
+                String scorePart2 = resultSet.getString("scorepart2");
+                String scorePart3 = resultSet.getString("scorepart3");
+                String scorePart4 = resultSet.getString("scorepart4");
+                String comment = resultSet.getString("comment");
+                String score = resultSet.getString("score");
+                Rate rate = new Rate(professorId, studentId, courseId, scorePart1, scorePart2, scorePart3, scorePart4, comment, score);
+                rates.add(rate);
+            }
+        }
+        return rates;
+    }
+    
+    
+    
+    
     public static Rate loadFromDatabase(Connection connection, String professorId, String studentId, String courseId) throws SQLException {
         String query = "SELECT * FROM Rate WHERE professor_id = ? AND student_id = ? AND course_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {

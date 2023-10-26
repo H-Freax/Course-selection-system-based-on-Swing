@@ -230,115 +230,27 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-        String search=txtSearch.getText();
-        if("".equals(search)){
-            JOptionPane.showMessageDialog(this, "Please enter!");
-        }else{
-            course e = Course.findPersonById(search);
-            if(e!=null){
-                txtname.setText(e.getPersonName());
-                txtid.setText(e.getPersonID());
-                txtStart.setText(e.getRole());
-            }
-            JOptionPane.showMessageDialog(this, "Not Existed!");
-        }
+
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int selectedRowIndex = personTbl.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to View.");
-            return;
-        }else{
-            DefaultTableModel model = (DefaultTableModel) personTbl.getModel();
-            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-            Person e = personDirectory.findPersonById(selectedID);
-            if(e!=null){
-                txtname.setText(e.getPersonName());
-                txtid.setText(e.getPersonID());
-                txtStart.setText(e.getRole());
-            }
-        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String id=txtid.getText();
-        if(personDirectory.findPersonById(id)!=null){
-            JOptionPane.showMessageDialog(this, "ID already existed!");
-            return;
-        }
-        String personName=txtname.getText();
-        String personID=txtid.getText();
-        String role=txtStart.getText();
-        if(personName==""||personID==""||role==""){
-            JOptionPane.showMessageDialog(this, "Please Input!");
-            return;
-        }
-        Person e = new Person( personName,  personID,  role);
-        personlist.add(e);
-        populateTable();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        String id=txtid.getText();
 
-        String personName=txtname.getText();
-        String personID=txtid.getText();
-        String role=txtStart.getText();
-        if(personName==""||personID==""||role==""){
-            JOptionPane.showMessageDialog(this, "Please Input!");
-            return;
-        }
-
-        int selectedRowIndex = personTbl.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to update.");
-            return;
-        }else{
-            DefaultTableModel model = (DefaultTableModel) personTbl.getModel();
-            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-            Person d = personDirectory.findPersonById(selectedID);
-            if(d!=null){
-                for(Person vs : personlist){
-                    if(vs.getPersonID().equals(id)&&!selectedID.equals(id)){
-                        JOptionPane.showMessageDialog(this, "Already Exist ID");
-                        return;
-                    }
-                }
-                d.setPersonID(personID);
-                d.setPersonName(personName);
-                d.setRole(role);
-                populateTable();
-                JOptionPane.showMessageDialog(this, "Updated!");
-                return;
-            }
-            JOptionPane.showMessageDialog(this, "Not Existed!");
-        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int selectedRowIndex = personTbl.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to Delete.");
-            return;
-        }else{
-            DefaultTableModel model = (DefaultTableModel) personTbl.getModel();
-            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-            for(Person vs : personlist){
-                if(vs.getPersonID().equals(selectedID)){
-                    //
-                    personlist.remove(vs);
-                    populateTable();
-                    JOptionPane.showMessageDialog(this, "Deleted!");
-                    return;
-                }
-            }
-            JOptionPane.showMessageDialog(this, "Not Existed!");
-        }
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed
