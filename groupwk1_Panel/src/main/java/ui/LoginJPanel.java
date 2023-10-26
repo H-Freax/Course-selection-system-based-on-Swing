@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package ui;
 
 import java.awt.CardLayout;
@@ -164,8 +160,10 @@ public class LoginJPanel extends javax.swing.JPanel {
             } else if (btnProfessor.isSelected()) {
                 // 显示 Professor 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                ProfessorDirectory prolist = new ProfessorDirectory();
-                Professor professor = prolist.getProfessorByusername(username);
+                ProfessorDirectory professorDirectory = new ProfessorDirectory();
+                professorDirectory.loadAllProfessorsFromDatabase(connection);
+                Professor professor = professorDirectory.getProfessorByusername(username);
+
                 FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  professor);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
