@@ -157,33 +157,29 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                         .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(43, 43, 43)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel6)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSearch)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)))
+                        .addComponent(btnSearch)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtname)
+                            .addComponent(txtid))
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel6)
+                        .addGap(29, 29, 29)
+                        .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)))
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addContainerGap(77, Short.MAX_VALUE))
@@ -297,7 +293,7 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
-        Person e = new Person( personName,  personID,  role);
+
         int selectedRowIndex = personTbl.getSelectedRow();
         if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");
@@ -305,13 +301,20 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
             DefaultTableModel model = (DefaultTableModel) personTbl.getModel();
             String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-            for(Person d : personlist){
-                if(d.getPersonID().equals(selectedID)){
-                    d=e;
+            Person d = personDirectory.findPersonById(selectedID);
+            if(d!=null){
+                    for(Person vs : personlist){
+                        if(vs.getPersonID().equals(id)&&!selectedID.equals(id)){
+                            JOptionPane.showMessageDialog(this, "Already Exist ID");
+                                return;
+                            }
+                   }
+                    d.setPersonID(personID);
+                    d.setPersonName(personName);
+                    d.setRole(role);
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
-                }
             }
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }

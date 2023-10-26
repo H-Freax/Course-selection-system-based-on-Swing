@@ -378,10 +378,8 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
-        Student stu1 = new Student( personName,  personID,  username,  nowPassword,  enabled,  gpa);
+        
         Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
-        stu1.setPasswordHistory(stringSet1);
-
        int selectedRowIndex = stuTable.getSelectedRow();
        if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");
@@ -391,8 +389,21 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
                 Student stu = studentdirectory.findStudent(selectedID);
                 if(stu!=null){
-                    stu=stu1;
+                    for(Student vs : studentList){
+                        if(vs.getPersonID().equals(personID)&&!selectedID.equals(personID)){
+                            JOptionPane.showMessageDialog(this, "Already Exist ID");
+                                return;
+                            }
+                   }
+                    stu.setPasswordHistory(stringSet1);
+                    stu.setEnabled(enabled);
+                    stu.setGpa(gpa);
+                    stu.setNowPassword(nowPassword);
+                    stu.setPersonID(personID);
+                    stu.setPersonName(personName);
+                    stu.setUsername(username);
                     JOptionPane.showMessageDialog(this, "Updated!");
+                    populateTable();
                     return;
                 }
             JOptionPane.showMessageDialog(this, "Not Existed!");

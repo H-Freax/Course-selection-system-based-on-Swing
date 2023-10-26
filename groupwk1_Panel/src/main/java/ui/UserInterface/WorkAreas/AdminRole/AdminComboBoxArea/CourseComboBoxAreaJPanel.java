@@ -481,10 +481,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
        int selectedRowIndex = courseTable.getSelectedRow();
 
         String id=txtCurrentCourseId.getText();
-        if(courseDirectory.getCourseById(id)!=null){
-            JOptionPane.showMessageDialog(this, "ID already existed!");
-            return;
-        }
+
         String name=txtCurrentCourseName.getText();
         String introduction=txtIntro.getText();
         int point=Integer.parseInt(txtCurrentCoursePoint.getText());
@@ -503,9 +500,13 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         List<String> stringSet2 = new ArrayList<>(Arrays.asList(txtEnrolled.getText().split(",")));
         List<String> topics=stringSet; // Store course topics
         List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
-        Course c = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime,0);
-        c.setTopics(topics);
-        c.setEnrolledStudents(enrolledStudents);
+        DefaultTableModel model1 = (DefaultTableModel) courseTable.getModel();
+        String selectedID1 = (String) model1.getValueAt(selectedRowIndex, 0);
+        for(Course vs : courselist){
+            if(vs.getId().equals(id)&&!selectedID1.equals(id)){
+                JOptionPane.showMessageDialog(this, "Already Exist ID");
+                return;
+            }}
         if(id==""||name==""||semesterId!=""||status==""||professor==""||location==""||studentLimit==0||studentCount==0){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
@@ -516,14 +517,25 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                for(Course d : courselist){
-                    if(d.getId().equals(selectedID)){
-                    d=c;
+                
+                Course d = courseDirectory.getCourseById(selectedID);
+                if(d!=null){
+                    d.setId(id);
+                    d.setName(name);
+                    d.setIntroduction(introduction);
+                    d.setPoint(point);
+                    d.setProfessor(professor);
+                    d.setSemesterId(semesterId);
+                    d.setTopics(topics);
+                    d.setStudentLimit(studentLimit);
+                    d.setStudentCount(studentCount);
+                    d.setEnrolledStudents(enrolledStudents);
+                    d.setBeginTime(beginTime);
+                    d.setEndTime(endTime);
                     JOptionPane.showMessageDialog(this, "Updated!");
                     populateTable();
-                    return;
                 }
-            }
+
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
 

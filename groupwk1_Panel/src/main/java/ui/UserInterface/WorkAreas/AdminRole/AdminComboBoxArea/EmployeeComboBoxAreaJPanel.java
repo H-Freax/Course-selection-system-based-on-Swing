@@ -324,21 +324,28 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
-        if(employeeDirectory.findEmployeeByID(id)!=null){
-            JOptionPane.showMessageDialog(this, "ID already existed!");
-            return;
-        }
+
+        
+
         String personName=txtname.getText();
         String personID=txtid.getText(); 
         String username=txtuser.getText();
         String nowPassword=txtpwd.getText();
-        boolean enabled=Boolean.getBoolean(txtEnabled.getText());
+        boolean enabled=false;
         String role=txtRole.getText();
-        if(personName==""||personID==""||username==""||nowPassword==""||role==""){
+        if("".equals(personName)||"".equals(personID)||"".equals(username)||"".equals(nowPassword)||"".equals(role)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
-        Employee e = new Employee( personName,  personID,  username,  nowPassword,  enabled,  role);
+       if("true".equals(txtEnabled.getText())){
+                enabled=true;
+        }else if("false".equals(txtEnabled.getText())){
+                enabled=false;
+            }else{
+                JOptionPane.showMessageDialog(this, "Please input true/false in isEnabled!");
+                return;
+            }
+       
        int selectedRowIndex = EmployeeTable.getSelectedRow();
        if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");
@@ -346,15 +353,26 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                for(Employee d : employeeList){
-                    if(d.getPersonID().equals(selectedID)){
-                    d=e;
-                    JOptionPane.showMessageDialog(this, "Updated!");
+                Employee c = employeeDirectory.findEmployeeByID(selectedID);
+                if(c!=null){
+                    for(Employee vs : employeeList){
+                    if(vs.getPersonID().equals(id)&&!selectedID.equals(id)){
+                        JOptionPane.showMessageDialog(this, "Already Exist ID");
+                            return;
+                        }
+                   }
+                    c.setUsername(username);
+                    c.setPersonName(personName);
+                    c.setEnabled(enabled);
+                    c.setNowPassword(nowPassword);
+                    c.setPersonID(personID);
+                    c.setRole(role);
                     populateTable();
+                    JOptionPane.showMessageDialog(this, "Updated!");
                     return;
                 }
-            }
             JOptionPane.showMessageDialog(this, "Not Existed!");
+
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed

@@ -465,11 +465,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         String id = txtid.getText();
-        for(Professor vs : professorlist){
-            if(vs.getPersonID().equals(id)){
-                JOptionPane.showMessageDialog(this, "Already Exist ID");
-                return;
-            }}
+
+
         String name = txtname.getText();
         String isEnabled = txtisEnabled.getText();
         String region = txtRegion.getText();
@@ -496,26 +493,33 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                 return;
             }
         }
-        Professor p = new Professor(name, id,  user, pwd,isRight , "professor");
-        p.setLanguage(language);
-        p.setRegion(region);
-        p.setTopics(stringSet);     
-        p.setPasswordHistory(stringSet1);
+        DefaultTableModel model1 = (DefaultTableModel) tblProfessor.getModel();
+        String selectedID1 = (String) model1.getValueAt(selectedRowIndex, 0);
+        for(Professor vs : professorlist){
+            if(vs.getPersonID().equals(id)&&!selectedID1.equals(id)){
+                JOptionPane.showMessageDialog(this, "Already Exist ID");
+                return;
+            }}
         if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");
             return;
         }else{
                 DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                
-                for(Professor c : professorlist){
-                    if(c.getPersonID().equals(selectedID)){
-                    c=p;
+                Professor c = professorDirectory.getProfessorById(selectedID);
+                if(c!=null){
+                    c.setUsername(user);
+                    c.setEnabled(isRight);
+                    c.setLanguage(language);
+                    c.setNowPassword(pwd);
+                    c.setPersonID(id);
+                    c.setRate(Double.parseDouble(rate));
+                    c.setTopics(stringSet);
+                    c.setPasswordHistory(stringSet1);
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
                 }
-            }
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
 

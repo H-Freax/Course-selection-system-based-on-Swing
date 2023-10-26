@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Business.Person.Employee;
+import Business.Person.Person;
 import Tools.MySQLConnectionUtil;
 
 public class EmployeeDirectory {
@@ -33,9 +34,9 @@ public class EmployeeDirectory {
                 String username = resultSet.getString("username");
                 String passwordHash = resultSet.getString("nowpassword");
                 boolean enabled = resultSet.getString("enabled").equals("1");
-
+                Person p = Person.loadFromDatabase(connection, personID);
                 // 创建Employee对象并添加到employeeList
-                Employee employee = new Employee("", personID, username, "", enabled, "employee");
+                Employee employee = new Employee(p.getPersonName(), personID, username, "", enabled, "employee");
                 employee.setPwdHash(passwordHash);
                 employeeList.add(employee);
             }
