@@ -160,7 +160,7 @@ public class CourseDirectory {
         return list;
     }
 
-            public List<CourseVO> loadCourseListByStudentIdSemFromDatabase(String keyWords, String studentId, String semester ) throws SQLException{
+    public List<CourseVO> loadCourseListByStudentIdSemFromDatabase(String keyWords, String studentId, String semester ) throws SQLException{
         List<CourseVO> list = new ArrayList<>();
         String query = "SELECT max(c.id) id , max(c.statue) statue , max(cs.score) score , max(c.begintime) begintime , max(c.endtime) endtime ," +
                 " max(c.location) location , max(c.introduction) introduction , max(c.point) point , " +
@@ -201,6 +201,7 @@ public class CourseDirectory {
             while (resultSet.next()) {
                 CourseVO course = CourseVO.resultSetToCourseVO(resultSet);
                 list.add(course);
+                System.out.println("course.getName():"+course.getName());
             }
         }
 

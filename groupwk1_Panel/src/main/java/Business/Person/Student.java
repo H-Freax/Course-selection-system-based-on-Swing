@@ -25,6 +25,9 @@ public class Student extends Person {
     private List<String> courseList; // 用于存储学生的课程信息
     private Set<String> passwordHistory;
 
+    public Student(){
+
+    }
     public Student(String personName, String personID, String username, String nowPassword, boolean enabled, double gpa) {
         super(personName, personID, "Student");
         this.nowPassword = PasswordUtils.hashPassword(nowPassword);
@@ -184,7 +187,7 @@ public class Student extends Person {
 
     public static List<Student> loadAllFromDatabase(Connection connection) throws SQLException {
         List<Student> students = new ArrayList<>();
-        String selectStudentsQuery = "SELECT * FROM Student";
+        String selectStudentsQuery = "SELECT * FROM Student ";
         try (PreparedStatement statement = connection.prepareStatement(selectStudentsQuery)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

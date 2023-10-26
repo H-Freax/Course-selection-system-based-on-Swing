@@ -69,6 +69,22 @@ public class Person {
         }
     }
 
+    public static boolean isPersonExists(Connection connection, String personID, String personName, String role) throws SQLException {
+        // 查询数据库以检查是否存在具有指定属性的 Person 对象
+        String checkPersonQuery = "SELECT COUNT(*) FROM Person WHERE PersonID = ? AND PersonName = ? AND role = ?";
+        try (PreparedStatement statement = connection.prepareStatement(checkPersonQuery)) {
+            statement.setString(1, personID);
+            statement.setString(2, personName);
+            statement.setString(3, role);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // 如果记录数大于0，则表示存在
+            }
+        }
+        return false; // 如果没有匹配的记录，则表示不存在
+    }
+
     public static Person loadFromDatabase(Connection connection, String personID) throws SQLException {
         // 从数据库加载 Person 对象信息
         String selectPersonQuery = "SELECT * FROM Person WHERE PersonID = ?";

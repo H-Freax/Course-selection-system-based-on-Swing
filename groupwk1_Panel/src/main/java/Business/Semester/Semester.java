@@ -91,6 +91,21 @@ public class Semester {
         }
         return null;
     }
+    public static Semester loadFromDatabaseByName(Connection connection, String semesterName) throws SQLException {
+        String query = "SELECT * FROM Semester WHERE semstername = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, semesterName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String id = resultSet.getString("id");
+                LocalDateTime semesterStart = resultSet.getTimestamp("semesterstart").toLocalDateTime();
+                LocalDateTime semesterEnd = resultSet.getTimestamp("semesterend").toLocalDateTime();
+                return new Semester(id, semesterName, semesterStart, semesterEnd);
+            }
+        }
+        return null;
+    }
+
 
     public void setSemesterDates(int year, String season) {
         if (season.equalsIgnoreCase("Spring")) {
