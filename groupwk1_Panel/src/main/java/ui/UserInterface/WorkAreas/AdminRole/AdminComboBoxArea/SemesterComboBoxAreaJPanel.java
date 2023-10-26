@@ -4,6 +4,10 @@ import Business.Semester.Semester;
 import Tools.MySQLConnectionUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -242,27 +246,148 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
+        String search=txtSearch.getText();
+        Semester d = null;
+        if("".equals(search)){
+            JOptionPane.showMessageDialog(this, "Please enter!");
+        }else{
+            for(Semester e : semList){
+                if(e.getId().equals(search)){
+                    d = e;
+                }
+            }
+            if(d!=null){
+                txtid.setText(d.getId());
+                txtname.setText(d.getSemesterName());
+                
+                txtStart.setText(String.valueOf(d.getSemesterStart()));
+                txtEnd.setText(String.valueOf(d.getSemesterEnd()));
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
 
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int selectedRowIndex = semTbl.getSelectedRow();
+        Semester d = null;
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to View.");
+            return;
+        }else{
+                DefaultTableModel model = (DefaultTableModel) semTbl.getModel();
+                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                for(Semester e : semList){
+                if(e.getId().equals(selectedID)){
+                    d = e;
+                    }
+                }
+                if(d!=null){
+                    txtid.setText(d.getId());
+                    txtname.setText(d.getSemesterName());
+                    txtStart.setText(String.valueOf(d.getSemesterStart()));
+                    txtEnd.setText(String.valueOf(d.getSemesterEnd()));
+                    return;
+                }
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String id=txtid.getText();
+        for(Semester e : semList){
+                if(e.getId().equals(id)){
+                    JOptionPane.showMessageDialog(this, "ID Already Existed");
+                    return;
+                    }
+                }
+        String semesterName=txtname.getText();
+        String startTime = txtStart.getText();
+        String endTime = txtEnd.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // 将字符串转换为LocalDate对象
+        LocalDateTime localDate = LocalDateTime.parse(startTime, formatter);
+        LocalDateTime localDate1 = LocalDateTime.parse(endTime, formatter);
+        if("".equals(semesterName)||"".equals(id)||"".equals(startTime)||"".equals(endTime)){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
+        Semester e = new Semester( id,  semesterName,  localDate,  localDate1);
+        semList.add(e);
+        populateTable();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        String id=txtid.getText();
+        String semesterName=txtname.getText();
+        String startTime = txtStart.getText();
+        String endTime = txtEnd.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // 将字符串转换为LocalDate对象
+        LocalDateTime localDate = LocalDateTime.parse(startTime, formatter);
+        LocalDateTime localDate1 = LocalDateTime.parse(endTime, formatter);
+        if("".equals(semesterName)||"".equals(id)||"".equals(startTime)||"".equals(endTime)){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
+       
+       int selectedRowIndex = semTbl.getSelectedRow();
+       if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to update.");
+            return;
+        }else{
+                DefaultTableModel model = (DefaultTableModel) semTbl.getModel();
+                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                Semester c = null;
+                for(Semester e : semList){
+                    if(e.getId().equals(selectedID)){
+                        c = e;
+                    }
+                    if(e.getId().equals(selectedID)&&!id.equals(selectedID)){
+                        JOptionPane.showMessageDialog(this, "ID Already Existed");
+                        return;
+                    }
+                }
+                if(c!=null){
+                    c.setId(id);
+                    c.setSemesterName(semesterName);
+                    c.setSemesterStart(localDate);
+                    c.setSemesterEnd(localDate1);
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Updated!");
+                    return;
+                }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
 
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-
+        int selectedRowIndex = semTbl.getSelectedRow();
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to Deleted.");
+            return;
+        }else{
+            DefaultTableModel model = (DefaultTableModel) semTbl.getModel();
+            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+            for(Semester vs : semList){
+                if(vs.getId().equals(selectedID)){
+                    //
+                    semList.remove(vs);
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Deleted!");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed

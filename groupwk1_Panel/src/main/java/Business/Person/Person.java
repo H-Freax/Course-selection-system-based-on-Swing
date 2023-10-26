@@ -9,14 +9,15 @@ public class Person {
     private String personID;
     private String role;
 
+
     public Person(String personName, String personID, String role) {
         this.personName = personName;
         this.personID = personID;
         this.role = role;
     }
 
-    Person() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Person() {
+
     }
 
     public String getPersonName() {
