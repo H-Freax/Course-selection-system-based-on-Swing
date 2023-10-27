@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Course;
+
+import Business.Person.Student;
 
 import java.time.LocalDateTime;
 import java.sql.Connection;
@@ -34,11 +32,14 @@ public class Course {
     private List<String> topics; // Store course topics
     private List<String> enrolledStudents; // Store enrolled student IDs
 
+    private double score;
+
     public Course() {
     }
 
     public Course(String id, String name, String introduction, int point, String semesterId, String status,
-                  String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime) {
+                  String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime,
+                  double score) {
         this.id = id;
         this.name = name;
         this.introduction = introduction;
@@ -53,6 +54,7 @@ public class Course {
         this.endTime = endTime;
         this.topics = new ArrayList<>();
         this.enrolledStudents = new ArrayList<>();
+        this.score = score;
     }
 
     // Getter and Setter methods for class properties
@@ -161,6 +163,14 @@ public class Course {
         this.topics = topics;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
     public List<String> getEnrolledStudents() {
         return enrolledStudents;
     }
@@ -192,8 +202,8 @@ public class Course {
 
 
     public void saveToDatabase(Connection connection) throws SQLException {
-        String query = "INSERT INTO Course (id, name, introduction, point, semesterid, statue, professor, location, studentlimited, studentcount, begintime, endtime) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Course (id, name, introduction, point, semesterid, statue, location, studentlimited, studentcount) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, id);
             statement.setString(2, name);
@@ -201,12 +211,11 @@ public class Course {
             statement.setInt(4, point);
             statement.setString(5, semesterId);
             statement.setString(6, status);
-            statement.setString(7, professor);
-            statement.setString(8, location);
-            statement.setInt(9, studentLimit);
-            statement.setInt(10, studentCount);
-            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
-            statement.setTimestamp(12, Timestamp.valueOf(endTime));
+            statement.setString(7, location);
+            statement.setInt(8, studentLimit);
+            statement.setInt(9, studentCount);
+//            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
+//            statement.setTimestamp(12, Timestamp.valueOf(endTime));
             statement.executeUpdate();
         }
     }
@@ -230,6 +239,7 @@ public class Course {
             statement.executeUpdate();
         }
     }
+
 
     public void deleteFromDatabase(Connection connection) throws SQLException {
         String query = "DELETE FROM Course WHERE id = ?";
@@ -263,7 +273,8 @@ public class Course {
                 resultSet.getInt("studentlimited"),
                 resultSet.getInt("studentcount"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
-                resultSet.getTimestamp("endtime").toLocalDateTime()
+                resultSet.getTimestamp("endtime").toLocalDateTime(),
+                resultSet.getDouble("score")
         );
     }
     public void addTopic(Connection connection, String topic) throws SQLException {
@@ -304,7 +315,7 @@ public class Course {
             statement.setString(2, studentId);
             statement.executeUpdate();
         }
-        enrolledStudents.remove(studentId);
+//        enrolledStudents.remove(studentId);
     }
 
     public int calculateStudentCount(Connection connection) throws SQLException {
@@ -331,4 +342,56 @@ public class Course {
         }
     }
 
+    //update Student-Edition
+    //Student Enroll
+    public void updateStudentCountInCourse(Connection connection, int count) throws SQLException {
+        String query = "UPDATE Course SET studentcount = studentcount + ? WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, count);
+            statement.setString(2, id);
+            //去数据库执行
+            statement.executeUpdate();
+        }
+    }
+
+    public boolean isEnrolledStudentInCourseById(Connection connection, Student student) throws SQLException {
+        String query = "select cs.studuent_id from Course c left join CourseStudent cs " +
+                "on c.id = cs.course_id " +
+                "where cs.course_id =? and cs.studuent_id =? ";
+        String studentId = null;
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, id);
+            statement.setString(2, student.getPersonID());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                studentId = resultSet.getString("studuent_id");
+            }
+        }
+        return studentId != null;
+    }
+
+//    Starttime
+//    EndTime暂定
+    public void updateCourseToDatabase(Connection connection) throws SQLException {
+        String query = "UPDATE Course SET name = ?, introduction = ?, point = ?, semesterid = ?, statue = ?, " +
+                "location = ?, studentlimited = ?, studentcount = ? WHERE id = ?";
+//        String query = "UPDATE Course SET name = ?, introduction = ?, point = ?, semesterid = ?, statue = ?, " +
+//                "location = ?, studentlimited = ?, studentcount = ?, begintime = ?, endtime = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, name);
+            statement.setString(2, introduction);
+            statement.setInt(3, point);
+            statement.setString(4, semesterId);
+            statement.setString(5, status);
+            statement.setString(6, location);
+            statement.setInt(7, studentLimit);
+            statement.setInt(8, studentCount);
+//            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
+//            statement.setTimestamp(12, Timestamp.valueOf(endTime));
+            statement.setString(9, id);
+            statement.executeUpdate();
+        }
+    }
 }

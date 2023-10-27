@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Directory;
 
 import Business.Person.Student;
+import Tools.MySQLConnectionUtil;
+
 import java.util.ArrayList;
 
 import java.sql.Connection;
@@ -13,10 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDirectory {
+
+
     private List<Student> studentList;
+
 
     public StudentDirectory() {
         studentList = new ArrayList<>();
+
+        //给studentList赋值
+
+        try {
+            loadStudentsFromDatabase(MySQLConnectionUtil.getConnection());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
+    }
+
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
     }
 
     // 添加学生到目录
@@ -29,6 +47,14 @@ public class StudentDirectory {
         studentList.remove(student);
     }
 
+    public Student findStudentbyUsername(String username) {
+        for (Student student : studentList) {
+            if (student.getUsername().equals(username)) {
+                return student;
+            }
+        }
+        return null;
+    }
     // 通过学生ID查找学生
     public Student findStudent(String personID) {
         for (Student student : studentList) {

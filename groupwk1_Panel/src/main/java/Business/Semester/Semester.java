@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Semester;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Semester {
     private String id;
@@ -13,12 +11,16 @@ public class Semester {
     private LocalDateTime semesterStart;
     private LocalDateTime semesterEnd;
 
+    public Semester(){
+
+    }
     public Semester(String id, String semesterName, LocalDateTime semesterStart, LocalDateTime semesterEnd) {
         this.id = id;
         this.semesterName = semesterName;
         this.semesterStart = semesterStart;
         this.semesterEnd = semesterEnd;
     }
+
 
     public String getId() {
         return id;
@@ -36,6 +38,41 @@ public class Semester {
         return semesterEnd;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setSemesterName(String semesterName) {
+        this.semesterName = semesterName;
+    }
+
+    public void setSemesterStart(LocalDateTime semesterStart) {
+        this.semesterStart = semesterStart;
+    }
+
+    public void setSemesterEnd(LocalDateTime semesterEnd) {
+        this.semesterEnd = semesterEnd;
+    }
+
+
+
+
+    public static List<Semester> getAllSemestersFromDatabase(Connection connection) throws SQLException {
+        List<Semester> semesters = new ArrayList<>();
+        String query = "SELECT * FROM Semester";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String semesterName = resultSet.getString("semstername");
+                LocalDateTime semesterStart = resultSet.getTimestamp("semesterstart").toLocalDateTime();
+                LocalDateTime semesterEnd = resultSet.getTimestamp("semesterend").toLocalDateTime();
+                Semester semester = new Semester(id, semesterName, semesterStart, semesterEnd);
+                semesters.add(semester);
+            }
+        }
+        return semesters;
+    }
     public static Semester loadFromDatabase(Connection connection, String id) throws SQLException {
         String query = "SELECT * FROM Semester WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -50,6 +87,21 @@ public class Semester {
         }
         return null;
     }
+    public static Semester loadFromDatabaseByName(Connection connection, String semesterName) throws SQLException {
+        String query = "SELECT * FROM Semester WHERE semstername = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, semesterName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String id = resultSet.getString("id");
+                LocalDateTime semesterStart = resultSet.getTimestamp("semesterstart").toLocalDateTime();
+                LocalDateTime semesterEnd = resultSet.getTimestamp("semesterend").toLocalDateTime();
+                return new Semester(id, semesterName, semesterStart, semesterEnd);
+            }
+        }
+        return null;
+    }
+
 
     public void setSemesterDates(int year, String season) {
         if (season.equalsIgnoreCase("Spring")) {

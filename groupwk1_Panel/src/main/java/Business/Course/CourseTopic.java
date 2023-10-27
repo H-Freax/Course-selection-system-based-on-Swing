@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Course;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import Tools.MySQLConnectionUtil;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +9,9 @@ public class CourseTopic {
     private List<String> topics;
     private Connection connection;
 
-    public CourseTopic(Connection connection) {
+    public CourseTopic() {
         topics = new ArrayList<>();
-        this.connection = connection;
+        this.connection = MySQLConnectionUtil.getConnection();
     }
 
     public void addTopicToCourse(String topic, Course course) throws SQLException {
@@ -65,6 +60,16 @@ public class CourseTopic {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, courseId);
             statement.setString(2, topic);
+            statement.executeUpdate();
+        }
+    }
+
+    public void updateTopicToCourse(String topic, Course updateCourse) throws SQLException {
+        String query = "UPDATE CourseTopic SET  topic = ? WHERE course_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, topic);
+            statement.setString(2, updateCourse.getId());
+
             statement.executeUpdate();
         }
     }

@@ -1,14 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package ui.UserInterface.WorkAreas.AdminRole;
 
 import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import model.PersonList;
+
+import Business.Person.Employee;
+import Tools.MySQLConnectionUtil;
 import ui.LoginJPanel;
-import static ui.MainJFrame.readDataFromFile;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.CourseComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.EmployeeComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.FacultyComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.PersonComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.RateComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.SemesterComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.StudentComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
 
 /**
@@ -25,13 +32,14 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 //        initComponents();
 //
 //    }
+    private Employee employee;
     private JPanel controlPanel;
-    private PersonList personList; 
     private JPanel ViewContainer;
-    public AdminWorkAreaJPanel(JPanel ViewContainer,JPanel controlPanel, PersonList personList) {
+    String selectedText="";
+    public AdminWorkAreaJPanel(JPanel ViewContainer, JPanel controlPanel, Employee employee) {
         initComponents();
         this.controlPanel = controlPanel;
-        this.personList=  personList;
+        this.employee=  employee;
         this.ViewContainer=ViewContainer;
     }
 
@@ -50,6 +58,9 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         btnLogout = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        btnGo = new javax.swing.JButton();
+        btnCreate = new javax.swing.JButton();
 
         jButton8.setBackground(new java.awt.Color(102, 153, 255));
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
@@ -114,40 +125,87 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        jComboBox1.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 18)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Faculty", "Student", "Course", "Rate","Person","Employee","HistoryPwd","Semester","Course-Pro","Course-Stu"}));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        btnGo.setText("Go");
+        btnGo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    btnGoActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        btnCreate.setBackground(new java.awt.Color(102, 153, 255));
+        btnCreate.setForeground(new java.awt.Color(255, 255, 255));
+        btnCreate.setText("Create Profile");
+        btnCreate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCreate.setMaximumSize(new java.awt.Dimension(145, 40));
+        btnCreate.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnCreate.setPreferredSize(new java.awt.Dimension(240, 25));
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateIdentifyEventsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(btnLogout)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGo)))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(btnLogout)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGo))
+                .addGap(43, 43, 43)
+                .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64)
                 .addComponent(btnLogout)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -162,14 +220,14 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        this.personList = readDataFromFile("personlist.txt");
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+
+        LoginJPanel panel = new LoginJPanel(ViewContainer,controlPanel);
         ViewContainer.add("LoginJPanel",panel);
         GeneralJPanel panel3 = new GeneralJPanel();
         CardLayout layout1 = (CardLayout)controlPanel.getLayout();
         controlPanel.add(panel3);
         layout1.next(controlPanel);
-        
+
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);        // TODO add your handling code here:
         btnLogout.setVisible(false);
@@ -183,13 +241,67 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9IdentifyEventsActionPerformed
 
+    private void btnGoActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnGoActionPerformed
+        // TODO add your handling code here:
+        if("Faculty".equals(selectedText)){
+            FacultyComboBoxAreaJPanel cPanel = new FacultyComboBoxAreaJPanel();
+            ViewContainer.add("FacultyComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else if("Student".equals(selectedText)){
+            StudentComboBoxAreaJPanel cPanel = new StudentComboBoxAreaJPanel();
+            ViewContainer.add("StudentComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else if("Course".equals(selectedText)){
+            CourseComboBoxAreaJPanel cPanel = new CourseComboBoxAreaJPanel();
+            ViewContainer.add("CourseComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else if("Rate".equals(selectedText)){
+            RateComboBoxAreaJPanel cPanel = new RateComboBoxAreaJPanel();
+            ViewContainer.add("RateComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else if("Person".equals(selectedText)){
+            PersonComboBoxAreaJPanel cPanel = new PersonComboBoxAreaJPanel();
+            ViewContainer.add("PersonComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else if("Employee".equals(selectedText)){
+            EmployeeComboBoxAreaJPanel cPanel = new EmployeeComboBoxAreaJPanel();
+            ViewContainer.add("EmployeeComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else if("Semester".equals(selectedText)){
+            SemesterComboBoxAreaJPanel cPanel = new SemesterComboBoxAreaJPanel();
+            ViewContainer.add("EmployeeComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else{
+            JOptionPane.showMessageDialog(this,"Please select a row!");
+        }
+    }//GEN-LAST:event_btnGoActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        selectedText = jComboBox1.getSelectedItem().toString();
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void btnCreateIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateIdentifyEventsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCreateIdentifyEventsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnGo;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

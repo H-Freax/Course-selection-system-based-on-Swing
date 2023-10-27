@@ -17,9 +17,12 @@ public class Employee extends Person {
     private String pwdHash;
     private Set<String> passwordHistory; // 用于存储密码历史
 
+    public Employee(){
+
+    }
     public Employee(String personName, String personID, String username, String nowPassword, boolean enabled, String role) {
         super(personName, personID, role);
-        this.nowPassword = Tools.PasswordUtils.hashPassword(nowPassword);
+        this.nowPassword =nowPassword;
         this.username = username;
         this.enabled = enabled;
         this.pwdHash = Tools.PasswordUtils.hashPassword(nowPassword);
@@ -132,8 +135,8 @@ public class Employee extends Person {
                 String username = resultSet.getString("username");
                 String passwordHash = resultSet.getString("nowpassword");
                 boolean enabled = resultSet.getString("enabled").equals("1");
-
-                Employee employee = new Employee(person.getPersonName(), personID, username, "", enabled, person.getRole());
+                Person p = Person.loadFromDatabase(connection, personID);
+                Employee employee = new Employee(p.getPersonName(), personID, username, "", enabled, person.getRole());
                 employee.setNowPassword(""); // 不直接保存明文密码
                 employee.setPwdHash(passwordHash);
 
