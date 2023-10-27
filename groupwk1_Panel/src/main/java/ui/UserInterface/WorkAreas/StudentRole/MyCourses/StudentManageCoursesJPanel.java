@@ -601,6 +601,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
                 row[1] = course.getName();
                 row[2] = course.getProfessor();
                 row[3] = course.getStatus();
+                System.out.println(course.getScore());
                 row[4] = course.getScore();
                 row[5] =course.getSemester();
 

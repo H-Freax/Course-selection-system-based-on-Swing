@@ -298,12 +298,18 @@ public class CourseVO {
         }
     }
     public static CourseVO resultSetToCourseVO(ResultSet resultSet) throws SQLException {
+        double a;
+        try{
+            a= resultSet.getDouble("score");
+        } catch (Exception e){
+            a=0d;
+        }
         return new CourseVO(
                 resultSet.getString("id"),
                 resultSet.getString("name"),
                 resultSet.getString("introduction"),
                 resultSet.getInt("point"),
-                 null,
+                null,
                 resultSet.getString("statue"),
                 resultSet.getString("professor"),
                 resultSet.getString("location"),
@@ -311,7 +317,7 @@ public class CourseVO {
                 resultSet.getInt("studentcount"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
                 resultSet.getTimestamp("endtime").toLocalDateTime(),
-                0d,
+                a,
                 resultSet.getString("region"),
                 resultSet.getString("language"),
                 resultSet.getString("topics"),

@@ -224,7 +224,7 @@ public class CourseDirectory {
             while (resultSet.next()) {
                 CourseVO course = CourseVO.resultSetToCourseVO(resultSet);
                 list.add(course);
-                System.out.println("course.getName():"+course.getName());
+                System.out.println("course.getScore():"+course.getScore());
             }
         }
 
@@ -241,6 +241,7 @@ public class CourseDirectory {
             course.setProfessor(vo.getProfessor());
             course.setStatus(vo.getStatus());
             course.setTopics(vo.getTopics());
+            System.out.println("score:::"+vo.getScore());
             course.setScore(vo.getScore());
             return course;
         }).collect(Collectors.toList());
