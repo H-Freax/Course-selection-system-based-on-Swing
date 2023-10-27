@@ -77,6 +77,44 @@ public class Rate {
         return rateId;
     }
 
+    public void setProfessorId(String professorId) {
+        this.professorId = professorId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public void setScorePart1(String scorePart1) {
+        this.scorePart1 = scorePart1;
+    }
+
+    public void setScorePart2(String scorePart2) {
+        this.scorePart2 = scorePart2;
+    }
+
+    public void setScorePart3(String scorePart3) {
+        this.scorePart3 = scorePart3;
+    }
+
+    public void setScorePart4(String scorePart4) {
+        this.scorePart4 = scorePart4;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+    
+    
+
     public void setRateId(String rateId) {
         this.rateId = rateId;
     }
@@ -88,7 +126,7 @@ public class Rate {
             while (resultSet.next()) {
                 String rateId = resultSet.getString("rate_id");
                 String professorId = resultSet.getString("professor_id");
-                String studentId = resultSet.getString("student_id");
+                String studentId = resultSet.getString("studuent_id");
                 String courseId = resultSet.getString("course_id");
                 String scorePart1 = resultSet.getString("scorepart1");
                 String scorePart2 = resultSet.getString("scorepart2");
@@ -105,7 +143,7 @@ public class Rate {
 
 
     public void saveToDatabase(Connection connection) throws SQLException {
-        String query = "INSERT INTO Rate (professor_id, student_id, course_id, scorepart1, scorepart2, scorepart3, scorepart4, comment, score,rate_id) " +
+        String query = "INSERT INTO Rate (professor_id, studuent_id, course_id, scorepart1, scorepart2, scorepart3, scorepart4, comment, score,rate_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -133,7 +171,7 @@ public class Rate {
             while (resultSet.next()) {
                 String rateId = resultSet.getString("rate_id");
                 String professorId = resultSet.getString("professor_id");
-                String studentId = resultSet.getString("student_id");
+                String studentId = resultSet.getString("studuent_id");
                 String courseId = resultSet.getString("course_id");
                 String scorePart1 = resultSet.getString("scorepart1");
                 String scorePart2 = resultSet.getString("scorepart2");
@@ -152,7 +190,7 @@ public class Rate {
 
 
     public static Rate loadFromDatabase(Connection connection, String professorId, String studentId, String courseId) throws SQLException {
-        String query = "SELECT * FROM Rate WHERE professor_id = ? AND student_id = ? AND course_id = ?";
+        String query = "SELECT * FROM Rate WHERE professor_id = ? AND studuent_id = ? AND course_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, professorId);
             statement.setString(2, studentId);

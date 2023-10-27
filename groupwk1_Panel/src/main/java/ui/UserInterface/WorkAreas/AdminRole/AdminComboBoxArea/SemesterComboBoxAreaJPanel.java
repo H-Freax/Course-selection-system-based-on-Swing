@@ -38,8 +38,11 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
                 Object[] row = new Object[4];
                 row[0] = vs.getId();
                 row[1] = vs.getSemesterName();
-                row[2] = vs.getSemesterStart();
-                row[3] = vs.getSemesterEnd();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String formattedDateTime = vs.getSemesterStart().format(formatter);
+                String formattedDateTime1 = vs.getSemesterEnd().format(formatter);
+                row[2] = formattedDateTime;
+                row[3] = formattedDateTime1;
                 model.addRow(row);
 
         }
@@ -287,8 +290,11 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
                 if(d!=null){
                     txtid.setText(d.getId());
                     txtname.setText(d.getSemesterName());
-                    txtStart.setText(String.valueOf(d.getSemesterStart()));
-                    txtEnd.setText(String.valueOf(d.getSemesterEnd()));
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String formattedDateTime = d.getSemesterStart().format(formatter);
+                    String formattedDateTime1 = d.getSemesterEnd().format(formatter);
+                    txtStart.setText(formattedDateTime);
+                    txtEnd.setText(formattedDateTime1);
                     return;
                 }
         }

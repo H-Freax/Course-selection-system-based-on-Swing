@@ -2,8 +2,13 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Rate.Rate;
 import static Business.Rate.Rate.getAllRatesFromDatabase;
+import Tools.MySQLConnectionUtil;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,9 +22,11 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
      */
 
     List<Rate> rateList;
+    Connection connection;
     public RateComboBoxAreaJPanel() throws SQLException {
         initComponents();
-        rateList= Rate.getAllRatesFromDatabase();
+        connection=MySQLConnectionUtil.getConnection();
+        rateList= Rate.loadAllRatesFromDatabase(connection);
         populateTable();
     }
 
@@ -27,11 +34,12 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel)rateTbl.getModel();
         model.setRowCount(0);
         for(Rate vs : rateList){
-                Object[] row = new Object[4];
-                row[0] = vs.getCourseId();
-                row[1] = vs.getProfessorId();
-                row[2] = vs.getStudentId();
-                row[3] = vs.getScore();
+                Object[] row = new Object[5];
+                row[0]=vs.getRateId();
+                row[1] = vs.getCourseId();
+                row[2] = vs.getProfessorId();
+                row[3] = vs.getStudentId();
+                row[4] = vs.getScore();
                 model.addRow(row);
         }
     }
@@ -57,23 +65,25 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtc = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtp = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txts = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtS1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtS2 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtS3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtSc = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtS4 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        txtComment = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtr = new javax.swing.JTextField();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -81,13 +91,13 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
 
         rateTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Course ID", "Professor ID", "Student ID", "Score"
+                "Rate ID", "Course ID", "Professor ID", "Student ID", "Score"
             }
         ));
         jScrollPane2.setViewportView(rateTbl);
@@ -131,9 +141,9 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Course ID");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtcActionPerformed(evt);
             }
         });
 
@@ -152,6 +162,14 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         jLabel8.setText("scorePart4");
 
         jLabel9.setText("comment");
+
+        jLabel10.setText("Rate ID");
+
+        txtr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtrActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -179,47 +197,54 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jButton3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(35, 35, 35)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(122, 122, 122)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
+                                .addComponent(txtr, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txts, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtc, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
                                     .addGap(35, 35, 35)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtp, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(35, 35, 35)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(35, 35, 35)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addGap(35, 35, 35)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(35, 35, 35)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jLabel7)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel9)
+                                        .addComponent(txtSc, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(122, 122, 122)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel6)
+                                            .addGap(35, 35, 35)
+                                            .addComponent(txtS3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addGap(35, 35, 35)
+                                            .addComponent(txtS2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(35, 35, 35)
+                                            .addComponent(txtS1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(txtS4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(txtComment, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(100, 100, 100))
@@ -239,48 +264,52 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtS1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtS2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtS3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtS4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(63, 63, 63)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(334, Short.MAX_VALUE))
+                    .addComponent(txtComment, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(229, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -299,27 +328,185 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
+        String search=txtSearch.getText();
+        if("".equals(search)){
+            JOptionPane.showMessageDialog(this, "Please enter!");
+        }else{
+            Rate e = null;
+            for(Rate d : rateList){
+                if(d.getRateId().equals(search)){
+                    e=d;
+                }
+            }
+            if(e!=null){
+                   txtr.setText(e.getRateId());
+                   txtc.setText(e.getCourseId());
+                   txtp.setText(e.getProfessorId());
+                   txts.setText(e.getStudentId());
+                   txtSc.setText(e.getScore());
+                   txtS1.setText(e.getScorePart1());
+                   txtS2.setText(e.getScorePart2());
+                   txtS3.setText(e.getScorePart3());
+                   txtS4.setText(e.getScorePart4());
+                   txtComment.setText(e.getComment());
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int selectedRowIndex = rateTbl.getSelectedRow();
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to View.");
+            return;
+        }else{
+                DefaultTableModel model = (DefaultTableModel) rateTbl.getModel();
+                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                Rate e = null;
+                for(Rate d : rateList){
+                    if(d.getRateId().equals(selectedID)){
+                        e=d;
+                    }
+                }
+                if(e!=null){
+                   txtr.setText(e.getRateId());
+                   txtc.setText(e.getCourseId());
+                   txtp.setText(e.getProfessorId());
+                   txts.setText(e.getStudentId());
+                   txtSc.setText(e.getScore());
+                   txtS1.setText(e.getScorePart1());
+                   txtS2.setText(e.getScorePart2());
+                   txtS3.setText(e.getScorePart3());
+                   txtS4.setText(e.getScorePart4());
+                   txtComment.setText(e.getComment());
+                   return;
+                }
+                JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String id=txtr.getText();
+        for(Rate e : rateList){
+                if(e.getRateId().equals(id)){
+                    JOptionPane.showMessageDialog(this, "ID Already Existed");
+                    return;
+                    }
+                }
+        String rId=txtr.getText();
+        String cId=txtc.getText(); 
+        String pId=txtp.getText();
+        String sId=txts.getText();
+        String score=txtSc.getText();
+        String score1=txtS1.getText();
+        String score2=txtS2.getText();
+        String score3=txtS3.getText();
+        String score4=txtS4.getText();
+        String comment = txtComment.getText();
+
+        if(rId==""||cId==""||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
+        Rate e=null;
+        try {
+            e = new Rate( rId,pId, sId, cId, score1, score2,score3,  score4,  comment,  score);
+        } catch (SQLException ex) {
+            Logger.getLogger(RateComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        rateList.add(e);
+        JOptionPane.showMessageDialog(this, "Added!");
+        populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        String rId=txtr.getText();
+        String cId=txtc.getText(); 
+        String pId=txtp.getText();
+        String sId=txts.getText();
+        String score=txtSc.getText();
+        String score1=txtS1.getText();
+        String score2=txtS2.getText();
+        String score3=txtS3.getText();
+        String score4=txtS4.getText();
+        String comment = txtComment.getText();
+
+        if(rId==""||cId==""||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
+       
+       int selectedRowIndex = rateTbl.getSelectedRow();
+       if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to update.");
+            return;
+        }else{
+                DefaultTableModel model = (DefaultTableModel) rateTbl.getModel();
+                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                Rate c = null;
+                for(Rate e : rateList){
+                    if(e.getRateId().equals(selectedID)){
+                        c = e;
+                    }
+                    if(e.getRateId().equals(selectedID)&&!rId.equals(selectedID)){
+                        JOptionPane.showMessageDialog(this, "ID Already Existed");
+                        return;
+                    }
+                }
+                if(c!=null){
+                    c.setRateId(rId);
+                    c.setComment(comment);
+                    c.setCourseId(cId);
+                    c.setProfessorId(pId);
+                    c.setStudentId(sId);
+                    c.setScore(score);
+                    c.setScorePart1(score1);
+                    c.setScorePart2(score2);
+                    c.setScorePart3(score3);
+                    c.setScorePart4(score4);
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Updated!");
+                    return;
+                }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+
+        }
+      
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+                int selectedRowIndex = rateTbl.getSelectedRow();
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to Deleted.");
+            return;
+        }else{
+            DefaultTableModel model = (DefaultTableModel) rateTbl.getModel();
+            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+            for(Rate vs : rateList){
+                if(vs.getRateId().equals(selectedID)){
+                    //
+                    rateList.remove(vs);
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Deleted!");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Not Existed!");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtcActionPerformed
+
+    private void txtrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtrActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -329,6 +516,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -340,17 +528,18 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable rateTbl;
+    private javax.swing.JTextField txtComment;
+    private javax.swing.JTextField txtS1;
+    private javax.swing.JTextField txtS2;
+    private javax.swing.JTextField txtS3;
+    private javax.swing.JTextField txtS4;
+    private javax.swing.JTextField txtSc;
     private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtc;
+    private javax.swing.JTextField txtp;
+    private javax.swing.JTextField txtr;
+    private javax.swing.JTextField txts;
     // End of variables declaration//GEN-END:variables
 }

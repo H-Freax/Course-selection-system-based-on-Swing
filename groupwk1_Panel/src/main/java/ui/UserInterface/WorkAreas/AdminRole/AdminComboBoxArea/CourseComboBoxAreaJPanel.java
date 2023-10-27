@@ -417,7 +417,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
             txtCurrentSemester.setText(c.getSemesterId());
             txtStatus.setText(c.getStatus());
             txtCurrentCourseLocation.setText(c.getLocation());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
              String formattedDateTime = c.getBeginTime().format(formatter);
              String formattedDateTime1 = c.getBeginTime().format(formatter);
             txtCurrentCourseStartTime.setText(formattedDateTime);
@@ -477,7 +477,6 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
        int selectedRowIndex = courseTable.getSelectedRow();
 
         String id=txtCurrentCourseId.getText();
-
         String name=txtCurrentCourseName.getText();
         String introduction=txtIntro.getText();
         int point=Integer.parseInt(txtCurrentCoursePoint.getText());
@@ -489,13 +488,14 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         int studentCount=Integer.parseInt(txtCurrentStudentCount.getText());
         String dateString = txtCurrentCourseStartTime.getText();
         String dateString1 = txtCurrentCourseEndTime.getText();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime beginTime = LocalDateTime.parse(dateString, formatter);
         LocalDateTime endTime = LocalDateTime.parse(dateString1, formatter);
         List<String> stringSet = new ArrayList<>(Arrays.asList(txtTopic.getText().split(",")));
         List<String> stringSet2 = new ArrayList<>(Arrays.asList(txtEnrolled.getText().split(",")));
         List<String> topics=stringSet; // Store course topics
         List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
+        
         DefaultTableModel model1 = (DefaultTableModel) courseTable.getModel();
         String selectedID1 = (String) model1.getValueAt(selectedRowIndex, 0);
         for(Course vs : courselist){
@@ -503,7 +503,16 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Already Exist ID");
                 return;
             }}
-        if(id==""||name==""||semesterId!=""||status==""||professor==""||location==""||studentLimit==0||studentCount==0){
+        if("".equals(id)||"".equals(name)||"".equals(semesterId)||"".equals(status)||"".equals(professor)||"".equals(location)||studentLimit==0||studentCount==0){
+            System.out.println(id);
+            System.out.println(name);
+            System.out.println(semesterId);
+            System.out.println(status);
+            System.out.println(professor);
+            System.out.println(location);
+            System.out.println(studentLimit);
+            System.out.println(studentCount);
+            
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
@@ -530,6 +539,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                     d.setEndTime(endTime);
                     JOptionPane.showMessageDialog(this, "Updated!");
                     populateTable();
+                    return;
                 }
 
             JOptionPane.showMessageDialog(this, "Not Existed!");
@@ -541,55 +551,39 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-        String id=txtCurrentCourseId.getText();
-        String name=txtCurrentCourseName.getText();
-        String introduction=txtIntro.getText();
-        int point=Integer.parseInt(txtCurrentCoursePoint.getText());
-        String semesterId=txtCurrentSemester.getText();
-        String status=txtStatus.getText();
-        String professor=txtPro.getText();
-        String location=txtCurrentCourseLocation.getText();
-        int studentLimit=Integer.parseInt(txtCurrentStudentLimited.getText());
-        int studentCount=Integer.parseInt(txtCurrentStudentCount.getText());
-        String dateString = txtCurrentCourseStartTime.getText();
-        String dateString1 = txtCurrentCourseEndTime.getText();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime beginTime = LocalDateTime.parse(dateString, formatter);
-        LocalDateTime endTime = LocalDateTime.parse(dateString1, formatter);
-        List<String> stringSet = new ArrayList<>(Arrays.asList(txtTopic.getText().split(",")));
-        List<String> stringSet2 = new ArrayList<>(Arrays.asList(txtEnrolled.getText().split(",")));
-        List<String> topics=stringSet; // Store course topics
-        List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
-
-        if(id==""||name==""||semesterId!=""||status==""||professor==""||location==""||studentLimit==0||studentCount==0){
-            JOptionPane.showMessageDialog(this, "Please Input!");
-            return;
-        }
-        Course f = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime,0);
-        f.setTopics(topics);
-        f.setEnrolledStudents(enrolledStudents);
-
-        int selectedRowIndex = courseTable.getSelectedRow();
-        if(selectedRowIndex<0){
+       int selectedRowIndex = courseTable.getSelectedRow();
+       if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to View.");
             return;
         }else{
                 DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                Course d = courseDirectory.getCourseById(selectedID);
-                if(d!=null){
-                    d=f;
-                    populateTable();
-                    JOptionPane.showMessageDialog(this, "Updated!");
-                }else{
-                    JOptionPane.showMessageDialog(this, "Not Existed!");
+                Course c = null;
+                for(Course d : courselist){
+                    if(d.getId().equals(selectedID)){
+                        c=d;
+                    }
                 }
+                if(c!=null){
+                    txtCurrentCourseId.setText(c.getId());
+                    txtCurrentCourseName.setText(c.getName());
+                    txtIntro.setText(c.getIntroduction());
+                    txtCurrentCoursePoint.setText(String.valueOf(c.getPoint()));
+                    txtCurrentSemester.setText(c.getSemesterId());
+                    txtStatus.setText(c.getStatus());
+                    txtCurrentCourseLocation.setText(c.getLocation());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String formattedDateTime = c.getBeginTime().format(formatter);
+                    String formattedDateTime1 = c.getBeginTime().format(formatter);
+                    txtCurrentCourseStartTime.setText(formattedDateTime);
+                    txtCurrentCourseEndTime.setText(formattedDateTime1);
+                    txtCurrentStudentLimited.setText(String.valueOf(c.getStudentLimit()));
+                    txtCurrentStudentCount.setText(String.valueOf(c.getStudentCount()));
+                    txtPro.setText(c.getProfessor());
+                    return;
+                }
+                JOptionPane.showMessageDialog(this, "Not Existed!");
         }
-
-
-
-
-
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
