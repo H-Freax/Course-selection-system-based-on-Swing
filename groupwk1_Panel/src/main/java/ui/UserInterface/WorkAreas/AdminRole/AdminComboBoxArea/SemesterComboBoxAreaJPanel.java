@@ -354,7 +354,7 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
                     if(e.getId().equals(selectedID)){
                         c = e;
                     }
-                    if(e.getId().equals(selectedID)&&!id.equals(selectedID)){
+                    if(e.getId().equals(id)&&!selectedID.equals(id)){
                         JOptionPane.showMessageDialog(this, "ID Already Existed");
                         return;
                     }

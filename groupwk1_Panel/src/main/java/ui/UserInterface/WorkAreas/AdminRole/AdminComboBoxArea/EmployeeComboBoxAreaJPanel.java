@@ -291,7 +291,9 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                     txtEnabled.setText(String. valueOf(e.isEnabled()));
                     txtRole.setText(e.getRole());
                     populateTable();
+                    return;
                 }
+                JOptionPane.showMessageDialog(this, "Not Existed!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

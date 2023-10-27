@@ -32,7 +32,7 @@ public class EmployeeDirectory {
                 boolean enabled = resultSet.getString("enabled").equals("1");
                 Person p = Person.loadFromDatabase(connection, personID);
                 // 创建Employee对象并添加到employeeList
-                Employee employee = new Employee(p.getPersonName(), personID, username, passwordHash, enabled, "Employee");
+                Employee employee = new Employee(p.getPersonName(), personID, username, "", enabled, "employee");
                 employee.setPwdHash(passwordHash);
                 employeeList.add(employee);
             }

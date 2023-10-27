@@ -22,7 +22,7 @@ public class Employee extends Person {
     }
     public Employee(String personName, String personID, String username, String nowPassword, boolean enabled, String role) {
         super(personName, personID, role);
-        this.nowPassword =nowPassword;
+        this.nowPassword = Tools.PasswordUtils.hashPassword(nowPassword);
         this.username = username;
         this.enabled = enabled;
         this.pwdHash = Tools.PasswordUtils.hashPassword(nowPassword);

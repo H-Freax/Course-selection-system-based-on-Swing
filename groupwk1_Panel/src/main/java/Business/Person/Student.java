@@ -20,19 +20,18 @@ public class Student extends Person {
     private double gpa;
     private List<String> courseList; // 用于存储学生的课程信息
     private Set<String> passwordHistory;
-    private String pwdHash;
+
     public Student(){
 
     }
     public Student(String personName, String personID, String username, String nowPassword, boolean enabled, double gpa) {
         super(personName, personID, "Student");
-        this.nowPassword = nowPassword;
+        this.nowPassword = PasswordUtils.hashPassword(nowPassword);
         this.username = username;
         this.enabled = enabled;
         this.gpa = gpa;
         this.courseList = new ArrayList<>();
         this.passwordHistory = new HashSet<>();
-        this.pwdHash = Tools.PasswordUtils.hashPassword(nowPassword);
     }
 
     public Set<String> getPasswordHistory() {
@@ -140,10 +139,10 @@ public class Student extends Person {
             statement.setString(7, getPersonID());
             statement.executeUpdate();
         }
-//
-//        for (String courseID : courseList) {
-//            addStudentToCourse(connection, courseID, getPersonID());
-//        }
+
+        for (String courseID : courseList) {
+            addStudentToCourse(connection, courseID, getPersonID());
+        }
     }
 
     public static Student loadFromDatabase(Connection connection, String personID) throws SQLException {

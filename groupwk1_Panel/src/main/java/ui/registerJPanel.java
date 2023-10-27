@@ -163,7 +163,7 @@ public class registerJPanel extends javax.swing.JPanel {
         }
         if(b){//Todo
             if(role=="Employee"){
-                Employee e = new Employee(p.getPersonName(),p.getPersonID(),un,pwd ,true,role);
+                Employee e = new Employee(p.getPersonName(),p.getPersonID(),un, pwd,true,role);
                 e.saveToDatabase(MySQLConnectionUtil.getConnection());
             }else if(role=="Professor"){
                 Professor pro = new Professor(p.getPersonName(),p.getPersonID(),un,pwd,true,role);

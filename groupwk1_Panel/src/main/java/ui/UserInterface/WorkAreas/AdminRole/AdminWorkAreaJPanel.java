@@ -8,11 +8,16 @@ import javax.swing.JPanel;
 
 import Business.Person.Employee;
 import Tools.MySQLConnectionUtil;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ui.LoginJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.CourseComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.CourseScheduleComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.EmployeeComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.FacultyComboBoxAreaJPanel;
+
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.PersonComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.PersonScheduleComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.RateComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.SemesterComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.StudentComboBoxAreaJPanel;
@@ -126,7 +131,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         jComboBox1.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Faculty", "Student", "Course", "Rate","Person","Employee","HistoryPwd","Semester","Course-Pro","Course-Stu"}));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Faculty", "Student", "Course", "Rate","Person","Employee","Semester","Course Schedule","Person Schedule"}));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -276,6 +281,16 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         }else if("Semester".equals(selectedText)){
             SemesterComboBoxAreaJPanel cPanel = new SemesterComboBoxAreaJPanel();
             ViewContainer.add("EmployeeComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else if("Course Schedule".equals(selectedText)){
+            CourseScheduleComboBoxAreaJPanel cPanel = new CourseScheduleComboBoxAreaJPanel();
+            ViewContainer.add("CourseScheduleComboBoxAreaJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+        }else if("Person Schedule".equals(selectedText)){
+            PersonScheduleComboBoxAreaJPanel cPanel = new PersonScheduleComboBoxAreaJPanel();
+            ViewContainer.add("PersonScheduleComboBoxAreaJPanel", cPanel);
             CardLayout layout = (CardLayout)ViewContainer.getLayout();
             layout.next(ViewContainer);
         }else{
