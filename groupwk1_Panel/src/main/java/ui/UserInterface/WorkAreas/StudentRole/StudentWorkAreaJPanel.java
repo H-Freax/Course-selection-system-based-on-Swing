@@ -11,6 +11,7 @@ import ui.UserInterface.WorkAreas.StudentRole.GraduationStatus.StudentGraduation
 import ui.UserInterface.WorkAreas.StudentRole.ManageProfile.StudentManageProfileJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.MyCourses.StudentManageCoursesJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.Registration.StudentRegisterJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.StudentRate.StudentRateJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.Transcript.StudentTranscriptJPanel;
 
 /**
@@ -192,9 +193,15 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMyCourseIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnMyCourseIdentifyEventsActionPerformed
+    private void btnMyCourseIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt){//GEN-FIRST:event_btnMyCourseIdentifyEventsActionPerformed
         // TODO add your handling code here:
-        StudentManageCoursesJPanel mscPanel = new StudentManageCoursesJPanel(student);
+        StudentManageCoursesJPanel mscPanel = null;
+        try {
+            mscPanel = new StudentManageCoursesJPanel(student);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
         ViewContainer.add("StudentManageCoursesJPanel", mscPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
@@ -214,9 +221,15 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         //        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnRegisrtationIdentifyResourceAssetsActionPerformed
 
-    private void btnManageProfileActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnManageProfileActionPerformed
+    private void btnManageProfileActionPerformed(java.awt.event.ActionEvent evt){//GEN-FIRST:event_btnManageProfileActionPerformed
         // TODO add your handling code here:
-        StudentManageProfileJPanel smpPanel = new StudentManageProfileJPanel(ViewContainer,student);
+        StudentManageProfileJPanel smpPanel = null;
+        try {
+            smpPanel = new StudentManageProfileJPanel(ViewContainer,student);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
         ViewContainer.add("StudentManageProfileJPanel", smpPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
@@ -241,9 +254,15 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         //        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
     }//GEN-LAST:event_btnGraduationStatusIdentifyEventsActionPerformed
 
-    private void btnTranscriptActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTranscriptActionPerformed
+    private void btnTranscriptActionPerformed(java.awt.event.ActionEvent evt){//GEN-FIRST:event_btnTranscriptActionPerformed
         // TODO add your handling code here:
-        StudentTranscriptJPanel stPanel = new StudentTranscriptJPanel(ViewContainer,student);
+        StudentTranscriptJPanel stPanel = null;
+        try {
+            stPanel = new StudentTranscriptJPanel(ViewContainer,student);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
         ViewContainer.add("StudentManageProfileJPanel", stPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
@@ -267,6 +286,10 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRateActionPerformed
         // TODO add your handling code here:
+        StudentRateJPanel srPanel = new StudentRateJPanel();
+        ViewContainer.add("StudentRateJPanel", srPanel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
     }//GEN-LAST:event_btnRateActionPerformed
 
 
