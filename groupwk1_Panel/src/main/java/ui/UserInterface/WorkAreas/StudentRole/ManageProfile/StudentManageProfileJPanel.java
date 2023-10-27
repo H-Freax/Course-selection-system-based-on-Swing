@@ -7,14 +7,21 @@ package ui.UserInterface.WorkAreas.StudentRole.ManageProfile;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import Business.Course.Course;
 import Business.Course.CourseDirectory;
+import Business.Directory.StudentDirectory;
+import Business.Person.Employee;
+import Business.Person.Professor;
 import Business.Person.Student;
+import Business.Semester.Semester;
 import Tools.MySQLConnectionUtil;
+import Tools.PasswordUtils;
+import ui.LoginJPanel;
 
 /**
  *
@@ -31,12 +38,13 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
     private List<Course> allCourses;
 
-    public StudentManageProfileJPanel(JPanel ViewContainer, Student student) {
+    public StudentManageProfileJPanel(JPanel ViewContainer, Student student) throws SQLException {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.student = student;
         initStudentProfile(student);
         populateTable();
+        btnBack.setVisible(false);
 
     }
 
@@ -73,7 +81,6 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtStudentGpa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -82,32 +89,33 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         tblStudentProfile = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         txtStudentPassword = new javax.swing.JTextField();
+        btnChangepwd = new javax.swing.JButton();
 
         jLabel3.setText("Student ID:");
 
         txtStudentId.setEditable(false);
+        txtStudentId.setEnabled(false);
 
         jLabel4.setText("Student Name:");
 
         txtStudentName.setEditable(false);
+        txtStudentName.setEnabled(false);
 
         jLabel5.setText("Courses");
 
         txtStudentGpa.setEditable(false);
+        txtStudentGpa.setEnabled(false);
 
         jLabel6.setText("GPA:");
-
-        jButton5.setText("Edit");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
 
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                try {
+                    btnSaveActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -122,18 +130,37 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
         tblStudentProfile.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Course Name", "Professor name", "Student Score"
+                "Course Name", "Professor name", "Student Score", "Semester"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblStudentProfile);
 
         jLabel11.setText("Password:");
+
+        btnChangepwd.setText("Change");
+        btnChangepwd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    btnChangepwdActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -145,19 +172,24 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(54, 54, 54)
-                                    .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(81, 81, 81)
-                                    .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(54, 54, 54)
-                                    .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(54, 54, 54)
+                                        .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(81, 81, 81)
+                                        .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(54, 54, 54)
+                                        .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSave)
+                                    .addComponent(btnChangepwd)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(156, 156, 156)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -172,13 +204,8 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(81, 81, 81)
                                     .addComponent(txtStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBack)
-                        .addGap(454, 454, 454)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSave)))
-                .addContainerGap(62, Short.MAX_VALUE))
+                    .addComponent(btnBack))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,26 +229,40 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSave)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
-                    .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBack)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton5)
-                        .addComponent(btnSave)))
+                        .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnChangepwd)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addComponent(btnBack)
                 .addGap(39, 39, 39))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnSaveActionPerformed
+        String un = txtStudentUsername.getText();
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        StudentDirectory sd = new StudentDirectory();
+        boolean unb =true;
+        if(sd.findStudentbyUsername(un)!=null){
+            unb=false;
+        }
+        if(unb){//Todo
+            student.setUsername(un);
+            System.out.println("password::"+student.getNowPassword());
+            student.updateStudentInDatabase(conn);
+            JOptionPane.showMessageDialog(this,"Username Change Success!");
+
+        }else{
+            JOptionPane.showMessageDialog(this,"Please use a new username! This username is exist!");
+        }
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -232,11 +273,28 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         layout.previous(ViewContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnChangepwdActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnChangepwdActionPerformed
+        String pwd = txtStudentPassword.getText();
+
+        if(PasswordUtils.isPasswordInHistory(conn,student.getPersonID(),PasswordUtils.hashPassword(pwd))){
+            JOptionPane.showMessageDialog(this,"Please don't use history password!");
+
+        }else{
+            if(PasswordUtils.updatePassword(conn,student.getUsername(),pwd,"Student")){
+                JOptionPane.showMessageDialog(this,"Success!");
+            }else{
+                JOptionPane.showMessageDialog(this,"Fail!");
+            }
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnChangepwdActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnChangepwd;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
@@ -252,16 +310,17 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtStudentUsername;
     // End of variables declaration//GEN-END:variables
 
-    private void populateTable() {
+    private void populateTable() throws SQLException {
         DefaultTableModel model = (DefaultTableModel) tblStudentProfile.getModel(); //Have the access to the table;
         model.setRowCount(0); //初始化？？
-
+        Semester semester;
         for(Course course : allCourses){
-
-            Object[] row = new Object[3];
+            semester = Semester.loadFromDatabase(conn,course.getSemesterId());
+            Object[] row = new Object[4];
             row[0] = course.getName();
             row[1] = course.getProfessor();
             row[2] = course.getScore();
+            row[3] = semester.getSemesterName();
             //设置3R对应
 
             model.addRow(row);

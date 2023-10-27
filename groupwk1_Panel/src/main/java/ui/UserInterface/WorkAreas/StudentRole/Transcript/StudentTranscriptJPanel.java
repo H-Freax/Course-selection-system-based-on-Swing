@@ -1,7 +1,17 @@
 package ui.UserInterface.WorkAreas.StudentRole.Transcript;
 
+import Business.Course.Course;
+import Business.Course.CourseDirectory;
+import Business.Person.Student;
+import Business.Semester.Semester;
+import Tools.MySQLConnectionUtil;
+
 import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,10 +23,33 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
      * Creates new form StudentTranscriptJPanel
      */
     private JPanel ViewContainer;
-    
-    public StudentTranscriptJPanel() {
+    private Student student;
+    Connection conn= MySQLConnectionUtil.getConnection();
+
+    private List<Course> allCourses;
+
+    public StudentTranscriptJPanel(JPanel ViewContainer, Student student) throws SQLException {
         initComponents();
         this.ViewContainer = ViewContainer;
+
+        this.ViewContainer = ViewContainer;
+        this.student = student;
+        initStudentProfile(student);
+        populateTable();
+    }
+
+    private void initStudentProfile(Student student) {
+        CourseDirectory courseDirectory = new CourseDirectory(MySQLConnectionUtil.getConnection());//数据传到了courseList
+        try {
+            courseDirectory.loadCoursesFromDatabase(student.getPersonID());
+            allCourses = courseDirectory.getAllCourses();
+            for(Course course:allCourses){
+                System.out.println("course.getProfessor()"+course.getProfessor());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
     }
 
     /**
@@ -29,13 +62,13 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblTrascript = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btnPrint = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtStudentGpa = new javax.swing.JTextField();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblTrascript.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -47,9 +80,9 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
                 "Semester", "Course", "Professor", "Score"
             }
         ));
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblTrascript.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(tblTrascript);
+        tblTrascript.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         jTextField1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -69,10 +102,6 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(69, 69, 69)
@@ -85,13 +114,17 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
                         .addGap(81, 81, 81)
                         .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(79, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnPrint)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -107,13 +140,35 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPrintActionPerformed
 
+    private void populateTable() throws SQLException {
+        DefaultTableModel model = (DefaultTableModel) tblTrascript.getModel(); //Have the access to the table;
+        model.setRowCount(0); //初始化？？
+        Semester semester;
+        for(Course course : allCourses){
+            semester = Semester.loadFromDatabase(conn,course.getSemesterId());
+            Object[] row = new Object[4];
 
+            row[0] = semester.getSemesterName();
+            row[1] = course.getName();
+            row[2] = course.getProfessor();
+            if((course.getScore()+"").equals("0.0")){
+                row[3]="N/A";
+            }else{
+                row[3] = course.getScore();
+            }
+
+            //设置3R对应
+
+            model.addRow(row);
+
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPrint;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblTrascript;
     private javax.swing.JTextField txtStudentGpa;
     // End of variables declaration//GEN-END:variables
 }

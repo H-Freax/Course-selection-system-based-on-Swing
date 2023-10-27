@@ -35,6 +35,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         this.student = student;
         this.controlPanel = controlPanel;
         this.ViewContainer=ViewContainer;
+
     }
 
     public Student getStudent() {
@@ -100,7 +101,11 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         btnManageProfile.setPreferredSize(new java.awt.Dimension(240, 25));
         btnManageProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageProfileActionPerformed(evt);
+                try {
+                    btnManageProfileActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -126,7 +131,11 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         btnTranscript.setPreferredSize(new java.awt.Dimension(240, 25));
         btnTranscript.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTranscriptActionPerformed(evt);
+                try {
+                    btnTranscriptActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -198,7 +207,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         //        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnRegisrtationIdentifyResourceAssetsActionPerformed
 
-    private void btnManageProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageProfileActionPerformed
+    private void btnManageProfileActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnManageProfileActionPerformed
         // TODO add your handling code here:
         StudentManageProfileJPanel smpPanel = new StudentManageProfileJPanel(ViewContainer,student);
         ViewContainer.add("StudentManageProfileJPanel", smpPanel);
@@ -225,9 +234,9 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         //        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
     }//GEN-LAST:event_btnGraduationStatusIdentifyEventsActionPerformed
 
-    private void btnTranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTranscriptActionPerformed
+    private void btnTranscriptActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTranscriptActionPerformed
         // TODO add your handling code here:
-        StudentTranscriptJPanel stPanel = new StudentTranscriptJPanel();
+        StudentTranscriptJPanel stPanel = new StudentTranscriptJPanel(ViewContainer,student);
         ViewContainer.add("StudentManageProfileJPanel", stPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
