@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Directory;
 
 import Business.Person.Professor;
+import Tools.MySQLConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +22,14 @@ public class ProfessorDirectory {
         professors.add(professor);
     }
 
+    public Professor getProfessorByusername(String username) {
+        for (Professor professor : professors) {
+            if (professor.getUsername().equals(username)) {
+                return professor;
+            }
+        }
+        return null;
+    }
     // 根据ID获取教授
     public Professor getProfessorById(String personID) {
         for (Professor professor : professors) {

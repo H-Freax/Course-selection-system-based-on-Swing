@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Person;
 
 import java.sql.Connection;
@@ -23,10 +19,13 @@ public class Professor extends Person {
     private String language;
     private String region;
     private Set<String> topics;
+    private Set<String> passwordHistory;
+    public Professor(){
 
+    }
     public Professor(String personName, String personID, String username, String nowPassword, boolean enabled, String role) {
         super(personName, personID, role);
-        this.nowPassword = Tools.PasswordUtils.hashPassword(nowPassword);
+        this.nowPassword = nowPassword;
         this.username = username;
         this.enabled = enabled;
         this.pwdHash = Tools.PasswordUtils.hashPassword(nowPassword);
@@ -34,7 +33,17 @@ public class Professor extends Person {
         this.language = "";
         this.region = "";
         this.topics = new HashSet<>();
+        this.passwordHistory = new HashSet<>();
     }
+
+    public Set<String> getPasswordHistory() {
+        return passwordHistory;
+    }
+
+    public void setPasswordHistory(Set<String> passwordHistory) {
+        this.passwordHistory = passwordHistory;
+    }
+
 
     public String getUsername() {
         return username;
@@ -170,8 +179,8 @@ public class Professor extends Person {
                 double rate = resultSet.getDouble("rate");
                 String language = resultSet.getString("language");
                 String region = resultSet.getString("region");
-
-                Professor professor = new Professor(person.getPersonName(), personID, username, "", enabled, person.getRole());
+                Person p = Person.loadFromDatabase(connection, personID);
+                Professor professor = new Professor(p.getPersonName(), personID, username, "", enabled, person.getRole());
                 professor.setNowPassword(""); // 不直接保存明文密码
                 professor.setPwdHash(passwordHash);
                 professor.setRate(rate);

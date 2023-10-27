@@ -4,17 +4,24 @@
  */
 package ui.UserInterface.WorkAreas.FacultyRole.Ranking;
 
+import Business.Person.Professor;
+
+import javax.swing.*;
+
 /**
  *
  * @author zhangjinming
  */
 public class FacultyRankingJPanel extends javax.swing.JPanel {
-
+    private JPanel ViewContainer;
+    private Professor professor;
     /**
      * Creates new form FacultyRanking
      */
-    public FacultyRankingJPanel() {
+    public FacultyRankingJPanel(JPanel ViewContainer, Professor professor) {
         initComponents();
+        this.ViewContainer = ViewContainer;
+        this.professor = professor;
     }
 
     /**

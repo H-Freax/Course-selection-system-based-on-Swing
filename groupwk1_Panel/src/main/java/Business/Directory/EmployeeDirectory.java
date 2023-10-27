@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Directory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,21 +5,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Business.Person.Employee;
+import Business.Person.Person;
+import Tools.MySQLConnectionUtil;
 
 public class EmployeeDirectory {
     private ArrayList<Employee> employeeList;
     private Connection connection; // 数据库连接
 
-    public EmployeeDirectory(Connection connection) {
-        this.connection = connection;
+    public EmployeeDirectory() {
+        this.connection = MySQLConnectionUtil.getConnection();
         this.employeeList = new ArrayList<>();
         loadEmployeesFromDatabase();
     }
 
+
     // 从数据库加载Employee对象
-    private void loadEmployeesFromDatabase() {
+    public void loadEmployeesFromDatabase() {
         try {
-            String selectQuery = "SELECT * FROM Employee";
+            String selectQuery = "SELECT * FROM Employee ";
             PreparedStatement statement = connection.prepareStatement(selectQuery);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -31,9 +30,9 @@ public class EmployeeDirectory {
                 String username = resultSet.getString("username");
                 String passwordHash = resultSet.getString("nowpassword");
                 boolean enabled = resultSet.getString("enabled").equals("1");
-
+                Person p = Person.loadFromDatabase(connection, personID);
                 // 创建Employee对象并添加到employeeList
-                Employee employee = new Employee("", personID, username, "", enabled, "employee");
+                Employee employee = new Employee(p.getPersonName(), personID, username, passwordHash, enabled, "Employee");
                 employee.setPwdHash(passwordHash);
                 employeeList.add(employee);
             }
@@ -85,6 +84,15 @@ public class EmployeeDirectory {
         }
     }
 
+    public Employee findEmployeeByUsername(String username) {
+        for (Employee employee : employeeList) {
+            if (employee.getUsername().equals(username)) {
+                return employee;
+            }
+        }
+
+        return null;
+    }
     // 根据PersonID查询Employee对象
     public Employee findEmployeeByID(String personID) {
         for (Employee employee : employeeList) {

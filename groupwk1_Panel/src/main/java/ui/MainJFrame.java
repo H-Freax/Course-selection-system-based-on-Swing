@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ui;
 
 import javax.swing.*;
@@ -13,9 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import model.PersonList;
-import model.Person;
-import model.User;
 
 import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
@@ -30,48 +23,14 @@ import Tools.MySQLConnectionUtil;
  */
 public class MainJFrame extends javax.swing.JFrame {
 
-    private PersonList personList;
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
 
-//        LoginJPanel login = new LoginJPanel();
         initComponents();
-        Person person1 = new Person("Person1", "NUID1");
-        User user1 = new User("user1", "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e", new ArrayList<>(), true, "user");
-        user1.getPwds().add("0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e");
-        User user2 = new User("user2", "6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4", new ArrayList<>(), true, "user");
-        user2.getPwds().add("6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4");
-        person1.addUser(user1);
-        person1.addUser(user2);
 
-        Person person0 = new Person("Person0", "   ");
-        User user0 = new User("user0", "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e", new ArrayList<>(), true, "admin");
-        user0.getPwds().add("0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e");
-        person0.addUser(user0);
-
-        Person person2 = new Person("Person2", "NUID2");
-        User user3 = new User("user3", "5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764", new ArrayList<>(), false, "user");
-        user3.getPwds().add("5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764");
-        person2.addUser(user3);
-
-        PersonList savepersonList = new PersonList();
-        savepersonList.addPerson(person0);
-        savepersonList.addPerson(person1);
-        savepersonList.addPerson(person2);
-        MySQLConnectionUtil mySQLConnectionUtil= new MySQLConnectionUtil();
-        mySQLConnectionUtil.getConnection();
-
-        // 将数据写入文件
-        writeDataToFile(savepersonList, "personlist.txt");
-
-        // 从文件中读取数据
-        PersonList personList = readDataFromFile("personlist.txt");
-
-        
-
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+        LoginJPanel panel = new LoginJPanel(ViewContainer,controlPanel);
 
         ViewContainer.add("LoginJPanel",panel);
         GeneralJPanel panel3 = new GeneralJPanel();
@@ -80,10 +39,9 @@ public class MainJFrame extends javax.swing.JFrame {
         layout1.next(controlPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
-//        jSplitPane1.setRightComponent(login);
 
     }
-    
+
 
 
     /**
@@ -111,11 +69,11 @@ public class MainJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
         );
 
         pack();
@@ -123,75 +81,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        this.personList = readDataFromFile("personlist.txt");
-        LoginJPanel panel = new LoginJPanel(ViewContainer,personList,controlPanel);
+        LoginJPanel panel = new LoginJPanel(ViewContainer,controlPanel);
         ViewContainer.add("LoginJPanel",panel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);        // TODO add your handling code here:
 
 
     }//GEN-LAST:event_btnLogoutActionPerformed
-
-    public static void writeDataToFile(PersonList personList, String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(personList.toText());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
- public static PersonList readDataFromFile(String filename) {
-    PersonList personList = new PersonList();
-    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-        String line;
-        Person currentPerson = null;
-        User currentUser = null;
-        boolean readingPwds = false; // 用于标识是否正在读取密码列表
-
-        while ((line = reader.readLine()) != null) {
-            if (line.startsWith("name:")) {
-                currentPerson = new Person(line.substring(5), "");
-                personList.addPerson(currentPerson);
-            } else if (line.startsWith("NUID:")) {
-                if (currentPerson != null) {
-                    currentPerson.setNUID(line.substring(5));
-                }
-            } else if (line.startsWith("username:")) {
-                currentUser = new User("", "", new ArrayList<>(), false, "");
-                if (currentPerson != null) {
-                    currentPerson.addUser(currentUser);
-                    currentUser.setUsername(line.substring(9));
-                }
-            } else if (line.startsWith("nowpwd:")) {
-                if (currentUser != null) {
-                    currentUser.setNowpwd(line.substring(7));
-                }
-            } else if (line.startsWith("pwds:")) {
-                if (currentUser != null) {
-                    currentUser.getPwds().add(line.substring(5));
-                    readingPwds = true;
-                }
-            } else if (line.startsWith("pwdsend:")) {
-                if (currentUser != null ) {
-                    readingPwds = false;
-                }
-            } else if (line.startsWith("enabled:")) {
-                if (currentUser != null ) {
-                    currentUser.setEnabled(Boolean.parseBoolean(line.substring(8)));
-                }
-            } else if (line.startsWith("role:")) {
-                if (currentUser != null) {
-                    currentUser.setRole(line.substring(5));
-                }
-            } else if (line.isEmpty() && readingPwds) {
-                readingPwds = false;
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return personList;
-}
 
 
     /**

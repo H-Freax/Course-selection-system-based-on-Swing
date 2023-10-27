@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package ui;
 
 import java.awt.CardLayout;
@@ -14,13 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Business.Directory.EmployeeDirectory;
+import Business.Directory.StudentDirectory;
 import Business.Person.Employee;
 import Business.Person.Professor;
 import Business.Person.Student;
 import Tools.MySQLConnectionUtil;
-import model.PersonList;
-import model.Person;
-import model.User;
+import Business.Directory.ProfessorDirectory;
 import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
 import ui.UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
@@ -34,14 +30,12 @@ import ui.UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 public class LoginJPanel extends javax.swing.JPanel {
     int i=0;
     private JPanel ViewContainer;
-    private PersonList personList;
     private JPanel controlPanel;
 
     Connection connection = MySQLConnectionUtil.getConnection();
-    public LoginJPanel(JPanel ViewContainer, PersonList personList, JPanel controlPanel) {
+    public LoginJPanel(JPanel ViewContainer,  JPanel controlPanel) {
         initComponents();
         this.ViewContainer = ViewContainer;
-        this.personList = personList;
         this.controlPanel = controlPanel;
     }
 
@@ -64,6 +58,9 @@ public class LoginJPanel extends javax.swing.JPanel {
         btnAdmin = new javax.swing.JRadioButton();
         btnProfessor = new javax.swing.JRadioButton();
         btnStudent = new javax.swing.JRadioButton();
+        register = new javax.swing.JButton();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         loginbtn.setText("Login");
         loginbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -75,89 +72,52 @@ public class LoginJPanel extends javax.swing.JPanel {
                 }
             }
         });
+        add(loginbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 271, 78, -1));
 
         lbltitle.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         lbltitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbltitle.setText("Login in");
+        add(lbltitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 18, 561, -1));
 
         txtloginusername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtloginusernameActionPerformed(evt);
             }
         });
+        add(txtloginusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 110, 165, -1));
 
         lblusername.setText("User Name:");
+        add(lblusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 113, -1, -1));
 
         lblpwd.setText("Password:");
+        add(lblpwd, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 167, -1, -1));
+        add(txtloginpwd, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 164, 165, -1));
 
         buttonGroup1.add(btnAdmin);
         btnAdmin.setText("Admin");
 
+        add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 213, -1, -1));
 
         buttonGroup1.add(btnProfessor);
         btnProfessor.setText("Faculty");
 
+        add(btnProfessor, new org.netbeans.lib.awtextra.AbsoluteConstraints(283, 213, -1, -1));
 
         buttonGroup1.add(btnStudent);
         btnStudent.setText("Student");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbltitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(btnAdmin)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnProfessor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnStudent))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(163, Short.MAX_VALUE)
-                                .addComponent(lblusername))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblpwd)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(loginbtn)
-                            .addComponent(txtloginusername, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(158, 158, 158))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(lbltitle)
-                .addGap(77, 77, 77)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtloginusername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblusername))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblpwd)
-                    .addComponent(txtloginpwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdmin)
-                    .addComponent(btnProfessor)
-                    .addComponent(btnStudent))
-                .addGap(37, 37, 37)
-                .addComponent(loginbtn)
-                .addContainerGap(83, Short.MAX_VALUE))
-        );
+        add(btnStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(366, 213, -1, -1));
+
+        register.setText("Register");
+        register.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerActionPerformed(evt);
+            }
+        });
+        add(register, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 321, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_loginbtnActionPerformed
+    private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         String username = txtloginusername.getText();
         String password = Arrays.toString(txtloginpwd.getPassword());
         connection =  MySQLConnectionUtil.getConnection();
@@ -170,11 +130,11 @@ public class LoginJPanel extends javax.swing.JPanel {
 
         } else if (btnProfessor.isSelected()) {
             System.out.println("professor");
-            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Professor");
 
         } else if (btnStudent.isSelected()) {
             System.out.println("student");
-            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Employee");
+            loginSuccess = Tools.PasswordUtils.verifyLogin(connection, username, password, "Student");
 
         }
 
@@ -182,32 +142,55 @@ public class LoginJPanel extends javax.swing.JPanel {
             // 根据用户身份切换到不同的界面
             if (btnAdmin.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                AdminWorkAreaJPanel panel1 = new AdminWorkAreaJPanel( ViewContainer, controlPanel,  personList);
-                controlPanel.add(panel1);
+
+                EmployeeDirectory adminlist = new EmployeeDirectory();
+                Employee employee = adminlist.findEmployeeByUsername(username);
+
+                AdminWorkAreaJPanel admincontrolpanel = new AdminWorkAreaJPanel(ViewContainer, controlPanel,employee);
+                controlPanel.add(admincontrolpanel);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
 
-                AdminJPanel panel = new AdminJPanel(ViewContainer,personList);
-                ViewContainer.add("AdminJPanel",panel);
+
+                JPanel panel = new JPanel();
+                ViewContainer.add("Block",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
                 // 显示 Employee 界面
             } else if (btnProfessor.isSelected()) {
                 // 显示 Professor 界面
                 JOptionPane.showMessageDialog(this, "Succuss!");
-                FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  personList);
+                ProfessorDirectory professorDirectory = new ProfessorDirectory();
+                professorDirectory.loadAllProfessorsFromDatabase(connection);
+                Professor professor = professorDirectory.getProfessorByusername(username);
+
+                FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  professor);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
 
-                UserViewPanel panel = new UserViewPanel(ViewContainer,personList);
-                ViewContainer.add("UserViewPanel",panel);
+                JPanel panel = new JPanel();
+                ViewContainer.add("Block",panel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
             } else if (btnStudent.isSelected()) {
                 // 显示 Student 界面
+                JOptionPane.showMessageDialog(this, "Succuss!");
+
+                StudentDirectory stulist = new StudentDirectory();
+                Student student = stulist.findStudentbyUsername(username);
+                StudentWorkAreaJPanel panel1 = new StudentWorkAreaJPanel(ViewContainer, controlPanel, student);
+                controlPanel.add(panel1);
+                CardLayout layout1 = (CardLayout)controlPanel.getLayout();
+                layout1.next(controlPanel);
+
+
+                JPanel panel = new JPanel();
+                ViewContainer.add("Block",panel);
+                CardLayout layout = (CardLayout)ViewContainer.getLayout();
+                layout.next(ViewContainer);
             }
-        } else {
+        }else{
             JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");
         }
 
@@ -216,6 +199,15 @@ public class LoginJPanel extends javax.swing.JPanel {
     private void txtloginusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtloginusernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtloginusernameActionPerformed
+
+    private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
+
+        validationJPanel panel = new validationJPanel(ViewContainer,controlPanel);
+        ViewContainer.add("validationJPanel",panel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -227,6 +219,7 @@ public class LoginJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lbltitle;
     private javax.swing.JLabel lblusername;
     private javax.swing.JButton loginbtn;
+    private javax.swing.JButton register;
     private javax.swing.JPasswordField txtloginpwd;
     private javax.swing.JTextField txtloginusername;
     // End of variables declaration//GEN-END:variables
