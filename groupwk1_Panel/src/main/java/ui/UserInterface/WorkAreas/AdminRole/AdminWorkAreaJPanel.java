@@ -15,7 +15,7 @@ import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.CourseComboBoxArea
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.CourseScheduleComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.EmployeeComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.FacultyComboBoxAreaJPanel;
-import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.HistoryPwdJPanel;
+
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.PersonComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.PersonScheduleComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.RateComboBoxAreaJPanel;
@@ -131,7 +131,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         jComboBox1.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Faculty", "Student", "Course", "Rate","Person","Employee","HistoryPwd","Semester","Course Schedule","Person Schedule"}));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Faculty", "Student", "Course", "Rate","Person","Employee","Semester","Course Schedule","Person Schedule"}));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -291,11 +291,6 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         }else if("Person Schedule".equals(selectedText)){
             PersonScheduleComboBoxAreaJPanel cPanel = new PersonScheduleComboBoxAreaJPanel();
             ViewContainer.add("PersonScheduleComboBoxAreaJPanel", cPanel);
-            CardLayout layout = (CardLayout)ViewContainer.getLayout();
-            layout.next(ViewContainer);
-        }else if("HistoryPwd".equals(selectedText)){
-            HistoryPwdJPanel cPanel = new HistoryPwdJPanel();
-            ViewContainer.add("HistoryPwdJPanel", cPanel);
             CardLayout layout = (CardLayout)ViewContainer.getLayout();
             layout.next(ViewContainer);
         }else{
