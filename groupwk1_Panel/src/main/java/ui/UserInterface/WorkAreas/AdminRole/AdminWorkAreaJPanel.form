@@ -209,7 +209,7 @@
           <Font name="Microsoft YaHei UI" size="18" style="3"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;&quot;,&quot;Faculty&quot;, &quot;Student&quot;, &quot;Course&quot;, &quot;Rate&quot;,&quot;Person&quot;,&quot;Employee&quot;,&quot;HistoryPwd&quot;,&quot;Semester&quot;,&quot;Course-Pro&quot;,&quot;Course-Stu&quot;})" type="code"/>
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;&quot;,&quot;Faculty&quot;, &quot;Student&quot;, &quot;Course&quot;, &quot;Rate&quot;,&quot;Person&quot;,&quot;Employee&quot;,&quot;HistoryPwd&quot;,&quot;Semester&quot;,&quot;Course Schedule&quot;,&quot;Person Schedule&quot;})" type="code"/>
         </Property>
       </Properties>
       <Events>

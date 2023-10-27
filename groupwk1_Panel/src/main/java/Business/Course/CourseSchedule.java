@@ -11,12 +11,95 @@ import java.util.List;
 public class CourseSchedule {
     private List<Course> courseSchedule;
     private Connection connection;
+    private List<CourseInfo> courseInfoList;
 
     public CourseSchedule(Connection connection) {
         courseSchedule = new ArrayList<>();
         this.connection = connection;
+        courseInfoList = new ArrayList<>();
     }
 
+     public void loadCourseInfoFromDatabase() throws SQLException {
+        String query = "SELECT course_id, weekday, starttime, endtime FROM CourseSchedule";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String courseId = resultSet.getString("course_id");
+                String weekday = resultSet.getString("weekday");
+                String starttime = resultSet.getString("starttime");
+                String endtime = resultSet.getString("endtime");
+
+                CourseInfo courseInfo = new CourseInfo(courseId, weekday, starttime, endtime);
+                courseInfoList.add(courseInfo);
+            }
+        }
+    }
+
+     public void addCourseInfoList(String cId, String week, String start, String end){
+         CourseInfo e = new CourseInfo(cId, week, start, end);
+         courseInfoList.add(e);
+     }
+     
+     
+     
+    public List<CourseInfo> getCourseInfoList() {
+        return courseInfoList;
+    }
+
+    // CourseInfo类用于存储从数据库中读取的课程信息
+    public static class CourseInfo {
+        private String courseId;
+        private String weekday;
+        private String starttime;
+        private String endtime;
+
+        public CourseInfo(String courseId, String weekday, String starttime, String endtime) {
+            this.courseId = courseId;
+            this.weekday = weekday;
+            this.starttime = starttime;
+            this.endtime = endtime;
+        }
+
+        public void setCourseId(String courseId) {
+            this.courseId = courseId;
+        }
+
+        public void setWeekday(String weekday) {
+            this.weekday = weekday;
+        }
+
+        public void setStarttime(String starttime) {
+            this.starttime = starttime;
+        }
+
+        public void setEndtime(String endtime) {
+            this.endtime = endtime;
+        }
+
+        // 这里可以添加课程信息的getter方法
+        public String getCourseId() {
+            return courseId;
+        }
+
+        public String getWeekday() {
+            return weekday;
+        }
+
+        public String getStarttime() {
+            return starttime;
+        }
+
+        public String getEndtime() {
+            return endtime;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     public void addCourseToSchedule(Course course) throws SQLException {
         // 添加到内存
         courseSchedule.add(course);
@@ -72,4 +155,11 @@ public class CourseSchedule {
             statement.executeUpdate();
         }
     }
+    
+    
+    
+    
+    
+    
+    
 }
