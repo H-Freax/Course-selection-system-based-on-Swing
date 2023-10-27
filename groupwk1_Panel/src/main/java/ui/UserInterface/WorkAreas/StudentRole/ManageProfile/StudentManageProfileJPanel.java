@@ -319,7 +319,11 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
             Object[] row = new Object[4];
             row[0] = course.getName();
             row[1] = course.getProfessor();
-            row[2] = course.getScore();
+            if((course.getScore()+"").equals("0.0")){
+                row[2]="N/A";
+            }else{
+                row[2] = course.getScore();
+            }
             row[3] = semester.getSemesterName();
             //设置3R对应
 
