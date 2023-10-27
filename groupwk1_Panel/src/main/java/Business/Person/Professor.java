@@ -25,7 +25,7 @@ public class Professor extends Person {
     }
     public Professor(String personName, String personID, String username, String nowPassword, boolean enabled, String role) {
         super(personName, personID, role);
-        this.nowPassword = Tools.PasswordUtils.hashPassword(nowPassword);
+        this.nowPassword = nowPassword;
         this.username = username;
         this.enabled = enabled;
         this.pwdHash = Tools.PasswordUtils.hashPassword(nowPassword);

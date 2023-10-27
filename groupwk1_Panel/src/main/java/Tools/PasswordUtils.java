@@ -77,7 +77,7 @@ public class PasswordUtils {
     }
 
     // 检查密码是否在Historypwd表中
-    private static boolean isPasswordInHistory(Connection connection, String personId, String hashedPassword) throws SQLException {
+    public static boolean isPasswordInHistory(Connection connection, String personId, String hashedPassword) throws SQLException {
         String query = "SELECT password FROM Historypwd WHERE personid = ? AND password = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, personId);

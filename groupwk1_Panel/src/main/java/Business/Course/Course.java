@@ -268,14 +268,13 @@ public class Course {
                 resultSet.getInt("point"),
                 resultSet.getString("semesterid"),
                 resultSet.getString("statue"),
-//                resultSet.getString("professor"),
-                null,
+                resultSet.getString("professor"),
                 resultSet.getString("location"),
                 resultSet.getInt("studentlimited"),
                 resultSet.getInt("studentcount"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
                 resultSet.getTimestamp("endtime").toLocalDateTime(),
-                0
+                resultSet.getDouble("score")
         );
     }
     public void addTopic(Connection connection, String topic) throws SQLException {
