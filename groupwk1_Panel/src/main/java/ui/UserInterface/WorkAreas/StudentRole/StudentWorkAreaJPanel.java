@@ -146,7 +146,11 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         btnRate.setPreferredSize(new java.awt.Dimension(240, 25));
         btnRate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRateActionPerformed(evt);
+                try {
+                    btnRateActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -285,7 +289,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void btnRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRateActionPerformed
+    private void btnRateActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnRateActionPerformed
         // TODO add your handling code here:
         StudentRateJPanel srPanel = new StudentRateJPanel(ViewContainer,student);
         ViewContainer.add("StudentRateJPanel", srPanel);

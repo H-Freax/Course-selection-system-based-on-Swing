@@ -31,6 +31,14 @@ public class PersonDirectory {
         }
         return null;
     }
+    public Person findPersonByname(String name) {
+        for (Person person : persons) {
+            if (person.getPersonName().equals(name)) {
+                return person;
+            }
+        }
+        return null;
+    }
 
     public ArrayList<Person> listPersons() {
         return persons;

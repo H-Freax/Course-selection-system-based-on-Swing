@@ -177,7 +177,7 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
     private void generateAndSavePDF() throws Exception {
         Document document = new Document();
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("transcript.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(student.getPersonName()+"transcript.pdf"));
             document.open();
             PdfPTable table = new PdfPTable(4); // 4 列用于学期、课程、教授和分数
 

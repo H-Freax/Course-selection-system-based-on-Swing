@@ -40,7 +40,14 @@ public class CourseDirectory {
         // 从数据库中删除
         course.deleteFromDatabase(connection);
     }
-
+    public Course findCourseIdByName(String courseName) {
+        for (Course course : courses) {
+            if (course.getName().equals(courseName)) {
+                return course;
+            }
+        }
+        return null; // Handle the case where the course is not found, possibly by showing an error message.
+    }
     public Course getCourseById(String courseId) {
         for (Course course : courses) {
             if (course.getId().equals(courseId)) {

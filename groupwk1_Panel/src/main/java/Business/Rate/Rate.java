@@ -22,6 +22,9 @@ public class Rate {
     private String comment;
     private String score;
 
+    public Rate(){
+
+    }
     public Rate(String rateId,String professorId, String studentId, String courseId, String scorePart1, String scorePart2,
                 String scorePart3, String scorePart4, String comment, String score) throws SQLException {
         this.rateId = rateId;
@@ -112,8 +115,8 @@ public class Rate {
     public void setScore(String score) {
         this.score = score;
     }
-    
-    
+
+
 
     public void setRateId(String rateId) {
         this.rateId = rateId;
@@ -186,7 +189,20 @@ public class Rate {
         return rates;
     }
 
-
+    public static boolean doesRateExist(Connection connection, String professorId, String studentId, String courseId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM Rate WHERE professor_id = ? AND studuent_id = ? AND course_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, professorId);
+            statement.setString(2, studentId);
+            statement.setString(3, courseId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        }
+        return false;
+    }
 
 
     public static Rate loadFromDatabase(Connection connection, String professorId, String studentId, String courseId) throws SQLException {
