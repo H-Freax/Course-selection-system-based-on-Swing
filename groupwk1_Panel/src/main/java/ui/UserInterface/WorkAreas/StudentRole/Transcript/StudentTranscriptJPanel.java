@@ -36,6 +36,7 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
         this.student = student;
         initStudentProfile(student);
         populateTable();
+        txtStudentGpa.setText(String.valueOf(student.getGpa()));
     }
 
     private void initStudentProfile(Student student) {
@@ -64,7 +65,6 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTrascript = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
-        btnPrint = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtStudentGpa = new javax.swing.JTextField();
 
@@ -88,13 +88,6 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("Transcript");
 
-        btnPrint.setText("Print");
-        btnPrint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrintActionPerformed(evt);
-            }
-        });
-
         jLabel6.setText("GPA:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -114,17 +107,11 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
                         .addGap(81, 81, 81)
                         .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(79, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnPrint)
-                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(51, 51, 51)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,10 +122,6 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
                 .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPrintActionPerformed
 
     private void populateTable() throws SQLException {
         DefaultTableModel model = (DefaultTableModel) tblTrascript.getModel(); //Have the access to the table;
@@ -164,7 +147,6 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnPrint;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
