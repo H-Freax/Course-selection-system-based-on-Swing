@@ -9,7 +9,7 @@ import Business.Person.Professor;
 import Tools.MySQLConnectionUtil;
 
 import java.util.List;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -86,7 +86,11 @@ public class FacultyProfileJPanel extends JPanel {
 
         jLabel3.setText("Professor ID:");
 
+        txtProfessorId.setEditable(false);
+
         jLabel4.setText("Professor Name:");
+
+        txtProfessorName.setEditable(false);
 
         jLabel5.setText("Courses");
 
@@ -218,7 +222,14 @@ public class FacultyProfileJPanel extends JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-//        hello
+        professor.setLanguage(txtProfessorLanguage.getText());
+        professor.setRate(Double.parseDouble(txtProfessorRating.getText()));
+        professor.setRegion(txtProfessorRegion.getText());
+        professor.setUsername(txtProfessorUsername.getText());
+        professor.setNowPassword(txtProfessorPassword.getText());
+        professor.updateProfessorInDatabase2(MySQLConnectionUtil.getConnection());
+        populateTable();
+        JOptionPane.showMessageDialog(this, "Succuss!");
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void populateTable() {
