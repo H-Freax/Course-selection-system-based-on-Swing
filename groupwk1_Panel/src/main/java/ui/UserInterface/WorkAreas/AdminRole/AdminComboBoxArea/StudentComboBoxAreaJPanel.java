@@ -377,10 +377,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         personName=txtname.getText();
         personID=txtid.getText();
-        if(studentdirectory.findStudent(personID)!=null){
-            JOptionPane.showMessageDialog(this, "ID already existed!");
-            return;
-        }
+
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
         enabled=(txtEnabled.getText()=="true")? true:false;

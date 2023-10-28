@@ -21,6 +21,7 @@ import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.PersonScheduleComb
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.RateComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.SemesterComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.StudentComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.Management.StudentManagementJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
 
 /**
@@ -217,7 +218,10 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         //manage student profile
-
+            StudentManagementJPanel cPanel = new StudentManagementJPanel(ViewContainer);
+            ViewContainer.add("StudentManagementJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
