@@ -31,6 +31,7 @@ public class Course {
     private int studentCount;
     private LocalDateTime beginTime;
     private LocalDateTime endTime;
+    private String weekday;
     private List<String> topics; // Store course topics
     private List<String> enrolledStudents; // Store enrolled student IDs
 
@@ -40,7 +41,7 @@ public class Course {
     }
 
     public Course(String id, String name, String introduction, int point, String semesterId, String status,
-                  String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime,
+                  String professor, String location, int studentLimit, int studentCount,String weekday, LocalDateTime beginTime, LocalDateTime endTime,
                   double score) {
         this.id = id;
         this.name = name;
@@ -54,6 +55,7 @@ public class Course {
         this.studentCount = studentCount;
         this.beginTime = beginTime;
         this.endTime = endTime;
+        this.weekday = weekday;
         this.topics = new ArrayList<>();
         this.enrolledStudents = new ArrayList<>();
         this.score = score;
@@ -136,6 +138,14 @@ public class Course {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(String weekday) {
+        this.weekday = weekday;
     }
 
     public int getStudentLimit() {
@@ -287,6 +297,7 @@ public class Course {
                 resultSet.getString("location"),
                 resultSet.getInt("studentlimited"),
                 resultSet.getInt("studentcount"),
+                resultSet.getString("weekday"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
                 resultSet.getTimestamp("endtime").toLocalDateTime(),
                 resultSet.getDouble("score")
