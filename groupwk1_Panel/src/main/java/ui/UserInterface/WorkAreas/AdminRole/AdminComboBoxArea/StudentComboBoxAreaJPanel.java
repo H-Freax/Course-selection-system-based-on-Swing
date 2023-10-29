@@ -7,6 +7,7 @@ import Business.Directory.StudentDirectory;
 import Business.Person.Student;
 import Business.Semester.Semester;
 import Tools.MySQLConnectionUtil;
+import Tools.PasswordUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -341,7 +342,12 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         if(personName!=""&&personID!=""&&username!=""&&nowPassword!=""){
             Student stu1 = new Student( personName,  personID,  username,  nowPassword,  enabled,  gpa);
             Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
-            stu1.setPasswordHistory(stringSet1);
+            Set<String> stringSet2 = new HashSet<>();
+            for(String s : stringSet1){
+                s=PasswordUtils.hashPassword(s);
+                stringSet2.add(s);
+            }
+            stu1.setPasswordHistory(stringSet2);
             studentList.add(stu1);
             populateTable();
             JOptionPane.showMessageDialog(this, "Added!");
@@ -389,6 +395,11 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         
         Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
+        Set<String> stringSet2 = new HashSet<>();
+        for(String s : stringSet1){
+                s=PasswordUtils.hashPassword(s);
+                stringSet2.add(s);
+            }
        int selectedRowIndex = stuTable.getSelectedRow();
        if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");
@@ -404,7 +415,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                                 return;
                             }
                    }
-                    stu.setPasswordHistory(stringSet1);
+                    stu.setPasswordHistory(stringSet2);
                     stu.setEnabled(enabled);
                     stu.setGpa(gpa);
                     stu.setNowPassword(nowPassword);

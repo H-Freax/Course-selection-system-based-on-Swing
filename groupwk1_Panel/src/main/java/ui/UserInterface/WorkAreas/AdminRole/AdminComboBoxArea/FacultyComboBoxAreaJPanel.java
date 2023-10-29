@@ -3,6 +3,7 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 import Business.Directory.ProfessorDirectory;
 import Business.Person.Professor;
 import Tools.MySQLConnectionUtil;
+import Tools.PasswordUtils;
 import com.mysql.cj.util.StringUtils;
 
 import java.sql.Connection;
@@ -386,7 +387,12 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         if(id!=""&&name!=""&&isEnabled!=""&&region!=""&pwd!=""&&language!=""&&rate!=""&&user!=""&&topic!=""){
             boolean isRight=false;
             Set<String> stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
-            Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(","))); 
+            Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(",")));
+            Set<String> stringSet2 = new HashSet<>();
+            for(String s : stringSet1){
+                s=PasswordUtils.hashPassword(s);
+                stringSet2.add(s);
+            }
             if("true".equals(isEnabled)){
                 isRight=true;
             }else if("false".equals(isEnabled)){
@@ -400,7 +406,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             p.setLanguage(language);
             p.setRegion(region);
             p.setTopics(stringSet);
-            p.setPasswordHistory(stringSet1);
+            p.setPasswordHistory(stringSet2);
             try {
                 professorDirectory.saveProfessorToDatabase(connection,p);
             } catch (SQLException ex) {
@@ -471,7 +477,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         String id = txtid.getText();
 
-
+        Set<String> stringSet2 = new HashSet<>();
         String name = txtname.getText();
         String isEnabled = txtisEnabled.getText();
         String region = txtRegion.getText();
@@ -489,6 +495,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             isRight=false;
             stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
             stringSet1=new HashSet<>(Arrays.asList(his.split(",")));
+
+            for(String s : stringSet1){
+                s=PasswordUtils.hashPassword(s);
+                stringSet2.add(s);
+            }
             if("true".equals(isEnabled)){
                 isRight=true;
             }else if("false".equals(isEnabled)){
@@ -520,7 +531,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setPersonID(id);
                     c.setRate(Double.parseDouble(rate));
                     c.setTopics(stringSet);
-                    c.setPasswordHistory(stringSet1);
+                    c.setPasswordHistory(stringSet2);
                     try {
                     professorDirectory.setProfessors(professorlist);
                     professorDirectory.saveProfessorToDatabase( connection, c);

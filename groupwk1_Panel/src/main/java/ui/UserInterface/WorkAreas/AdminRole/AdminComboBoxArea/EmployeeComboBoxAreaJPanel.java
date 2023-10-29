@@ -2,6 +2,7 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Directory.EmployeeDirectory;
 import Business.Person.Employee;
+import Tools.PasswordUtils;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
      */
     private EmployeeDirectory employeeDirectory;
     private ArrayList<Employee> employeeList;
-
+      
     public EmployeeComboBoxAreaJPanel() {
         initComponents();
         employeeDirectory=new EmployeeDirectory();
@@ -308,6 +309,8 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
         String personID=txtid.getText(); 
         String username=txtuser.getText();
         String nowPassword=txtpwd.getText();
+        nowPassword=PasswordUtils.hashPassword(nowPassword);
+        
         boolean enabled=Boolean.getBoolean(txtEnabled.getText());
         String role=txtRole.getText();
         if(personName==""||personID==""||username==""||nowPassword==""||role==""){
