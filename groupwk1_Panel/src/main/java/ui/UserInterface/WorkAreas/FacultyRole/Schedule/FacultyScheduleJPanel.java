@@ -15,6 +15,7 @@ import Tools.MySQLConnectionUtil;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -49,63 +50,84 @@ public class FacultyScheduleJPanel extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new JLabel();
-        jScrollPane1 = new JScrollPane();
-        scheduleTable = new JTable();
-        btnCalendar = new JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        scheduleTable = new javax.swing.JTable();
+        btnCalendar = new javax.swing.JButton();
+        cbSemester = new javax.swing.JComboBox<>();
+        labelSemesterTime = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 3, 18)); // NOI18N
         jLabel1.setText("My Schedule");
 
-        scheduleTable.setModel(new DefaultTableModel(
+        scheduleTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Course Name", "Course Location", "Course Time"
+                "Course Name", "Course Location", "Course Time", "Semster"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(scheduleTable);
 
         btnCalendar.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         btnCalendar.setText("Add To Calendar");
 
-        GroupLayout layout = new GroupLayout(this);
+        labelSemesterTime.setText("Semester Time:");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCalendar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(575, 575, 575))
-                    .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 676, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(60, Short.MAX_VALUE))
+                        .addGap(54, 54, 54)
+                        .addComponent(cbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(labelSemesterTime, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnCalendar)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSemesterTime))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
                 .addComponent(btnCalendar)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JButton btnCalendar;
-    private JLabel jLabel1;
-    private JScrollPane jScrollPane1;
-    private JTable scheduleTable;
+    private javax.swing.JButton btnCalendar;
+    private javax.swing.JComboBox<String> cbSemester;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelSemesterTime;
+    private javax.swing.JTable scheduleTable;
     // End of variables declaration//GEN-END:variables
 
     private void populateTable(){
@@ -117,10 +139,15 @@ public class FacultyScheduleJPanel extends JPanel {
             List<CourseVO> courseVOList = courseDirectory.loadCourseListFromDatabase(null, professor.getPersonID());
 
             for(CourseVO course : courseVOList){
-                Object[] row = new Object[3];
+                Object[] row = new Object[4];
                 row[0] = course.getName();
                 row[1] = course.getLocation();
-                row[2] = course.getBeginTime();
+                DateTimeFormatter startformatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+                String scheduletime =  course.getWeekday()+" "+course.getBeginTime().format(startformatter)+"-"+course.getEndTime().format(startformatter);
+
+                row[2] = scheduletime;
+                row[3] = course.getSemester();
                 model.addRow(row);
             }
         } catch (SQLException e) {

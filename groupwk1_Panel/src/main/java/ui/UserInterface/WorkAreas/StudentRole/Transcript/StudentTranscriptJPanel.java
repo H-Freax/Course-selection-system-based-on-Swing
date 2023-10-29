@@ -89,6 +89,7 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblTrascript);
         tblTrascript.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
+        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("Transcript");
