@@ -15,6 +15,12 @@ public class PersonDirectory {
         persons = new ArrayList<>();
     }
 
+    public void setPersons(ArrayList<Person> persons) {
+        this.persons = persons;
+    }
+
+    
+    
     public void addPerson(Person person) {
         persons.add(person);
     }

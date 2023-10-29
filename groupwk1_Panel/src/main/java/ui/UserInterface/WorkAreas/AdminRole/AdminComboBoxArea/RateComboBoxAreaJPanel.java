@@ -452,7 +452,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                     if(e.getRateId().equals(selectedID)){
                         c = e;
                     }
-                    if(e.getRateId().equals(selectedID)&&!rId.equals(selectedID)){
+                    if(e.getRateId().equals(rId)&&!selectedID.equals(rId)){
                         JOptionPane.showMessageDialog(this, "ID Already Existed");
                         return;
                     }

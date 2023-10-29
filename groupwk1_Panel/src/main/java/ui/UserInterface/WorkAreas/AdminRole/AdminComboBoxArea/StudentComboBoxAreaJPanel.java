@@ -159,7 +159,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Delete");
+        jButton3.setText("Disable");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -336,13 +336,14 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
-        enabled=(txtEnabled.getText()=="true")? true:false;
+        enabled=("true".equals(txtEnabled.getText()))? true:false;
         gpa=(Double.parseDouble(GPA.getText()));
         if(personName!=""&&personID!=""&&username!=""&&nowPassword!=""){
             Student stu1 = new Student( personName,  personID,  username,  nowPassword,  enabled,  gpa);
             Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
             stu1.setPasswordHistory(stringSet1);
             studentList.add(stu1);
+            populateTable();
             JOptionPane.showMessageDialog(this, "Added!");
             return;
         }
@@ -380,7 +381,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
 
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
-        enabled=(txtEnabled.getText()=="true")? true:false;
+        enabled=("true".equals(txtEnabled.getText()))? true:false;
         gpa=(Double.parseDouble(GPA.getText()));
         if(personName==""||personID==""||username==""||nowPassword==""){
             JOptionPane.showMessageDialog(this, "Please Input!");
@@ -422,7 +423,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRowIndex = stuTable.getSelectedRow();
         if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+            JOptionPane.showMessageDialog(this, "Please select a row to disable.");
             return;
         }else{
                 DefaultTableModel model = (DefaultTableModel) stuTable.getModel();
@@ -430,7 +431,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                 Student st = studentdirectory.findStudent(selectedID);
                 if(st!=null){
                     st.setEnabled(false);
-                    JOptionPane.showMessageDialog(this, "Deleted!");
+                    JOptionPane.showMessageDialog(this, "disabled!");
                     return;
                 }
             JOptionPane.showMessageDialog(this, "Not Existed!");

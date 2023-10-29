@@ -1,3 +1,4 @@
+ui\UserInterface\WorkAreas\FacultyRole\FacultyWorkAreaJPanel$4.class
 ui\LoginJPanel$3.class
 ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel$5.class
 ui\UserInterface\WorkAreas\FacultyRole\ManageCourses\FacultyManageCoursesJPanel$3.class
@@ -8,6 +9,7 @@ ui\UserInterface\WorkAreas\FacultyRole\ManageCourses\FacultyManageCoursesJPanel$
 ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel$2.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonComboBoxAreaJPanel$4.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonScheduleComboBoxAreaJPanel$1.class
+ui\UserInterface\WorkAreas\FacultyRole\ManageStudents\FacultyManageStudentsJPanel$1.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\CourseScheduleComboBoxAreaJPanel$6.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\SemesterComboBoxAreaJPanel$5.class
 ui\validationJPanel$1.class
@@ -22,11 +24,9 @@ Business\Person\Student.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\EmployeeComboBoxAreaJPanel$1.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\SemesterComboBoxAreaJPanel.class
 ui\validationJPanel$7.class
-ui\UserInterface\WorkAreas\AdminRole\Management\StudentManagementJPanel$7.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonScheduleComboBoxAreaJPanel.class
 ui\UserInterface\WorkAreas\AdminRole\Management\StudentManagementJPanel$1.class
 ui\UserInterface\WorkAreas\AdminRole\AdminWorkAreaJPanel$1.class
-ui\UserInterface\WorkAreas\AdminRole\AdminWorkAreaJPanel$7.class
 Business\Person\Person.class
 ui\UserInterface\WorkAreas\AdminRole\Management\StudentManagementJPanel$4.class
 Business\Rate\Rate.class
@@ -46,11 +46,11 @@ ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel.clas
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\EmployeeComboBoxAreaJPanel$2.class
 ui\UserInterface\WorkAreas\StudentRole\ManageProfile\StudentManageProfileJPanel$2.class
 Business\Course\CourseSchedule$CourseInfo.class
-ui\UserInterface\WorkAreas\AdminRole\AdminWorkAreaJPanel$8.class
 ui\LoginJPanel$1.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\FacultyComboBoxAreaJPanel$1.class
 ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel$4.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonComboBoxAreaJPanel$1.class
+ui\UserInterface\WorkAreas\FacultyRole\FacultyWorkAreaJPanel$5.class
 ui\UserInterface\WorkAreas\StudentRole\StudentWorkAreaJPanel$5.class
 ui\UserInterface\WorkAreas\FacultyRole\ManageCourses\FacultyManageCoursesJPanel$7.class
 ui\UserInterface\WorkAreas\AdminRole\AdminWorkAreaJPanel$2.class
@@ -74,12 +74,15 @@ Business\Course\CourseSchedule.class
 ui\UserInterface\WorkAreas\StudentRole\StudentWorkAreaJPanel$1.class
 ui\UserInterface\WorkAreas\AdminRole\Management\StudentManagementJPanel$5.class
 ui\UserInterface\WorkAreas\StudentRole\Registration\StudentRegisterJPanel.class
+ui\UserInterface\WorkAreas\General\GeneralJPanel.class
 Business\Directory\PersonDirectory.class
 ui\UserInterface\WorkAreas\FacultyRole\Schedule\FacultyScheduleJPanel.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\FacultyComboBoxAreaJPanel$5.class
 ui\UserInterface\WorkAreas\FacultyRole\ManageCourses\FacultyManageCoursesJPanel$2.class
 ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel$6.class
+ui\UserInterface\WorkAreas\FacultyRole\ManageStudents\FacultyManageStudentsJPanel.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonComboBoxAreaJPanel.class
+ui\UserInterface\WorkAreas\FacultyRole\FacultyWorkAreaJPanel$3.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonComboBoxAreaJPanel$6.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonScheduleComboBoxAreaJPanel$2.class
 ui\UserInterface\WorkAreas\StudentRole\Registration\StudentRegisterJPanel$3.class
@@ -91,6 +94,7 @@ ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel$3.cl
 ui\UserInterface\WorkAreas\StudentRole\StudentWorkAreaJPanel$4.class
 ui\UserInterface\WorkAreas\StudentRole\Transcript\StudentTranscriptJPanel.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonComboBoxAreaJPanel$3.class
+ui\UserInterface\WorkAreas\FacultyRole\FacultyWorkAreaJPanel$6.class
 ui\LoginJPanel$2.class
 Business\Person\PersonSchedule.class
 ui\UserInterface\WorkAreas\StudentRole\ManageProfile\StudentManageProfileJPanel$1.class
@@ -112,6 +116,7 @@ ui\UserInterface\WorkAreas\AdminRole\AdminWorkAreaJPanel$5.class
 ui\UserInterface\WorkAreas\FacultyRole\ManageCourses\FacultyManageCoursesJPanel$5.class
 ui\UserInterface\WorkAreas\AdminRole\Management\FacultyManagementJPanel.class
 Business\Person\Professor.class
+ui\UserInterface\WorkAreas\FacultyRole\FacultyWorkAreaJPanel$2.class
 ui\UserInterface\WorkAreas\AdminRole\Management\EmployeeManagementJPanel.class
 ui\UserInterface\WorkAreas\AdminRole\Management\PersonManagementJPanel.class
 ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel$1.class
@@ -124,7 +129,8 @@ ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonScheduleComboBoxAre
 ui\UserInterface\WorkAreas\AdminRole\Management\StudentManagementJPanel$2.class
 Business\Course\Course.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\EmployeeComboBoxAreaJPanel.class
-ui\UserInterface\WorkAreas\AdminRole\AdminWorkAreaJPanel$6.class
+ui\UserInterface\WorkAreas\FacultyRole\FacultyWorkAreaJPanel$1.class
+ui\UserInterface\WorkAreas\FacultyRole\FacultyWorkAreaJPanel.class
 ui\validationJPanel.class
 ui\UserInterface\WorkAreas\FacultyRole\ManageCourses\FacultyManageCoursesJPanel.class
 Business\Directory\ProfessorDirectory.class
