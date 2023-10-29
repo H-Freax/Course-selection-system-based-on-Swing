@@ -21,10 +21,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="mainTabbedPane" min="-2" pref="1002" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="mainTabbedPane" alignment="0" pref="909" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -97,17 +94,16 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jScrollPane8" min="-2" pref="687" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                                  <Component id="jScrollPane9" max="32767" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                                              </Group>
+                                          <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane9" max="32767" attributes="0"/>
+                                          <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane8" alignment="0" min="-2" pref="687" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="1" attributes="0">
@@ -152,28 +148,38 @@
                                                       <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
                                                       <Component id="jLabel33" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="txtCurrentCourseLocation" alignment="1" min="-2" pref="174" max="-2" attributes="0"/>
-                                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                                                              <Component id="txtCurrentCourseEndTime" max="32767" attributes="0"/>
-                                                          </Group>
-                                                          <Component id="txtCurrentCourseStartTime" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                                              <Component id="txtCurrentStudentCount" min="-2" pref="171" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                                              <Component id="txtCurrentStudentLimited" min="-2" pref="172" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                      <Component id="btnSaveCurrentCourse" alignment="1" min="-2" pref="88" max="-2" attributes="0"/>
-                                                  </Group>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                                  <Component id="btnBackCurrentCourse" min="-2" pref="88" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
+                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="txtCurrentCourseLocation" alignment="1" min="-2" pref="174" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                                                      <Component id="txtCurrentCourseEndTime" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="txtCurrentCourseStartTime" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                                      <Component id="txtCurrentStudentCount" min="-2" pref="171" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                                      <Component id="txtCurrentStudentLimited" min="-2" pref="172" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <Component id="btnSaveCurrentCourse" alignment="1" min="-2" pref="88" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                                          <Component id="txtSearchCurrentCourse" min="-2" pref="330" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                                          <Component id="btnSearchCurrentCourse" min="-2" pref="88" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace pref="58" max="32767" attributes="0"/>
@@ -184,8 +190,13 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane8" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane8" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtSearchCurrentCourse" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                      <Component id="btnSearchCurrentCourse" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="3" attributes="0">
@@ -246,8 +257,11 @@
                                       <Component id="jScrollPane9" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                  <Component id="btnSaveCurrentCourse" min="-2" pref="38" max="-2" attributes="0"/>
-                                  <EmptySpace pref="311" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="btnSaveCurrentCourse" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                      <Component id="btnBackCurrentCourse" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="269" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -267,32 +281,8 @@
                                     <Column editable="true" title="Course ID" type="java.lang.Object"/>
                                     <Column editable="true" title="Couse Name" type="java.lang.Object"/>
                                     <Column editable="true" title="Course Topic" type="java.lang.Object"/>
-                                    <Column editable="true" title="Course Location" type="java.lang.Object"/>
+                                    <Column editable="true" title="Course Capacity" type="java.lang.Object"/>
                                   </Table>
-                                </Property>
-                                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                                  <TableColumnModel selectionModel="0">
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                  </TableColumnModel>
                                 </Property>
                                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -301,6 +291,16 @@
                             </Component>
                           </SubComponents>
                         </Container>
+                        <Component class="javax.swing.JTextField" name="txtSearchCurrentCourse">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Search Bar"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="btnSearchCurrentCourse">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Search"/>
+                          </Properties>
+                        </Component>
                         <Component class="javax.swing.JTextField" name="txtCurrentCourseId">
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel28">
@@ -375,9 +375,6 @@
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Save"/>
                           </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveCurrentCourseActionPerformed"/>
-                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel36">
                           <Properties>
@@ -391,7 +388,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Component class="javax.swing.JTextArea" name="currentCourseIntroductionTextArea">
+                            <Component class="javax.swing.JTextArea" name="createCourseIntroductionTextArea1">
                               <Properties>
                                 <Property name="columns" type="int" value="20"/>
                                 <Property name="rows" type="int" value="5"/>
@@ -399,6 +396,14 @@
                             </Component>
                           </SubComponents>
                         </Container>
+                        <Component class="javax.swing.JButton" name="btnBackCurrentCourse">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Back"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackCurrentCourseActionPerformed"/>
+                          </Events>
+                        </Component>
                       </SubComponents>
                     </Container>
                   </SubComponents>
@@ -439,10 +444,15 @@
                                               <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel22" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="txtCreateCoursePoint" pref="172" max="32767" attributes="0"/>
-                                              <Component id="selectSemComboBox" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                                  <Component id="txtCreateSemester" min="-2" pref="171" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                                  <Component id="txtCreateCoursePoint" min="-2" pref="172" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -474,19 +484,30 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="78" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
-                              <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                              <Component id="jScrollPane7" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="btnCreate" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                                      <Component id="btnView" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
+                                      <Component id="jLabel16" min="-2" pref="75" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="txtCreateProfessor" min="-2" pref="400" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
+                                      <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Component id="jScrollPane7" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnCreate" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -518,7 +539,7 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="selectSemComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCreateSemester" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
@@ -548,19 +569,22 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                                      <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane7" min="-2" pref="72" max="-2" attributes="0"/>
-                                  </Group>
+                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCreateProfessor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                              <Component id="btnCreate" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="212" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane7" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnCreate" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnView" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -599,6 +623,8 @@
                         <Property name="text" type="java.lang.String" value="Semester:"/>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JTextField" name="txtCreateSemester">
+                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel24">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Course Location:"/>
@@ -634,6 +660,13 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtCreateStudentCount">
                     </Component>
+                    <Component class="javax.swing.JTextField" name="txtCreateProfessor">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel16">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Professor"/>
+                      </Properties>
+                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel27">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Course Introduction"/>
@@ -658,23 +691,11 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Create"/>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateActionPerformed"/>
-                      </Events>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="selectSemComboBox">
+                    <Component class="javax.swing.JButton" name="btnView">
                       <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="0"/>
-                        </Property>
+                        <Property name="text" type="java.lang.String" value="View"/>
                       </Properties>
-                      <Events>
-                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="selectSemComboBoxItemStateChanged"/>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectSemComboBoxActionPerformed"/>
-                      </Events>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1116,9 +1137,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Search"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchCourseActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel17">
                   <Properties>
@@ -1173,9 +1191,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Search"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchStudentActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>

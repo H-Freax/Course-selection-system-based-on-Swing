@@ -1,6 +1,7 @@
 package Business.Directory;
 
 import Business.Person.Professor;
+import Business.Person.Student;
 import Tools.MySQLConnectionUtil;
 
 import java.sql.Connection;
@@ -12,9 +13,10 @@ import java.util.List;
 
 public class ProfessorDirectory {
     private List<Professor> professors;
-
+    private Connection connection;
     public ProfessorDirectory() {
         professors = new ArrayList<>();
+        connection = MySQLConnectionUtil.getConnection();
     }
 
     // 添加新教授
@@ -103,4 +105,41 @@ public class ProfessorDirectory {
             }
         }
     }
+    /**
+     * 查询所有学生，并判断是否选过教授的课
+     * */
+    public List<Student> getStudentsByKeyword(String keyword, Professor professor) throws SQLException {
+
+        List<Student> studentList = new ArrayList<>();
+
+        String query = "  select s.id, max(s.username) username, max(s.gpa) gpa,  max(p.PersonName) name, " +
+                " group_concat(distinct pp.PersonName) professorNames , group_concat(distinct cp.professor_id) professorIds " +
+                "  from student s left join person p on p.PersonID = s.id " +
+                "  left join coursestudent cs on s.id = cs.studuent_id " +
+                "  left join course c on cs.course_id = c.id " +
+                "  left join courseprofessor cp on cp.course_id = c.id  " +
+                "  left join person pp on pp.PersonID = cp.professor_id  " ;
+        if(keyword != null){
+            query = query + "where p.PersonName like concat('%',?,'%') or s.id =? or pp.PersonName like concat('%',?,'%')";
+        }
+        query = query + " group by s.id";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            if(keyword != null){
+                statement.setString(1, keyword);
+                statement.setString(2, keyword);
+                statement.setString(3, keyword);
+            }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Student student = Student.resultSetToCourse(resultSet);
+                if(student.getProfessorList().contains(professor.getPersonID())){
+                    student.setMyStu(true);
+                }
+                studentList.add(student);
+            }
+        }
+        return studentList;
+    }
+
 }
