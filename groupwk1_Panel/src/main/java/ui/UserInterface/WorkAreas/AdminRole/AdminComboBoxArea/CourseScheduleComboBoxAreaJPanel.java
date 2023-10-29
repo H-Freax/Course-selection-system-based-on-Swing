@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -277,6 +279,11 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
                     }
                 }
        courseInfoList.add(c);
+        try {
+            courseSch.saveCourseScheduleInDatabase(c);
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -343,7 +350,6 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
             for(CourseInfo e : courseInfoList){
                 
                 if(e.getCourseId().equals(selectedID)&&e.getWeekday().equals(weekday)){
-                    //
                     courseInfoList.remove(e);
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Deleted!");

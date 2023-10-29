@@ -319,15 +319,13 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         Employee e = new Employee( personName,  personID,  username,  nowPassword,  enabled,  role);
         employeeList.add(e);
+        employeeDirectory.addEmployee(e);
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
-
-        
-
         String personName=txtname.getText();
         String personID=txtid.getText(); 
         String username=txtuser.getText();
@@ -369,6 +367,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setPersonID(personID);
                     c.setRole(role);
                     populateTable();
+                    employeeDirectory.updateEmployee(c);
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
                 }
@@ -392,6 +391,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                     //
                     vs.setEnabled(false);
                     populateTable();
+                    employeeDirectory.updateEmployee(vs);
                     JOptionPane.showMessageDialog(this, "Disabled!");
                     return;
                 }

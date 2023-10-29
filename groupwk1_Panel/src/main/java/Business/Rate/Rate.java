@@ -185,6 +185,36 @@ public class Rate {
         }
         return rates;
     }
+    
+    public void updateInDatabase(Connection connection) throws SQLException {
+        // 更新数据库中的 Person 对象信息
+        String updatePersonQuery = "UPDATE Rate SET Professor_id = ?, Studuent_id = ?, Course_id = ?, scorepart1 = ?,scorepart2 = ?, scorepart3 = ?,scorepart4 = ?,role = ? WHERE rate_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
+            statement.setString(1, professorId);
+            statement.setString(2, studentId);
+            statement.setString(3, courseId);
+            statement.setString(4, scorePart1);
+            statement.setString(5, scorePart2);
+            statement.setString(6, scorePart3);
+            statement.setString(7, scorePart4);
+            statement.setString(8, comment);
+            statement.setString(9, score);
+            statement.executeUpdate();
+        }
+    }
+    
+    public void deleteRateFromDatabase(Connection connection) throws SQLException {
+    String query = "DELETE FROM Rate WHERE professor_id = ? AND studuent_id = ? AND course_id = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, professorId);
+        statement.setString(2, studentId);
+        statement.setString(3, courseId);
+        statement.executeUpdate();
+    }
+}
+
+    
+    
 
     public static boolean doesRateExist(Connection connection, String professorId, String studentId, String courseId) throws SQLException {
         String query = "SELECT COUNT(*) FROM Rate WHERE professor_id = ? AND studuent_id = ? AND course_id = ?";

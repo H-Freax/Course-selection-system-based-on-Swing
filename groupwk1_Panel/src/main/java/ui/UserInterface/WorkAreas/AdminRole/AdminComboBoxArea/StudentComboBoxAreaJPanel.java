@@ -60,7 +60,6 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
 
     
     
-    
     private void populateTable(){
         
         DefaultTableModel model = (DefaultTableModel)stuTable.getModel();
@@ -339,7 +338,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         nowPassword=txtpwd.getText();
         enabled=("true".equals(txtEnabled.getText()))? true:false;
         gpa=(Double.parseDouble(GPA.getText()));
-        if(personName!=""&&personID!=""&&username!=""&&nowPassword!=""){
+        if(!"".equals(personName)&&!"".equals(personID)&&!"".equals(username)&&!"".equals(nowPassword)){
             Student stu1 = new Student( personName,  personID,  username,  nowPassword,  enabled,  gpa);
             Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
             Set<String> stringSet2 = new HashSet<>();
@@ -349,6 +348,11 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
             }
             stu1.setPasswordHistory(stringSet2);
             studentList.add(stu1);
+            try {
+                studentdirectory.saveStudentToDatabase(connection, stu1);
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
             populateTable();
             JOptionPane.showMessageDialog(this, "Added!");
             return;
@@ -384,16 +388,14 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         personName=txtname.getText();
         personID=txtid.getText();
-
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
-        enabled=("true".equals(txtEnabled.getText()))? true:false;
+        enabled=("true".equals(txtEnabled.getText()));
         gpa=(Double.parseDouble(GPA.getText()));
-        if(personName==""||personID==""||username==""||nowPassword==""){
+        if("".equals(personName)||"".equals(personID)||"".equals(username)||"".equals(nowPassword)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
-        
         Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
         Set<String> stringSet2 = new HashSet<>();
         for(String s : stringSet1){
@@ -422,6 +424,11 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                     stu.setPersonID(personID);
                     stu.setPersonName(personName);
                     stu.setUsername(username);
+                    try {
+                        studentdirectory.updateStudentInDatabase(connection, stu);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(StudentComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     JOptionPane.showMessageDialog(this, "Updated!");
                     populateTable();
                     return;
@@ -442,6 +449,11 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                 Student st = studentdirectory.findStudent(selectedID);
                 if(st!=null){
                     st.setEnabled(false);
+                    try {
+                        studentdirectory.updateStudentInDatabase(connection, st);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(StudentComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     JOptionPane.showMessageDialog(this, "disabled!");
                     return;
                 }

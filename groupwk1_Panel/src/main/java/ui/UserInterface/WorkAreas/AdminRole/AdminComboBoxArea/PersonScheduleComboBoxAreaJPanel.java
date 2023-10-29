@@ -313,6 +313,7 @@ public class PersonScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         PersonSchedule.PersonInfo c = new PersonSchedule.PersonInfo(cId, week, start, end,pId);
         personInfoList.add(c);
+        
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 

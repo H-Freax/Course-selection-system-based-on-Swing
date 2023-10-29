@@ -66,6 +66,10 @@ public class ProfessorDirectory {
         return professor;
     }
 
+    
+    
+    
+    
     // 保存教授信息到数据库
     public void saveProfessorToDatabase(Connection connection, Professor professor) throws SQLException {
         if (getProfessorById(professor.getPersonID()) == null) {

@@ -408,7 +408,8 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             p.setTopics(stringSet);
             p.setPasswordHistory(stringSet2);
             try {
-                professorDirectory.saveProfessorToDatabase(connection,p);
+                
+                p.saveToDatabase(connection);
             } catch (SQLException ex) {
                 Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -462,6 +463,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     if(vs.getPersonID().equals(selectedID)){
                     //
                     vs.setEnabled(false);
+                        try {
+                            vs.updateProfessorInDatabase(connection);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Disabled!");
                     return;
@@ -533,10 +539,10 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setTopics(stringSet);
                     c.setPasswordHistory(stringSet2);
                     try {
-                    professorDirectory.setProfessors(professorlist);
-                    professorDirectory.saveProfessorToDatabase( connection, c);
+                        
+                        c.updateProfessorInDatabase(connection);
                     } catch (SQLException ex) {
-                    Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Updated!");

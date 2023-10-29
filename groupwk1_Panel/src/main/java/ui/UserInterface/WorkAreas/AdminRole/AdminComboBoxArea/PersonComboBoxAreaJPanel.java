@@ -276,11 +276,11 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         Person e = new Person( personName,  personID,  role);
         personlist.add(e);
         try {
-            personDirectory.setPersons(personlist);
-            personDirectory.savePersonsToDatabase(connection);
+            e.saveToDatabase(connection);
         } catch (SQLException ex) {
             Logger.getLogger(PersonComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -314,12 +314,11 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                     d.setPersonID(personID);
                     d.setPersonName(personName);
                     d.setRole(role);
-                    try {
-                        personDirectory.setPersons(personlist);
-                        personDirectory.savePersonsToDatabase(connection);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(PersonComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                try {
+                    d.updateInDatabase(connection);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PersonComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
@@ -347,10 +346,9 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                     //
                     personlist.remove(vs);
                     try {
-                        personDirectory.setPersons(personlist);
-                        personDirectory.savePersonsToDatabase(connection);
+                        vs.deleteFromDatabase(connection,vs.getPersonID());
                     } catch (SQLException ex) {
-                    Logger.getLogger(PersonComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PersonComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Deleted!");
