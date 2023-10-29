@@ -9,11 +9,6 @@
     <remote-repository>
       <option name="id" value="unknown-jars-temp-repo" />
       <option name="name" value="A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository." />
-      <option name="url" value="file:$PROJECT_DIR$/lib" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="unknown-jars-temp-repo" />
-      <option name="name" value="A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository." />
       <option name="url" value="file:C:\Users\15469\Desktop\NEU\NEU_Course\Semester_1\Application Engineer &amp; Dev\GroupWork\groupwork1\groupwk1_Panel/lib" />
     </remote-repository>
     <remote-repository>
@@ -25,6 +20,11 @@
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="unknown-jars-temp-repo" />
+      <option name="name" value="A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository." />
+      <option name="url" value="file:$PROJECT_DIR$/lib" />
     </remote-repository>
   </component>
 </project>

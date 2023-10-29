@@ -10,7 +10,6 @@ ui\UserInterface\WorkAreas\StudentRole\MyCourses\StudentManageCoursesJPanel$2.cl
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonComboBoxAreaJPanel$4.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\PersonScheduleComboBoxAreaJPanel$1.class
 ui\UserInterface\WorkAreas\FacultyRole\ManageStudents\FacultyManageStudentsJPanel$1.class
-ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\CourseScheduleComboBoxAreaJPanel$6.class
 ui\UserInterface\WorkAreas\AdminRole\AdminComboBoxArea\SemesterComboBoxAreaJPanel$5.class
 ui\validationJPanel$1.class
 Business\Course\CourseVO.class
