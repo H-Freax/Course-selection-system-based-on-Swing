@@ -4,22 +4,27 @@
  */
 package ui.UserInterface.WorkAreas.FacultyRole.MyProfile;
 
+import Business.Course.Course;
 import Business.Person.Professor;
+import Tools.MySQLConnectionUtil;
 
-import java.awt.CardLayout;
-import javax.swing.JPanel;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author zhangjinming
  */
-public class FacultyProfileJPanel extends javax.swing.JPanel {
+public class FacultyProfileJPanel extends JPanel {
 
     /**
      * Creates new form ProfessorProfileJPanel
      */
     private JPanel ViewContainer;
     private Professor professor;
+
+    List<Course> courseList;
 
     public FacultyProfileJPanel() {
         initComponents();
@@ -29,6 +34,25 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.professor = professor;
+
+        courseList = getCourseListByProfessor(professor);
+        initProfessorInfo(professor);
+    }
+
+    private List<Course> getCourseListByProfessor(Professor professor) {
+        Course course = new Course();
+        return course.getCourseListByProfessor(MySQLConnectionUtil.getConnection(),professor);
+    }
+
+    private void initProfessorInfo(Professor professor) {
+        txtProfessorId.setText(professor.getPersonID());
+        txtProfessorName.setText(professor.getPersonName());
+        txtProfessorUsername.setText(professor.getUsername());
+        txtProfessorLanguage.setText(professor.getLanguage());
+        txtProfessorRating.setText(professor.getRate() + "");
+        txtProfessorPassword.setText(professor.getNowPassword());
+        txtProfessorRegion.setText(!courseList.isEmpty() ? courseList.get(0).getRegion():"");
+        populateTable();
     }
 
     /**
@@ -40,33 +64,37 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        txtProfessorId = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtProfessorName = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblProfile = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
-        txtProfessorRating = new javax.swing.JTextField();
-        btnSave = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        txtProfessorLanguage = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txtProfessorPassword = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        txtStudentUsername = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        txtProfessorRegion = new javax.swing.JTextField();
+        jLabel3 = new JLabel();
+        txtProfessorId = new JTextField();
+        jLabel4 = new JLabel();
+        txtProfessorName = new JTextField();
+        jLabel5 = new JLabel();
+        jScrollPane1 = new JScrollPane();
+        tblProfile = new JTable();
+        jLabel6 = new JLabel();
+        txtProfessorRating = new JTextField();
+        btnSave = new JButton();
+        jLabel7 = new JLabel();
+        txtProfessorLanguage = new JTextField();
+        jLabel1 = new JLabel();
+        txtProfessorPassword = new JTextField();
+        jLabel9 = new JLabel();
+        jLabel10 = new JLabel();
+        txtProfessorUsername = new JTextField();
+        jLabel11 = new JLabel();
+        txtProfessorRegion = new JTextField();
 
         jLabel3.setText("Professor ID:");
 
+        txtProfessorId.setEditable(false);
+
         jLabel4.setText("Professor Name:");
+
+        txtProfessorName.setEditable(false);
 
         jLabel5.setText("Courses");
 
-        tblProfile.setModel(new javax.swing.table.DefaultTableModel(
+        tblProfile.setModel(new DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -100,92 +128,92 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
 
         jLabel11.setText("Professor Region:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(72, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 437, GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel7))
                                 .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtProfessorLanguage, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtProfessorName, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtProfessorId, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtProfessorLanguage, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtProfessorName, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtProfessorId, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
                                 .addGap(54, 54, 54)
-                                .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtProfessorUsername, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
                                 .addGap(28, 28, 28)
-                                .addComponent(txtProfessorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtProfessorPassword, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
                                 .addGap(49, 49, 49)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtProfessorRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtProfessorRating, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtProfessorRegion, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtProfessorRating, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))))
                         .addGap(131, 131, 131))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnSave)
                         .addGap(115, 115, 115))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtProfessorId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtProfessorId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtProfessorName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtProfessorName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtProfessorLanguage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProfessorLanguage, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtProfessorRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProfessorRating, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txtProfessorRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProfessorRegion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtProfessorUsername, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(txtProfessorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProfessorPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(181, 181, 181)
                 .addComponent(btnSave)
                 .addGap(90, 90, 90))
@@ -194,28 +222,51 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        professor.setLanguage(txtProfessorLanguage.getText());
+        professor.setRate(Double.parseDouble(txtProfessorRating.getText()));
+        professor.setRegion(txtProfessorRegion.getText());
+        professor.setUsername(txtProfessorUsername.getText());
+        professor.setNowPassword(txtProfessorPassword.getText());
+        professor.updateProfessorInDatabase2(MySQLConnectionUtil.getConnection());
+        populateTable();
+        JOptionPane.showMessageDialog(this, "Succuss!");
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void populateTable() {
+
+        DefaultTableModel model = (DefaultTableModel) tblProfile.getModel(); //Have the access to the table;
+        model.setRowCount(0); //初始化？？
+
+        for(Course course : courseList){
+            Object[] row = new Object[3];
+            row[0] = course.getName();
+            row[1] = course.getRegion();
+//            row[2] = stu.isMyStu();
+            //设置3R对应
+            model.addRow(row);
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSave;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblProfile;
-    private javax.swing.JTextField txtProfessorId;
-    private javax.swing.JTextField txtProfessorLanguage;
-    private javax.swing.JTextField txtProfessorName;
-    private javax.swing.JTextField txtProfessorPassword;
-    private javax.swing.JTextField txtProfessorRating;
-    private javax.swing.JTextField txtProfessorRegion;
-    private javax.swing.JTextField txtStudentUsername;
+    private JButton btnSave;
+    private JLabel jLabel1;
+    private JLabel jLabel10;
+    private JLabel jLabel11;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
+    private JLabel jLabel6;
+    private JLabel jLabel7;
+    private JLabel jLabel9;
+    private JScrollPane jScrollPane1;
+    private JTable tblProfile;
+    private JTextField txtProfessorId;
+    private JTextField txtProfessorLanguage;
+    private JTextField txtProfessorName;
+    private JTextField txtProfessorPassword;
+    private JTextField txtProfessorRating;
+    private JTextField txtProfessorRegion;
+    private JTextField txtProfessorUsername;
     // End of variables declaration//GEN-END:variables
 }

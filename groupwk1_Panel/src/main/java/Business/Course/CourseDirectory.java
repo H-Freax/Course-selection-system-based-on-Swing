@@ -266,6 +266,76 @@ public class CourseDirectory {
         getCourseById(id).removeEnrolledStudent(MySQLConnectionUtil.getConnection(),personID);
 
     }
+    public List<CourseVO> loadCourseListFromDatabase(String keyWords, String professorId) throws SQLException{
+        List<CourseVO> list = new ArrayList<>();
+        String query = "SELECT max(c.id) id , max(c.statue) statue , max(c.begintime) begintime , max(c.endtime) endtime ," +
+                " max(c.location) location , max(c.introduction) introduction , max(c.point) point , " +
+                "max(c.studentlimited) studentlimited , max(c.studentcount) studentcount, s.semstername," +
+                " c.name, p.language, p.region, person.PersonName professor, group_concat(ct.topic) topics FROM Course c " +
+                "left join CourseProfessor cp on c.id  = cp.course_id " +
+                "left join Professor p on cp.professor_id = p.id " +
+                "left join Person person on p.id = person.PersonID " +
+                "left join CourseTopic ct on c.id = ct.course_id " +
+                "left join Semester s on s.id = c.semesterid " +
+                "where c.statue ='Open' ";
+
+        if(keyWords != null){
+            query = query  +
+                    "and ( person.PersonName like concat('%',?,'%') " +
+                    "or p.language like concat('%',?,'%') " +
+                    "or p.region like concat('%',?,'%') " +
+                    "or c.name like concat('%',?,'%') " +
+                    "or ct.topic like concat('%',?,'%')) " ;
+        }
+
+        if(professorId != null){
+            query = query + "and p.id = ? ";
+        }
+
+        query = query + " group by language, region, professor, c.name, s.semstername ";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+
+            if(keyWords != null){
+                statement.setString(1, keyWords);
+                statement.setString(2, keyWords);
+                statement.setString(3, keyWords);
+                statement.setString(4, keyWords);
+                statement.setString(5, keyWords);
+                if(professorId != null){
+                    statement.setString(6, professorId);
+                }
+            }else{
+                if(professorId != null){
+                    statement.setString(1, professorId);
+                }
+            }
+
+            System.out.println(statement.toString());
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                CourseVO course = CourseVO.resultSetToProfessorCourseVO(resultSet);
+                list.add(course);
+            }
+        }
+        courses = list.stream().map(vo ->{
+            Course course = new Course();
+            course.setId(vo.getId());
+            course.setName(vo.getName());
+            course.setBeginTime(vo.getBeginTime());
+            course.setEndTime(vo.getEndTime());
+            course.setIntroduction(vo.getIntroduction());
+            course.setLocation(vo.getLocation());
+            course.setPoint(vo.getPoint());
+            course.setProfessor(vo.getProfessor());
+            course.setStatus(vo.getStatus());
+            course.setTopics(vo.getTopics());
+            return course;
+        }).collect(Collectors.toList());
+        return list;
+    }
 
     //FacultyCurrentCourse
     public List<CourseVO>  loadCourseListByProfessorIdFromDatabase(String keyWords, String professorId, String semester) throws SQLException {
@@ -330,5 +400,6 @@ public class CourseDirectory {
         }).collect(Collectors.toList());
         return list;
     }
+
 }
 

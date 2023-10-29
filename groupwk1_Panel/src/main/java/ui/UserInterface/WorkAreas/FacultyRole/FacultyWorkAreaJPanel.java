@@ -1,7 +1,10 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package ui.UserInterface.WorkAreas.FacultyRole;
 
 import java.awt.CardLayout;
-import java.sql.SQLException;
 import javax.swing.JPanel;
 
 import Business.Person.Professor;
@@ -13,12 +16,11 @@ import ui.UserInterface.WorkAreas.FacultyRole.Ranking.FacultyRankingJPanel;
 import ui.UserInterface.WorkAreas.FacultyRole.Schedule.FacultyScheduleJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
 
-
 /**
  *
  * @author zhangjinming
  */
-public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
+public class FacultyWorkAreaJPanel extends JPanel {
     private JPanel controlPanel;
     private JPanel ViewContainer;
 
@@ -26,11 +28,6 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form FacultyWorkAreaJPanel
      */
-    public FacultyWorkAreaJPanel() {
-        initComponents();
-
-    }
-
     public FacultyWorkAreaJPanel(JPanel ViewContainer, JPanel controlPanel, Professor professor) {
         initComponents();
         this.ViewContainer = ViewContainer;

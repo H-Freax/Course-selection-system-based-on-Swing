@@ -12,7 +12,7 @@ import javax.swing.*;
  *
  * @author zhangjinming
  */
-public class FacultyRankingJPanel extends javax.swing.JPanel {
+public class FacultyRankingJPanel extends JPanel {
     private JPanel ViewContainer;
     private Professor professor;
     /**
@@ -33,12 +33,12 @@ public class FacultyRankingJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblPro = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblCourse = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jLabel1 = new JLabel();
+        jScrollPane1 = new JScrollPane();
+        tblPro = new JTable();
+        jScrollPane2 = new JScrollPane();
+        tblCourse = new JTable();
+        jButton1 = new JButton();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 3, 24)); // NOI18N
         jLabel1.setText("Ranking");
@@ -71,33 +71,33 @@ public class FacultyRankingJPanel extends javax.swing.JPanel {
 
         jButton1.setText("View");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(jLabel1)))
                 .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(51, 51, 51))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel1)
                 .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
@@ -108,11 +108,11 @@ public class FacultyRankingJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblCourse;
-    private javax.swing.JTable tblPro;
+    private JButton jButton1;
+    private JLabel jLabel1;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane2;
+    private JTable tblCourse;
+    private JTable tblPro;
     // End of variables declaration//GEN-END:variables
 }

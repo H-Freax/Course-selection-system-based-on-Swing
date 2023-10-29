@@ -162,6 +162,30 @@ public class Professor extends Person {
         savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
     }
 
+    public void updateProfessorInDatabase2(Connection connection) {
+
+        String updateProfessorQuery = "UPDATE Professor SET username = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateProfessorQuery)) {
+            statement.setString(1, username);
+//            statement.setString(2, pwdHash);
+            statement.setString(2, language);
+            statement.setString(3, enabled ? "1" : "0");
+            statement.setDouble(4, rate);
+            statement.setString(5, region);
+            statement.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setString(8, getPersonID());
+            statement.executeUpdate();
+            // 保存密码历史
+//            savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
+
+    }
+
+
     public static Professor loadFromDatabase(Connection connection, String personID) throws SQLException {
         Person person = Person.loadFromDatabase(connection, personID);
         if (person == null) {

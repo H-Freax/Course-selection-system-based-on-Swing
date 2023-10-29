@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import Tools.PasswordUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,9 +23,23 @@ public class Student extends Person {
     private List<String> courseList; // 用于存储学生的课程信息
     private Set<String> passwordHistory;
     private String pwdHash;
+    private List<String> professorList; // 用于存储学生的任课老师professorId信息
+    private boolean isMyStu;
     public Student(){
 
     }
+
+    public Student(String id, String name, String username, double gpa, String professorIds) {
+        super(name, id, "Student");
+        this.username = username;
+        this.gpa =gpa;
+        this.professorList = new ArrayList<>();
+        if(StringUtils.isNotEmpty(professorIds)){
+            this.professorList = List.of(StringUtils.split(professorIds, ","));
+        }
+    }
+
+
     public Student(String personName, String personID, String username, String nowPassword, boolean enabled, double gpa) {
         super(personName, personID, "Student");
         this.nowPassword = nowPassword;
@@ -76,7 +92,21 @@ public class Student extends Person {
     public void setGpa(double gpa) {
         this.gpa = gpa;
     }
+    public boolean isMyStu() {
+        return isMyStu;
+    }
 
+    public void setMyStu(boolean myStu) {
+        isMyStu = myStu;
+    }
+
+    public List<String> getProfessorList() {
+        return professorList;
+    }
+
+    public void setProfessorList(List<String> professorList) {
+        this.professorList = professorList;
+    }
     public List<String> getCourseList() {
         return courseList;
     }
@@ -145,7 +175,15 @@ public class Student extends Person {
 //            addStudentToCourse(connection, courseID, getPersonID());
 //        }
     }
-
+    public static Student resultSetToCourse(ResultSet resultSet) throws SQLException {
+        return new Student(
+                resultSet.getString("id"),
+                resultSet.getString("name"),
+                resultSet.getString("username"),
+                resultSet.getInt("gpa"),
+                resultSet.getString("professorIds")
+        );
+    }
     public static Student loadFromDatabase(Connection connection, String personID) throws SQLException {
         Person person = Person.loadFromDatabase(connection, personID);
         if (person == null) {
