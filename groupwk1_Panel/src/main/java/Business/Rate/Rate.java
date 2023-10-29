@@ -9,9 +9,6 @@ import java.util.List;
 
 public class Rate {
     private String rateId;
-
-
-
     private String professorId;
     private String studentId;
     private String courseId;

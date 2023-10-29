@@ -21,6 +21,7 @@ import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.PersonScheduleComb
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.RateComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.SemesterComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.StudentComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.Management.RateChartJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.Management.StudentManagementJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
 
@@ -64,6 +65,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         btnLogout = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         btnGo = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
 
         jButton8.setBackground(new java.awt.Color(102, 153, 255));
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
@@ -121,6 +123,23 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton11.setBackground(new java.awt.Color(102, 153, 255));
+        jButton11.setForeground(new java.awt.Color(255, 255, 255));
+        jButton11.setText("Rart Chart");
+        jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton11.setMaximumSize(new java.awt.Dimension(200, 40));
+        jButton11.setMinimumSize(new java.awt.Dimension(20, 20));
+        jButton11.setPreferredSize(new java.awt.Dimension(240, 25));
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    jButton11ActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,6 +159,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -154,9 +174,11 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGo))
-                .addGap(80, 80, 80)
+                .addGap(49, 49, 49)
                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(18, 18, 18)
+                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(140, 140, 140)
                 .addComponent(btnLogout)
@@ -248,11 +270,25 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         selectedText = jComboBox1.getSelectedItem().toString();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        RateChartJPanel cPanel = null;
+        try {
+            cPanel = new RateChartJPanel();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ViewContainer.add("StudentManagementJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+    }//GEN-LAST:event_jButton11ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGo;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
