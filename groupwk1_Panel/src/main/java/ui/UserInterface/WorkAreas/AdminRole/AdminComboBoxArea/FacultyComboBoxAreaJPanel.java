@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -27,10 +29,10 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
      */
     private ArrayList<Professor>professorlist;
     private ProfessorDirectory professorDirectory;
-
+    private Connection connection;
     public FacultyComboBoxAreaJPanel() throws SQLException {
         initComponents();
-        Connection connection = MySQLConnectionUtil.getConnection();
+        connection = MySQLConnectionUtil.getConnection();
         professorDirectory = new ProfessorDirectory();
         professorDirectory.loadAllProfessorsFromDatabase(connection);
         professorlist=(ArrayList<Professor>)professorDirectory.getProfessors();
@@ -131,7 +133,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Delete");
+        jButton3.setText("Disable");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -399,6 +401,13 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             p.setRegion(region);
             p.setTopics(stringSet);
             p.setPasswordHistory(stringSet1);
+            try {
+                professorDirectory.saveProfessorToDatabase(connection,p);
+            } catch (SQLException ex) {
+                Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            
             populateTable();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -512,6 +521,12 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setRate(Double.parseDouble(rate));
                     c.setTopics(stringSet);
                     c.setPasswordHistory(stringSet1);
+                    try {
+                    professorDirectory.setProfessors(professorlist);
+                    professorDirectory.saveProfessorToDatabase( connection, c);
+                    } catch (SQLException ex) {
+                    Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;

@@ -17,6 +17,12 @@ public class ProfessorDirectory {
         professors = new ArrayList<>();
     }
 
+    public void setProfessors(List<Professor> professors) {
+        this.professors = professors;
+    }
+
+    
+    
     // 添加新教授
     public void addProfessor(Professor professor) {
         professors.add(professor);

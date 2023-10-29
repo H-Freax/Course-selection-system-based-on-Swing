@@ -77,7 +77,6 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         stuTable = new javax.swing.JTable();
         lblTitle = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         btnMyCourse = new javax.swing.JButton();
         btnRate = new javax.swing.JButton();
         btnRegisrtation = new javax.swing.JButton();
@@ -101,13 +100,6 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Student Management");
-
-        jButton1.setText("View");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         btnMyCourse.setBackground(new java.awt.Color(102, 153, 255));
         btnMyCourse.setForeground(new java.awt.Color(255, 255, 255));
@@ -191,10 +183,6 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(108, 108, 108))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -222,9 +210,7 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
                 .addComponent(lblTitle)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnMyCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,20 +226,6 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
                 .addContainerGap(96, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Student student = null;
-        int selectedRowIndex = stuTable.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to View.");
-            return;
-        }else{
-                DefaultTableModel model = (DefaultTableModel) stuTable.getModel();
-                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                Student s = studentdirectory.findStudent(selectedID);              
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnMyCourseIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyCourseIdentifyEventsActionPerformed
         // TODO add your handling code here:
@@ -411,9 +383,7 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnRate;
     private javax.swing.JButton btnRegisrtation;
     private javax.swing.JButton btnTranscript;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable stuTable;
     // End of variables declaration//GEN-END:variables

@@ -145,7 +145,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton4.setText("Delete");
+        jButton4.setText("Disable");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);

@@ -62,11 +62,8 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         jButton10 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         btnGo = new javax.swing.JButton();
-        btnCreate = new javax.swing.JButton();
 
         jButton8.setBackground(new java.awt.Color(102, 153, 255));
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
@@ -105,32 +102,6 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton7.setBackground(new java.awt.Color(102, 153, 255));
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Assessment of Faculty");
-        jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton7.setMaximumSize(new java.awt.Dimension(145, 40));
-        jButton7.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton7.setPreferredSize(new java.awt.Dimension(240, 25));
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7IdentifyEventsActionPerformed(evt);
-            }
-        });
-
-        jButton9.setBackground(new java.awt.Color(102, 153, 255));
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Assessment of Students");
-        jButton9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton9.setMaximumSize(new java.awt.Dimension(145, 40));
-        jButton9.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton9.setPreferredSize(new java.awt.Dimension(240, 25));
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9IdentifyEventsActionPerformed(evt);
-            }
-        });
-
         jComboBox1.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Faculty", "Student", "Course", "Rate","Person","Employee","Semester","Course Schedule","Person Schedule"}));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -147,19 +118,6 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-            }
-        });
-
-        btnCreate.setBackground(new java.awt.Color(102, 153, 255));
-        btnCreate.setForeground(new java.awt.Color(255, 255, 255));
-        btnCreate.setText("Create Profile");
-        btnCreate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnCreate.setMaximumSize(new java.awt.Dimension(145, 40));
-        btnCreate.setMinimumSize(new java.awt.Dimension(20, 20));
-        btnCreate.setPreferredSize(new java.awt.Dimension(240, 25));
-        btnCreate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateIdentifyEventsActionPerformed(evt);
             }
         });
 
@@ -182,9 +140,6 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -199,17 +154,11 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGo))
-                .addGap(43, 43, 43)
-                .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(80, 80, 80)
                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(55, 55, 55)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
+                .addGap(140, 140, 140)
                 .addComponent(btnLogout)
                 .addContainerGap(97, Short.MAX_VALUE))
         );
@@ -241,14 +190,6 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         layout.next(ViewContainer);        // TODO add your handling code here:
         btnLogout.setVisible(false);
     }//GEN-LAST:event_btnLogoutActionPerformed
-
-    private void jButton7IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7IdentifyEventsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7IdentifyEventsActionPerformed
-
-    private void jButton9IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9IdentifyEventsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9IdentifyEventsActionPerformed
 
     private void btnGoActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnGoActionPerformed
         // TODO add your handling code here:
@@ -307,19 +248,12 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         selectedText = jComboBox1.getSelectedItem().toString();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void btnCreateIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateIdentifyEventsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCreateIdentifyEventsActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnGo;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
