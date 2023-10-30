@@ -15,6 +15,12 @@ public class PersonDirectory {
         persons = new ArrayList<>();
     }
 
+    public void setPersons(ArrayList<Person> persons) {
+        this.persons = persons;
+    }
+
+    
+    
     public void addPerson(Person person) {
         persons.add(person);
     }
@@ -26,6 +32,14 @@ public class PersonDirectory {
     public Person findPersonById(String personID) {
         for (Person person : persons) {
             if (person.getPersonID().equals(personID)) {
+                return person;
+            }
+        }
+        return null;
+    }
+    public Person findPersonByname(String name) {
+        for (Person person : persons) {
+            if (person.getPersonName().equals(name)) {
                 return person;
             }
         }

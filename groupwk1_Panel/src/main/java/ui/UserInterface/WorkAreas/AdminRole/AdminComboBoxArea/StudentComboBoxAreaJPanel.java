@@ -7,6 +7,7 @@ import Business.Directory.StudentDirectory;
 import Business.Person.Student;
 import Business.Semester.Semester;
 import Tools.MySQLConnectionUtil;
+import Tools.PasswordUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -57,7 +58,6 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         populateTable();
     }
 
-    
     
     
     private void populateTable(){
@@ -159,7 +159,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Delete");
+        jButton3.setText("Disable");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -336,13 +336,25 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
-        enabled=(txtEnabled.getText()=="true")? true:false;
+        enabled=("true".equals(txtEnabled.getText()))? true:false;
         gpa=(Double.parseDouble(GPA.getText()));
-        if(personName!=""&&personID!=""&&username!=""&&nowPassword!=""){
+        if(!"".equals(personName)&&!"".equals(personID)&&!"".equals(username)&&!"".equals(nowPassword)){
             Student stu1 = new Student( personName,  personID,  username,  nowPassword,  enabled,  gpa);
             Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
-            stu1.setPasswordHistory(stringSet1);
+            Set<String> stringSet2 = new HashSet<>();
+            for(String s : stringSet1){
+                s=PasswordUtils.hashPassword(s);
+                stringSet2.add(s);
+            }
+            stu1.setPasswordHistory(stringSet2);
             studentList.add(stu1);
+            try {
+                studentdirectory.saveStudentToDatabase(connection, stu1);
+                PasswordUtils.replacePasswordListForPersonId(connection,stringSet2,personID);
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            populateTable();
             JOptionPane.showMessageDialog(this, "Added!");
             return;
         }
@@ -377,20 +389,20 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         personName=txtname.getText();
         personID=txtid.getText();
-        if(studentdirectory.findStudent(personID)!=null){
-            JOptionPane.showMessageDialog(this, "ID already existed!");
-            return;
-        }
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
-        enabled=(txtEnabled.getText()=="true")? true:false;
+        enabled=("true".equals(txtEnabled.getText()));
         gpa=(Double.parseDouble(GPA.getText()));
-        if(personName==""||personID==""||username==""||nowPassword==""){
+        if("".equals(personName)||"".equals(personID)||"".equals(username)||"".equals(nowPassword)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
-        
         Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
+        Set<String> stringSet2 = new HashSet<>();
+        for(String s : stringSet1){
+                s=PasswordUtils.hashPassword(s);
+                stringSet2.add(s);
+            }
        int selectedRowIndex = stuTable.getSelectedRow();
        if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");
@@ -406,13 +418,19 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                                 return;
                             }
                    }
-                    stu.setPasswordHistory(stringSet1);
+                    stu.setPasswordHistory(stringSet2);
                     stu.setEnabled(enabled);
                     stu.setGpa(gpa);
                     stu.setNowPassword(nowPassword);
                     stu.setPersonID(personID);
                     stu.setPersonName(personName);
                     stu.setUsername(username);
+                    try {
+                        studentdirectory.updateStudentInDatabase(connection, stu);
+                        PasswordUtils.replacePasswordListForPersonId(connection,stringSet2,personID);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(StudentComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     JOptionPane.showMessageDialog(this, "Updated!");
                     populateTable();
                     return;
@@ -425,7 +443,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRowIndex = stuTable.getSelectedRow();
         if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+            JOptionPane.showMessageDialog(this, "Please select a row to disable.");
             return;
         }else{
                 DefaultTableModel model = (DefaultTableModel) stuTable.getModel();
@@ -433,7 +451,12 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                 Student st = studentdirectory.findStudent(selectedID);
                 if(st!=null){
                     st.setEnabled(false);
-                    JOptionPane.showMessageDialog(this, "Deleted!");
+                    try {
+                        studentdirectory.updateStudentInDatabase(connection, st);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(StudentComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(this, "disabled!");
                     return;
                 }
             JOptionPane.showMessageDialog(this, "Not Existed!");

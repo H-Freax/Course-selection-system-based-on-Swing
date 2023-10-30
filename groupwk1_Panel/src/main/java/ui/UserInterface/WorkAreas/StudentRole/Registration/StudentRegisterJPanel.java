@@ -36,6 +36,8 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
     private List<CourseVO> courseVOList = new ArrayList<>();
 
     private Student student;
+    CourseVO selectedCourse;
+    Connection connection= MySQLConnectionUtil.getConnection();
 
     public StudentRegisterJPanel(Student student) {
         courseDirectory = new CourseDirectory(MySQLConnectionUtil.getConnection());//数据传到了courseList
@@ -57,6 +59,7 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
 
                     for (CourseVO courseVO:courseVOList){
                         if (courseVO.getId().equals((String)id)){
+                            selectedCourse=courseVO;
                             txtCourseId.setText(courseVO.getId());
                             txtCourseName.setText(courseVO.getName());
                             txtSemester.setText(courseVO.getSemester());
@@ -64,6 +67,17 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
                             txtCourseLocation.setText(courseVO.getLocation());
                             courseIntroductionTextArea.setText(courseVO.getIntroduction());
                             txtStudentLimited.setText(courseVO.getStudentLimit() + "");
+                            try {
+                                if((courseVO.getStudentCount()+"").equals(selectedCourse.calculateStudentCount(connection)+"")){
+                                    txtStudentCount.setText(courseVO.getStudentCount() + "");
+                                }else{
+                                    courseVO.setStudentCount(selectedCourse.calculateStudentCount(connection));
+                                    courseVO.updateInDatabase(connection);
+                                }
+
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
                             txtStudentCount.setText(courseVO.getStudentCount() + "");
                         }
                     }

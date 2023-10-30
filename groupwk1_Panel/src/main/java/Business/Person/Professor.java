@@ -138,9 +138,43 @@ public class Professor extends Person {
         savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
     }
 
+    
+    
+    
+    public void updateProfessorInDatabase1(Connection connection,String personName,String role,String personID,String language,String username,Double rate,String region,Boolean enabled,String nowPassword,String id) throws SQLException {
+        String updatePersonQuery = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
+            statement.setString(1, personName);
+            statement.setString(2, role);
+            statement.setString(3, id);
+            statement.executeUpdate();
+        }
+        String updateProfessorQuery = "UPDATE Professor SET id = ?,username = ?, nowpassword = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateProfessorQuery)) {
+            statement.setString(1, personID);
+            statement.setString(2, username);
+            statement.setString(3, nowPassword);
+            statement.setString(4, language);
+            int i = (enabled.equals("true"))?1:0;
+            statement.setDouble(5, i);
+            statement.setDouble(6, rate);
+            statement.setString(7, region);
+            statement.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setString(10, id);
+            statement.executeUpdate();
+        }
+
+        // 保存教授的研究领域信息
+        saveProfessorTopicsToDatabase(connection, getPersonID(), topics);
+
+        // 保存密码历史
+        savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
+    }
+    
+    
     public void updateProfessorInDatabase(Connection connection) throws SQLException {
         super.updateInDatabase(connection);
-
         String updateProfessorQuery = "UPDATE Professor SET username = ?, nowpassword = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(updateProfessorQuery)) {
             statement.setString(1, username);
@@ -161,6 +195,30 @@ public class Professor extends Person {
         // 保存密码历史
         savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
     }
+
+    public void updateProfessorInDatabase2(Connection connection) {
+
+        String updateProfessorQuery = "UPDATE Professor SET username = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateProfessorQuery)) {
+            statement.setString(1, username);
+//            statement.setString(2, pwdHash);
+            statement.setString(2, language);
+            statement.setString(3, enabled ? "1" : "0");
+            statement.setDouble(4, rate);
+            statement.setString(5, region);
+            statement.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setString(8, getPersonID());
+            statement.executeUpdate();
+            // 保存密码历史
+//            savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
+
+    }
+
 
     public static Professor loadFromDatabase(Connection connection, String personID) throws SQLException {
         Person person = Person.loadFromDatabase(connection, personID);

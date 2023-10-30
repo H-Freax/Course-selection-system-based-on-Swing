@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -323,6 +325,11 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         Semester e = new Semester( id,  semesterName,  localDate,  localDate1);
         semList.add(e);
+        try {
+            e.saveToDatabase(connection);
+        } catch (SQLException ex) {
+            Logger.getLogger(SemesterComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         populateTable();
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -354,7 +361,7 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
                     if(e.getId().equals(selectedID)){
                         c = e;
                     }
-                    if(e.getId().equals(selectedID)&&!id.equals(selectedID)){
+                    if(e.getId().equals(id)&&!selectedID.equals(id)){
                         JOptionPane.showMessageDialog(this, "ID Already Existed");
                         return;
                     }
@@ -365,6 +372,11 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setSemesterStart(localDate);
                     c.setSemesterEnd(localDate1);
                     populateTable();
+                    try {
+                        c.updateInDatabase(connection);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(SemesterComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
                 }

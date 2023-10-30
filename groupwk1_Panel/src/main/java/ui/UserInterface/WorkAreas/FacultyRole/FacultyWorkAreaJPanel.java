@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package ui.UserInterface.WorkAreas.FacultyRole;
 
 import java.awt.CardLayout;
@@ -13,12 +17,11 @@ import ui.UserInterface.WorkAreas.FacultyRole.Ranking.FacultyRankingJPanel;
 import ui.UserInterface.WorkAreas.FacultyRole.Schedule.FacultyScheduleJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
 
-
 /**
  *
  * @author zhangjinming
  */
-public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
+public class FacultyWorkAreaJPanel extends JPanel {
     private JPanel controlPanel;
     private JPanel ViewContainer;
 
@@ -26,11 +29,6 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form FacultyWorkAreaJPanel
      */
-    public FacultyWorkAreaJPanel() {
-        initComponents();
-
-    }
-
     public FacultyWorkAreaJPanel(JPanel ViewContainer, JPanel controlPanel, Professor professor) {
         initComponents();
         this.ViewContainer = ViewContainer;
@@ -67,7 +65,11 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         btnSchedule.setPreferredSize(new java.awt.Dimension(240, 25));
         btnSchedule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnScheduleIdentifyEventsActionPerformed(evt);
+                try {
+                    btnScheduleIdentifyEventsActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -106,7 +108,11 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         btnMyProfile.setPreferredSize(new java.awt.Dimension(240, 25));
         btnMyProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMyProfileIdentifyEventsActionPerformed(evt);
+                try {
+                    btnMyProfileIdentifyEventsActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -119,7 +125,11 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         btnRanking.setPreferredSize(new java.awt.Dimension(240, 25));
         btnRanking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRankingActionPerformed(evt);
+                try {
+                    btnRankingActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -171,7 +181,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnScheduleIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleIdentifyEventsActionPerformed
+    private void btnScheduleIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnScheduleIdentifyEventsActionPerformed
         // TODO add your handling code here:
         FacultyScheduleJPanel fsPanel = new FacultyScheduleJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyScheduleJPanel",fsPanel);
@@ -197,7 +207,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnManageStudentsActionPerformed
 
-    private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
+    private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
         // TODO add your handling code here:
         FacultyProfileJPanel ppPanel = new FacultyProfileJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyProfileJPanel", ppPanel);
@@ -206,7 +216,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
 
-    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
+    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnRankingActionPerformed
         // TODO add your handling code here:
         FacultyRankingJPanel prPanel = new FacultyRankingJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyRankingJPanel", prPanel);

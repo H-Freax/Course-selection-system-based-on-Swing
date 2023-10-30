@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import Business.Person.Professor;
 
 /**
  *
@@ -25,10 +26,12 @@ public class Course {
     private String status;
     private String professor;
     private String location;
+    private String region;
     private int studentLimit;
     private int studentCount;
     private LocalDateTime beginTime;
     private LocalDateTime endTime;
+    private String weekday;
     private List<String> topics; // Store course topics
     private List<String> enrolledStudents; // Store enrolled student IDs
 
@@ -38,7 +41,7 @@ public class Course {
     }
 
     public Course(String id, String name, String introduction, int point, String semesterId, String status,
-                  String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime,
+                  String professor, String location, int studentLimit, int studentCount,String weekday, LocalDateTime beginTime, LocalDateTime endTime,
                   double score) {
         this.id = id;
         this.name = name;
@@ -52,11 +55,17 @@ public class Course {
         this.studentCount = studentCount;
         this.beginTime = beginTime;
         this.endTime = endTime;
+        this.weekday = weekday;
         this.topics = new ArrayList<>();
         this.enrolledStudents = new ArrayList<>();
         this.score = score;
     }
 
+    public Course(String id, String name,String region) {
+        this.id = id;
+        this.name = name;
+        this.region = region;
+    }
     // Getter and Setter methods for class properties
 
     public String getId() {
@@ -107,6 +116,14 @@ public class Course {
         this.status = status;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
     public String getProfessor() {
         return professor;
     }
@@ -121,6 +138,14 @@ public class Course {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(String weekday) {
+        this.weekday = weekday;
     }
 
     public int getStudentLimit() {
@@ -272,6 +297,7 @@ public class Course {
                 resultSet.getString("location"),
                 resultSet.getInt("studentlimited"),
                 resultSet.getInt("studentcount"),
+                resultSet.getString("weekday"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
                 resultSet.getTimestamp("endtime").toLocalDateTime(),
                 resultSet.getDouble("score")
@@ -371,6 +397,13 @@ public class Course {
         return studentId != null;
     }
 
+    public static Course resultSetToCourse2(ResultSet resultSet) throws SQLException {
+        return new Course(
+                resultSet.getString("id"),
+                resultSet.getString("name"),
+                resultSet.getString("region")
+        );
+    }
 //    Starttime
 //    EndTime暂定
     public void updateCourseToDatabase(Connection connection) throws SQLException {
@@ -394,4 +427,26 @@ public class Course {
             statement.executeUpdate();
         }
     }
+
+    public List<Course> getCourseListByProfessor(Connection connection, Professor professor){
+        List<Course> courseList = new ArrayList<>();
+
+        String query = "SELECT c.*, p.region  from professor p right join courseprofessor cp on p.id = cp.professor_id " +
+                "  left join course c on cp.course_id = c.id " +
+                "  where p.id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, professor.getPersonID());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Course course = resultSetToCourse2(resultSet);
+                courseList.add(course);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
+        return courseList;
+    }
+
 }

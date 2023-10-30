@@ -2,7 +2,14 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Course.Course;
 import Business.Course.CourseDirectory;
+import Business.Course.CourseProfessor;
+import Business.Course.CourseSchedule;
 import java.util.List;
+
+import Business.Course.CourseVO;
+import Business.Directory.ProfessorDirectory;
+import Business.Person.Professor;
+import Business.Semester.Semester;
 import Tools.MySQLConnectionUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,24 +34,36 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
      */
 
     private CourseDirectory courseDirectory;
-    private List<Course> courselist;
-
+    private List<CourseVO> courselist;
+    private ProfessorDirectory professorDirectory; 
+    private ArrayList<Professor>professorlist;
+    private CourseProfessor cp;
+    private CourseSchedule cs;
+    private Semester sc;
+    private List<Semester> semList;
     public CourseComboBoxAreaJPanel() throws SQLException {
         initComponents();
         Connection connection = MySQLConnectionUtil.getConnection();
         courseDirectory=new CourseDirectory(connection);
-        courseDirectory.loadCoursesFromDatabase();
-        courselist=courseDirectory.getAllCourses();
+        courselist=courseDirectory.loadCourseListFromDatabase("");
+        professorDirectory=new ProfessorDirectory();
+        professorDirectory.loadAllProfessorsFromDatabase(connection);
+        professorlist=(ArrayList<Professor>)professorDirectory.getProfessors();
+        cp=new CourseProfessor(connection);
+        cs=new CourseSchedule(connection);
+        sc=new Semester();
+        semList=sc.getAllSemestersFromDatabase(connection);
         populateTable();
     }
 
-
-        private void populateTable(){
+    
+    
+    
+    
+    private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)courseTable.getModel();
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        courseTable.setRowSorter(sorter);
         model.setRowCount(0);
-        for(Course vs : courselist){
+        for(CourseVO vs : courselist){
                 Object[] row = new Object[5];
                 row[0] = vs.getId();
                 row[1] = vs.getName();
@@ -105,6 +124,8 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         jLabel37 = new javax.swing.JLabel();
         txtPro = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtCurrentCourseWeekday = new javax.swing.JTextField();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -163,7 +184,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
 
         jLabel31.setText("Course Credit:");
 
-        jLabel32.setText("Semester:");
+        jLabel32.setText("Semester id:");
 
         jLabel33.setText("Course Location:");
 
@@ -202,6 +223,8 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setText("Course Weekday:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -231,19 +254,17 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel36))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel30)
-                            .addComponent(Introduction, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel32)
-                            .addComponent(jLabel31))))
+                            .addComponent(jLabel31)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel36)
+                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30)
+                            .addComponent(Introduction, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -262,6 +283,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                             .addComponent(txtCurrentSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel37)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -271,7 +293,9 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel35)
                                     .addComponent(jLabel33))
                                 .addGap(10, 10, 10))
-                            .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel34)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -288,13 +312,10 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                                     .addGap(3, 3, 3)
                                     .addComponent(txtCurrentCourseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCurrentCourseStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(txtPro, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel37))
-                .addGap(58, 58, 58))
+                                .addComponent(txtPro, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCurrentCourseStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCurrentCourseWeekday, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(96, 96, 96)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,33 +351,13 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                     .addComponent(txtCurrentCourseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28)
                     .addComponent(txtCurrentCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCurrentCourseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel30))
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCurrentCourseStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel34))
-                        .addGap(18, 18, 18)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCourseEndTime2)
-                            .addComponent(txtCurrentCourseEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblStudentLimited2)
-                            .addComponent(txtCurrentStudentLimited, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel35)
-                            .addComponent(txtCurrentStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtCurrentCourseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30))
+                        .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtIntro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Introduction))
@@ -367,14 +368,37 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel32)
-                            .addComponent(txtCurrentSemester, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel36)
-                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel37)
-                    .addComponent(txtPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(119, 119, 119)
+                            .addComponent(txtCurrentSemester, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel36)
+                            .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(119, 119, 119))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtCurrentCourseWeekday, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCurrentCourseStartTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCourseEndTime2)
+                            .addComponent(txtCurrentCourseEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblStudentLimited2)
+                            .addComponent(txtCurrentStudentLimited, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel35)
+                            .addComponent(txtCurrentStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel37)
+                            .addComponent(txtPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(99, 99, 99)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -447,6 +471,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         int studentCount=Integer.parseInt(txtCurrentStudentCount.getText());
         String dateString = txtCurrentCourseStartTime.getText();
         String dateString1 = txtCurrentCourseEndTime.getText();
+        String weekday = txtCurrentCourseWeekday.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime beginTime = LocalDateTime.parse(dateString, formatter);
         LocalDateTime endTime = LocalDateTime.parse(dateString1, formatter);
@@ -454,8 +479,48 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         List<String> stringSet2 = new ArrayList<>(Arrays.asList(txtEnrolled.getText().split(",")));
         List<String> topics=stringSet; // Store course topics
         List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
+        
+        //
+        
+        
         if(id!=""&&name!=""&&semesterId!=""&&status!=""&&professor!=""&&location!=""&&studentLimit!=0&&studentCount!=0){
-            Course c = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount,  beginTime,  endTime,0);
+            String region="";
+            String professorid=cp.getProfessorId(id);
+            String language="";
+            Set<String> topic = new HashSet<String>();
+            String semester="";
+            int k=0,g=0;
+            for(Professor f: professorlist){
+                if(f.getPersonID().equals(professorid)){
+                    region=f.getRegion();
+                    language=f.getLanguage();
+                    topic=f.getTopics();
+                    k=1;
+                }
+            }
+            for(Semester s1: semList){
+                if(s1.getId()==semesterId){
+                    semester=s1.getSemesterName();
+                    g=1;
+                }
+            
+            }
+            if(g==0){
+                JOptionPane.showMessageDialog(this, "No Semester exist!");
+                return;
+            }
+            
+            if(k==0){
+                JOptionPane.showMessageDialog(this, "No Professor exist!");
+                return;
+            }
+            String topic1="";
+            for(String c: topic){
+                topic1+=c;
+                topic1+=",";
+            }
+            
+            CourseVO c = new CourseVO( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount, weekday ,beginTime,  endTime,region,language,topic1,semester);
             c.setTopics(topics);
             c.setEnrolledStudents(enrolledStudents);
             courselist.add(c);
@@ -467,10 +532,6 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_btnAddActionPerformed
-
-    private void txtProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
@@ -495,10 +556,10 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         List<String> stringSet2 = new ArrayList<>(Arrays.asList(txtEnrolled.getText().split(",")));
         List<String> topics=stringSet; // Store course topics
         List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
-        
+
         DefaultTableModel model1 = (DefaultTableModel) courseTable.getModel();
         String selectedID1 = (String) model1.getValueAt(selectedRowIndex, 0);
-        for(Course vs : courselist){
+        for(CourseVO vs : courselist){
             if(vs.getId().equals(id)&&!selectedID1.equals(id)){
                 JOptionPane.showMessageDialog(this, "Already Exist ID");
                 return;
@@ -512,7 +573,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
             System.out.println(location);
             System.out.println(studentLimit);
             System.out.println(studentCount);
-            
+
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
@@ -522,7 +583,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                
+
                 Course d = courseDirectory.getCourseById(selectedID);
                 if(d!=null){
                     d.setId(id);
@@ -558,8 +619,8 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                Course c = null;
-                for(Course d : courselist){
+                CourseVO c = null;
+                for(CourseVO d : courselist){
                     if(d.getId().equals(selectedID)){
                         c=d;
                     }
@@ -590,6 +651,10 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void txtProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Introduction;
@@ -602,6 +667,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -624,6 +690,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtCurrentCourseName;
     private javax.swing.JTextField txtCurrentCoursePoint;
     private javax.swing.JTextField txtCurrentCourseStartTime;
+    private javax.swing.JTextField txtCurrentCourseWeekday;
     private javax.swing.JTextField txtCurrentSemester;
     private javax.swing.JTextField txtCurrentStudentCount;
     private javax.swing.JTextField txtCurrentStudentLimited;

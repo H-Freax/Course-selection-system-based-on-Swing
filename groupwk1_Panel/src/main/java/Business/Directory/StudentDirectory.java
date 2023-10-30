@@ -77,7 +77,17 @@ public class StudentDirectory {
             student.saveToDatabase(connection);
         }
     }
+    
+    public void saveStudentToDatabase(Connection connection,Student student) throws SQLException {
+            student.saveToDatabase(connection);
+    }
+    
+    public void updateStudentInDatabase(Connection connection,Student student) throws SQLException {
+            student.updateStudentInDatabase(connection);
 
+    }
+    
+    
     // 从目录中更新所有学生信息到数据库
     public void updateStudentsInDatabase(Connection connection) throws SQLException {
         for (Student student : studentList) {

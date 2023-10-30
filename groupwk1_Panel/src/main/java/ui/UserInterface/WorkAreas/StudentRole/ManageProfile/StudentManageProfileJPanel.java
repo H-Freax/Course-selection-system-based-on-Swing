@@ -7,6 +7,7 @@ package ui.UserInterface.WorkAreas.StudentRole.ManageProfile;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
@@ -14,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Business.Course.Course;
 import Business.Course.CourseDirectory;
+import Business.Course.CourseVO;
 import Business.Directory.StudentDirectory;
 import Business.Person.Employee;
 import Business.Person.Professor;
@@ -48,7 +50,21 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
     }
 
-    public void initStudentProfile(Student student){
+    public void initStudentProfile(Student student) throws SQLException {
+        List<Semester> semesters = Semester.getAllSemestersFromDatabase(conn);
+        List<String> semesternames=new ArrayList<>();
+        for(Semester s : semesters){
+            semesternames.add(s.getSemesterName());
+        }
+        CourseVO courseVO = new CourseVO();
+        String gpa = courseVO.calculateGPA(student.getPersonID(),semesternames);
+        if(gpa.equals(String.valueOf(student.getGpa()))){
+            txtStudentGpa.setText(String.valueOf(student.getGpa()));
+        }else{
+            txtStudentGpa.setText(String.valueOf(gpa));
+            student.setGpa(Double.parseDouble(gpa));
+            student.updateStudentInDatabase(conn);
+        }
         txtStudentGpa.setText(String.valueOf(student.getGpa()));
         txtStudentId.setText(String.valueOf(student.getPersonID()));
         txtStudentUsername.setText(String.valueOf(student.getUsername()));
@@ -88,8 +104,8 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStudentProfile = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
-        txtStudentPassword = new javax.swing.JTextField();
         btnChangepwd = new javax.swing.JButton();
+        txtStudentPassword = new javax.swing.JPasswordField();
 
         jLabel3.setText("Student ID:");
 
@@ -174,18 +190,18 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(54, 54, 54)
-                                        .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(81, 81, 81)
                                         .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(54, 54, 54)
-                                        .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtStudentPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtStudentUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnSave)
@@ -236,8 +252,8 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnChangepwd)))
+                        .addComponent(btnChangepwd)
+                        .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(btnBack)
                 .addGap(39, 39, 39))
@@ -274,7 +290,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnChangepwdActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnChangepwdActionPerformed
-        String pwd = txtStudentPassword.getText();
+        String pwd = Arrays.toString(txtStudentPassword.getPassword());
 
         if(PasswordUtils.isPasswordInHistory(conn,student.getPersonID(),PasswordUtils.hashPassword(pwd))){
             JOptionPane.showMessageDialog(this,"Please don't use history password!");
@@ -306,7 +322,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtStudentGpa;
     private javax.swing.JTextField txtStudentId;
     private javax.swing.JTextField txtStudentName;
-    private javax.swing.JTextField txtStudentPassword;
+    private javax.swing.JPasswordField txtStudentPassword;
     private javax.swing.JTextField txtStudentUsername;
     // End of variables declaration//GEN-END:variables
 
@@ -319,11 +335,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
             Object[] row = new Object[4];
             row[0] = course.getName();
             row[1] = course.getProfessor();
-            if((course.getScore()+"").equals("0.0")){
-                row[2]="N/A";
-            }else{
-                row[2] = course.getScore();
-            }
+            row[2] = course.getScore();
             row[3] = semester.getSemesterName();
             //设置3R对应
 
