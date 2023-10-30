@@ -331,6 +331,9 @@ public class CourseVO {
             return null;
         }
     }
+
+
+
     public static CourseVO resultSetToCourseVO(ResultSet resultSet) throws SQLException {
         double a;
         try{

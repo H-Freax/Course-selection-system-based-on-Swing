@@ -16,7 +16,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -24,20 +24,21 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel10" min="-2" pref="102" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                      <Component id="txtStudentUsername" min="-2" pref="296" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel6" min="-2" pref="75" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                                       <Component id="txtStudentGpa" min="-2" pref="296" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel11" min="-2" pref="102" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                      <Component id="txtStudentPassword" min="-2" pref="296" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel10" alignment="0" min="-2" pref="102" max="-2" attributes="0"/>
+                                          <Component id="jLabel11" alignment="1" min="-2" pref="102" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="54" pref="54" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtStudentPassword" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="txtStudentUsername" pref="296" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -108,8 +109,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="txtStudentPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnChangepwd" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtStudentPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="152" max="32767" attributes="0"/>
@@ -234,8 +235,6 @@
         <Property name="text" type="java.lang.String" value="Password:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtStudentPassword">
-    </Component>
     <Component class="javax.swing.JButton" name="btnChangepwd">
       <Properties>
         <Property name="text" type="java.lang.String" value="Change"/>
@@ -243,6 +242,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChangepwdActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtStudentPassword">
     </Component>
   </SubComponents>
 </Form>

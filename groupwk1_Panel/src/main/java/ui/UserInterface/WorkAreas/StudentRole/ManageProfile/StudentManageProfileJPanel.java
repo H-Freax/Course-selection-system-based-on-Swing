@@ -88,8 +88,8 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStudentProfile = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
-        txtStudentPassword = new javax.swing.JTextField();
         btnChangepwd = new javax.swing.JButton();
+        txtStudentPassword = new javax.swing.JPasswordField();
 
         jLabel3.setText("Student ID:");
 
@@ -174,18 +174,18 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(54, 54, 54)
-                                        .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(81, 81, 81)
                                         .addComponent(txtStudentGpa, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(54, 54, 54)
-                                        .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtStudentPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtStudentUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnSave)
@@ -236,8 +236,8 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnChangepwd)))
+                        .addComponent(btnChangepwd)
+                        .addComponent(txtStudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(btnBack)
                 .addGap(39, 39, 39))
@@ -274,7 +274,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnChangepwdActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnChangepwdActionPerformed
-        String pwd = txtStudentPassword.getText();
+        String pwd = Arrays.toString(txtStudentPassword.getPassword());
 
         if(PasswordUtils.isPasswordInHistory(conn,student.getPersonID(),PasswordUtils.hashPassword(pwd))){
             JOptionPane.showMessageDialog(this,"Please don't use history password!");
@@ -306,7 +306,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtStudentGpa;
     private javax.swing.JTextField txtStudentId;
     private javax.swing.JTextField txtStudentName;
-    private javax.swing.JTextField txtStudentPassword;
+    private javax.swing.JPasswordField txtStudentPassword;
     private javax.swing.JTextField txtStudentUsername;
     // End of variables declaration//GEN-END:variables
 

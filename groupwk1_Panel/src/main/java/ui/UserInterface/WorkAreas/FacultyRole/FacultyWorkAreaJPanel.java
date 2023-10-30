@@ -108,7 +108,11 @@ public class FacultyWorkAreaJPanel extends JPanel {
         btnMyProfile.setPreferredSize(new java.awt.Dimension(240, 25));
         btnMyProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMyProfileIdentifyEventsActionPerformed(evt);
+                try {
+                    btnMyProfileIdentifyEventsActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -199,7 +203,7 @@ public class FacultyWorkAreaJPanel extends JPanel {
 
     }//GEN-LAST:event_btnManageStudentsActionPerformed
 
-    private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
+    private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
         // TODO add your handling code here:
         FacultyProfileJPanel ppPanel = new FacultyProfileJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyProfileJPanel", ppPanel);

@@ -328,6 +328,8 @@ public class StudentRateJPanel extends javax.swing.JPanel {
 
                         // Save the rate to the database
                         rate.saveToDatabase(conn);
+                        // Compute the new overall score for the professor
+                        rate.updateProfessorRating(professorId, conn);
 
                         // You can show a success message or perform any other actions after saving the rate
                         JOptionPane.showMessageDialog(this, "Rating submitted successfully.");
