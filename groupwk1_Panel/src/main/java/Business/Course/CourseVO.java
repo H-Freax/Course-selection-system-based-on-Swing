@@ -1,5 +1,8 @@
 package Business.Course;
 
+import Business.Semester.Semester;
+import Tools.MySQLConnectionUtil;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -451,5 +454,29 @@ public class CourseVO {
             return 0.0;
         }
     }
+
+    public double calculateGPA(String studentId,List<String> semesters) throws SQLException {
+        CourseDirectory courseDirectory=new CourseDirectory(MySQLConnectionUtil.getConnection());
+        List<CourseVO> courses = courseDirectory.loadCourseListByStudentIdListSemFromDatabase("",studentId,semesters);
+
+        double totalScoreTimesPoint = 0.0;
+        double totalPoints = 0.0;
+
+        for (CourseVO course : courses) {
+            totalPoints += course.getPoint();
+            totalScoreTimesPoint += scoreToGPA(course.getScore()) * course.getPoint();
+        }
+
+        return totalScoreTimesPoint / totalPoints;
+    }
+
+    private double scoreToGPA(double score) {
+        if (score >= 90) return 4.0;
+        if (score >= 80) return 3.0;
+        if (score >= 70) return 2.0;
+        if (score >= 60) return 1.0;
+        return 0.0;
+    }
+
 
 }

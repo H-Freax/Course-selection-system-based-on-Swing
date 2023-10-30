@@ -63,6 +63,8 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
             selectSemComboBox.addItem(s.getSemesterName());
         }
 
+
+
         getEnrolledCourses("",thisterm);
 //        getHistoryCourses(null);
 
@@ -95,7 +97,17 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
                             txtCurrentCourseLocation.setText(courseVO.getLocation());
                             currentCourseIntroductionTextArea.setText(courseVO.getIntroduction());
                             txtCurrentStudentLimited.setText(courseVO.getStudentLimit() + "");
-                            txtCurrentStudentCount.setText(courseVO.getStudentCount() + "");
+                            try {
+                                if((courseVO.getStudentCount()+"").equals(selectedCourse.calculateStudentCount(connection)+"")){
+                                    txtCurrentStudentCount.setText(courseVO.getStudentCount() + "");
+                                }else{
+                                    courseVO.setStudentCount(selectedCourse.calculateStudentCount(connection));
+                                    courseVO.updateInDatabase(connection);
+                                }
+
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
                             txtCurrentCoursePoint.setText(courseVO.getPoint() + "");
                             txtCurrentCourseStartTime.setText(courseVO.getBeginTime().format(startformatter));
                             txtCurrentCourseEndTime.setText(courseVO.getEndTime().format(startformatter));
