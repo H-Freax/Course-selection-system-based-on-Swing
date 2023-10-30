@@ -64,8 +64,6 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         
         DefaultTableModel model = (DefaultTableModel)stuTable.getModel();
         model.setRowCount(0);
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        stuTable.setRowSorter(sorter);
         for(Student vs : studentList){
             System.out.print(vs.getUsername());
                 Object[] row = new Object[4];
@@ -92,11 +90,11 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         stuTable = new javax.swing.JTable();
         txtSearch = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnDisable = new javax.swing.JButton();
         txtname = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         txtid = new javax.swing.JTextField();
@@ -131,24 +129,24 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
 
         txtSearch.setText("Search ID");
 
-        jButton4.setText("Search");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
-        jButton2.setText("View");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnViewActionPerformed(evt);
             }
         });
 
@@ -159,10 +157,10 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Disable");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnDisable.setText("Disable");
+        btnDisable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnDisableActionPerformed(evt);
             }
         });
 
@@ -203,15 +201,15 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                         .addGap(85, 85, 85)
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)
+                        .addComponent(btnSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnAdd)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnView)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUpdate)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3))
+                        .addComponent(btnDisable))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(117, 117, 117)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,12 +251,12 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4)
+                    .addComponent(btnAdd)
+                    .addComponent(btnView)
+                    .addComponent(btnSearch)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate)
-                    .addComponent(jButton3))
+                    .addComponent(btnDisable))
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -303,7 +301,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
                 String search=txtSearch.getText();
         if("".equals(search)){
@@ -324,9 +322,9 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                 txtHis.setText(s2);
             }
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         personName=txtname.getText();
         personID=txtid.getText();
@@ -359,9 +357,9 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
             return;
         }
         JOptionPane.showMessageDialog(this, "Please input!");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = stuTable.getSelectedRow();
         if(selectedRowIndex<0){
@@ -383,7 +381,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                     txtHis.setText(s2);
                 }
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
@@ -439,7 +437,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnDisableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisableActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = stuTable.getSelectedRow();
         if(selectedRowIndex<0){
@@ -461,7 +459,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                 }
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnDisableActionPerformed
 
     private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed
         // TODO add your handling code here:
@@ -470,11 +468,11 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField GPA;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDisable;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
