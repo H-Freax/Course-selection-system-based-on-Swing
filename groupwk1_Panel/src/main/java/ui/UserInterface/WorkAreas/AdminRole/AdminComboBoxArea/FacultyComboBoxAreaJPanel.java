@@ -154,7 +154,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
 
         jLabel28.setText("ID");
 
-        jLabel29.setText("Name");
+        jLabel29.setText("UserName");
 
         jLabel30.setText("isEnabled");
 
@@ -168,7 +168,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
 
         lblCourseEndTime2.setText("Topics");
 
-        jLabel35.setText("UserName");
+        jLabel35.setText("Name");
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {

@@ -67,6 +67,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         btnGo = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        btnMyProfile = new javax.swing.JButton();
 
         jButton8.setBackground(new java.awt.Color(102, 153, 255));
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
@@ -141,6 +142,19 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnMyProfile.setBackground(new java.awt.Color(102, 153, 255));
+        btnMyProfile.setForeground(new java.awt.Color(255, 255, 255));
+        btnMyProfile.setText("My Profile");
+        btnMyProfile.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnMyProfile.setMaximumSize(new java.awt.Dimension(145, 40));
+        btnMyProfile.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnMyProfile.setPreferredSize(new java.awt.Dimension(240, 25));
+        btnMyProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMyProfileIdentifyEventsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,6 +174,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnMyProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,13 +190,15 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGo))
-                .addGap(49, 49, 49)
+                .addGap(35, 35, 35)
+                .addComponent(btnMyProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
+                .addGap(28, 28, 28)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(149, 149, 149)
+                .addGap(96, 96, 96)
                 .addComponent(btnLogout)
                 .addContainerGap(97, Short.MAX_VALUE))
         );
@@ -293,10 +310,19 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             layout.next(ViewContainer);
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
+        MyProfileJPanel cPanel = null;
+        cPanel = new MyProfileJPanel(employee);
+        ViewContainer.add("MyProfileJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
+    }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGo;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnMyProfile;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton8;

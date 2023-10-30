@@ -337,7 +337,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel29">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Name"/>
+                <Property name="text" type="java.lang.String" value="UserName"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtname">
@@ -388,7 +388,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel35">
               <Properties>
-                <Property name="text" type="java.lang.String" value="UserName"/>
+                <Property name="text" type="java.lang.String" value="Name"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnUpdate">
