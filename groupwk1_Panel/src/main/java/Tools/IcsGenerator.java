@@ -20,7 +20,7 @@ public class IcsGenerator {
     public static void generateICS(String summary, String location, Date startDate, Date endDate, String dayOfWeek, Date startTime, Date endTime, String outputFileName) throws ParseException, IOException {
         // 创建一个iCalendar对象
         System.setProperty("net.fortuna.ical4j.timezone.cache.impl", "net.fortuna.ical4j.util.MapTimeZoneCache");
-
+        System.out.println("dayOfWeek::"+dayOfWeek);
         Calendar calendar = new Calendar();
 
         // 添加版本信息
@@ -88,19 +88,19 @@ public class IcsGenerator {
     private static int mapDayOfWeekToNumber(String dayOfWeek) {
         switch (dayOfWeek) {
             case "Monday":
-                return 1;
-            case "Tuesday":
                 return 2;
-            case "Wednesday":
+            case "Tuesday":
                 return 3;
-            case "Thursday":
+            case "Wednesday":
                 return 4;
-            case "Friday":
+            case "Thursday":
                 return 5;
-            case "Saturday":
+            case "Friday":
                 return 6;
-            case "Sunday":
+            case "Saturday":
                 return 7;
+            case "Sunday":
+                return 1;
             default:
                 return 0; // 0 表示错误
         }
