@@ -309,7 +309,7 @@ public class PersonScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         
         
-        if(cId==""||week==""||start==""||end==""||pId==""){
+        if("".equals(cId)||"".equals(week)||"".equals(start)||"".equals(end)||"".equals(pId)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }

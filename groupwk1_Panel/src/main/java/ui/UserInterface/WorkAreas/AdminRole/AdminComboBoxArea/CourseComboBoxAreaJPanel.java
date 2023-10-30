@@ -482,8 +482,13 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         
         //
         
-        
-        if(id!=""&&name!=""&&semesterId!=""&&status!=""&&professor!=""&&location!=""&&studentLimit!=0&&studentCount!=0){
+        if("".equals(id)||"".equals(name)||"".equals(semesterId)||"".equals(status)||"".equals(professor)||"".equals(location)||studentLimit==0||studentCount==0){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+            
+        }
+
+        if(!"".equals(id)&&!"".equals(name)&&!"".equals(semesterId)&&!"".equals(status)&&!"".equals(professor)&&!"".equals(location)&&studentLimit!=0&&studentCount!=0){
             String region="";
             String professorid=cp.getProfessorId(id);
             String language="";
@@ -499,7 +504,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                 }
             }
             for(Semester s1: semList){
-                if(s1.getId()==semesterId){
+                if(s1.getId() == null ? semesterId == null : s1.getId().equals(semesterId)){
                     semester=s1.getSemesterName();
                     g=1;
                 }

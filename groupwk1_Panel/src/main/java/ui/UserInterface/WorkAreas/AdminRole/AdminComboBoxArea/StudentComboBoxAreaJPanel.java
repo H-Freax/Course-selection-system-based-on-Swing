@@ -334,7 +334,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
-        enabled=("true".equals(txtEnabled.getText()))? true:false;
+        enabled=("true".equals(txtEnabled.getText()));
         gpa=(Double.parseDouble(GPA.getText()));
         if(!"".equals(personName)&&!"".equals(personID)&&!"".equals(username)&&!"".equals(nowPassword)){
             Student stu1 = new Student( personName,  personID,  username,  nowPassword,  enabled,  gpa);

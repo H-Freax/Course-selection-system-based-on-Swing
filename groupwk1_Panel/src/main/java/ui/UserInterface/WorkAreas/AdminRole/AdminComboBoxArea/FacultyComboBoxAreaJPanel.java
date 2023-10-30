@@ -481,7 +481,6 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         String id = txtid.getText();
-
         Set<String> stringSet2 = new HashSet<>();
         String name = txtname.getText();
         String isEnabled = txtisEnabled.getText();
@@ -496,7 +495,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         Set<String> stringSet= new HashSet<String>();
         Set<String> stringSet1= new HashSet<String>();
         boolean isRight=false;
-        if(id!=""&&name!=""&&isEnabled!=""&&region!=""&pwd!=""&&language!=""&&rate!=""&&user!=""&&topic!=""){
+        if("".equals(id)||"".equals(name)||"".equals(isEnabled)||"".equals(region)||"".equals(pwd)||"".equals(language)||"".equals(rate)||"".equals(user)||"".equals(topic)){
+                JOptionPane.showMessageDialog(this, "Please Input!");
+                return;
+        }
+        if(!"".equals(id)&&!"".equals(name)&&!"".equals(isEnabled)&&!"".equals(region)&!"".equals(pwd)&&!"".equals(language)&&!"".equals(rate)&&!"".equals(user)&&!"".equals(topic)){
             isRight=false;
             stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
             stringSet1=new HashSet<>(Arrays.asList(his.split(",")));
