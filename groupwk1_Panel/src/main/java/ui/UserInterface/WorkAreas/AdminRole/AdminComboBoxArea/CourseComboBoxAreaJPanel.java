@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Business.Course.CourseProfessor;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 /**
@@ -25,7 +26,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form CourseComboBoxAreaJPanel
      */
-
+    private CourseProfessor coursePro;
     private CourseDirectory courseDirectory;
     private List<Course> courselist;
 
