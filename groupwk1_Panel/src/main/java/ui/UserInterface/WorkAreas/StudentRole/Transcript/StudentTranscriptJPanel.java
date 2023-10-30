@@ -99,10 +99,16 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
             new String [] {
                 "Semester", "Course", "Professor", "Score"
             }
-        ));
-        tblTrascript.setColumnSelectionAllowed(true);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblTrascript);
-        tblTrascript.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
@@ -110,6 +116,8 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
         jTextField1.setText("Transcript");
 
         jLabel6.setText("GPA:");
+
+        txtStudentGpa.setEditable(false);
 
         btnPrint.setText("Print");
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
