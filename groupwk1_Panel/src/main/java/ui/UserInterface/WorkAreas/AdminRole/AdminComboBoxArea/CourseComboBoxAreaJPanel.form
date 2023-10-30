@@ -416,7 +416,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel32">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Semester:"/>
+                <Property name="text" type="java.lang.String" value="Semester id:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCurrentSemester">

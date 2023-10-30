@@ -350,6 +350,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
             studentList.add(stu1);
             try {
                 studentdirectory.saveStudentToDatabase(connection, stu1);
+                PasswordUtils.replacePasswordListForPersonId(connection,stringSet2,personID);
             } catch (SQLException ex) {
                 Logger.getLogger(StudentComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -426,6 +427,7 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
                     stu.setUsername(username);
                     try {
                         studentdirectory.updateStudentInDatabase(connection, stu);
+                        PasswordUtils.replacePasswordListForPersonId(connection,stringSet2,personID);
                     } catch (SQLException ex) {
                         Logger.getLogger(StudentComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
