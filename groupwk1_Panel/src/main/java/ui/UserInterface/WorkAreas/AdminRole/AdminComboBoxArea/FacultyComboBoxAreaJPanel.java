@@ -384,7 +384,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         String user = txtuser.getText();
         String topic = txtTopic.getText();
         String his = txtHis.getText();
-        if(id!=""&&name!=""&&isEnabled!=""&&region!=""&pwd!=""&&language!=""&&rate!=""&&user!=""&&topic!=""){
+        if(!"".equals(id)&&!"".equals(name)&&!"".equals(isEnabled)&&!"".equals(region)&!"".equals(pwd)&&!"".equals(language)&&!"".equals(rate)&&!"".equals(user)&&!"".equals(topic)){
             boolean isRight=false;
             Set<String> stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
             Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(",")));
@@ -410,6 +410,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             try {
                 
                 p.saveToDatabase(connection);
+                PasswordUtils.replacePasswordListForPersonId(connection,stringSet2,p.getPersonID());
             } catch (SQLException ex) {
                 Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -541,6 +542,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
 
                     try {
                         c.updateProfessorInDatabase1( connection, name, "professor", id, language, user, Double.parseDouble(rate), region, isRight, pwd, id);
+                        PasswordUtils.replacePasswordListForPersonId(connection,stringSet2,id);
                     } catch (SQLException ex) {
                         Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }

@@ -2,7 +2,14 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Course.Course;
 import Business.Course.CourseDirectory;
+import Business.Course.CourseProfessor;
+import Business.Course.CourseSchedule;
 import java.util.List;
+
+import Business.Course.CourseVO;
+import Business.Directory.ProfessorDirectory;
+import Business.Person.Professor;
+import Business.Semester.Semester;
 import Tools.MySQLConnectionUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,14 +34,25 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
      */
 
     private CourseDirectory courseDirectory;
-    private List<Course> courselist;
-
+    private List<CourseVO> courselist;
+    private ProfessorDirectory professorDirectory; 
+    private ArrayList<Professor>professorlist;
+    private CourseProfessor cp;
+    private CourseSchedule cs;
+    private Semester sc;
+    private List<Semester> semList;
     public CourseComboBoxAreaJPanel() throws SQLException {
         initComponents();
         Connection connection = MySQLConnectionUtil.getConnection();
         courseDirectory=new CourseDirectory(connection);
-        courseDirectory.loadCoursesFromDatabase();
-        courselist=courseDirectory.getAllCourses();
+        courselist=courseDirectory.loadCourseListFromDatabase("");
+        professorDirectory=new ProfessorDirectory();
+        professorDirectory.loadAllProfessorsFromDatabase(connection);
+        professorlist=(ArrayList<Professor>)professorDirectory.getProfessors();
+        cp=new CourseProfessor(connection);
+        cs=new CourseSchedule(connection);
+        sc=new Semester();
+        semList=sc.getAllSemestersFromDatabase(connection);
         populateTable();
     }
 
@@ -45,7 +63,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)courseTable.getModel();
         model.setRowCount(0);
-        for(Course vs : courselist){
+        for(CourseVO vs : courselist){
                 Object[] row = new Object[5];
                 row[0] = vs.getId();
                 row[1] = vs.getName();
@@ -166,7 +184,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
 
         jLabel31.setText("Course Credit:");
 
-        jLabel32.setText("Semester:");
+        jLabel32.setText("Semester id:");
 
         jLabel33.setText("Course Location:");
 
@@ -461,8 +479,48 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         List<String> stringSet2 = new ArrayList<>(Arrays.asList(txtEnrolled.getText().split(",")));
         List<String> topics=stringSet; // Store course topics
         List<String> enrolledStudents=stringSet2; // Store enrolled student IDs
+        
+        //
+        
+        
         if(id!=""&&name!=""&&semesterId!=""&&status!=""&&professor!=""&&location!=""&&studentLimit!=0&&studentCount!=0){
-            Course c = new Course( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount, weekday ,beginTime,  endTime,0);
+            String region="";
+            String professorid=cp.getProfessorId(id);
+            String language="";
+            Set<String> topic = new HashSet<String>();
+            String semester="";
+            int k=0,g=0;
+            for(Professor f: professorlist){
+                if(f.getPersonID().equals(professorid)){
+                    region=f.getRegion();
+                    language=f.getLanguage();
+                    topic=f.getTopics();
+                    k=1;
+                }
+            }
+            for(Semester s1: semList){
+                if(s1.getId()==semesterId){
+                    semester=s1.getSemesterName();
+                    g=1;
+                }
+            
+            }
+            if(g==0){
+                JOptionPane.showMessageDialog(this, "No Semester exist!");
+                return;
+            }
+            
+            if(k==0){
+                JOptionPane.showMessageDialog(this, "No Professor exist!");
+                return;
+            }
+            String topic1="";
+            for(String c: topic){
+                topic1+=c;
+                topic1+=",";
+            }
+            
+            CourseVO c = new CourseVO( id,name,introduction, point,  semesterId,  status,professor,  location,  studentLimit,  studentCount, weekday ,beginTime,  endTime,region,language,topic1,semester);
             c.setTopics(topics);
             c.setEnrolledStudents(enrolledStudents);
             courselist.add(c);
@@ -501,7 +559,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
 
         DefaultTableModel model1 = (DefaultTableModel) courseTable.getModel();
         String selectedID1 = (String) model1.getValueAt(selectedRowIndex, 0);
-        for(Course vs : courselist){
+        for(CourseVO vs : courselist){
             if(vs.getId().equals(id)&&!selectedID1.equals(id)){
                 JOptionPane.showMessageDialog(this, "Already Exist ID");
                 return;
@@ -561,8 +619,8 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                Course c = null;
-                for(Course d : courselist){
+                CourseVO c = null;
+                for(CourseVO d : courselist){
                     if(d.getId().equals(selectedID)){
                         c=d;
                     }

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
 
 public class PasswordUtils {
 
@@ -28,6 +29,27 @@ public class PasswordUtils {
         }
     }
 
+ // Replace all passwords for the given personId with the new passwords from the provided Set
+    public static void replacePasswordListForPersonId(Connection connection, Set<String> newPasswords, String personId) throws SQLException {
+        // First, delete all the existing passwords for the given personId
+        deleteAllPasswordsForPersonId(connection, personId);
+        // Now, insert the new passwords for the given personId
+        for (String password : newPasswords) {
+            addToPasswordHistory(connection, personId, hashPassword(password));
+        }
+    }
+
+    // Delete all passwords associated with the provided personId in the Historypwd table
+    private static void deleteAllPasswordsForPersonId(Connection connection, String personId) throws SQLException {
+        String deleteQuery = "DELETE FROM Historypwd WHERE personid = ?";
+        try (PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
+            statement.setString(1, personId);
+            statement.executeUpdate();
+        }
+    }
+    
+    
+    
     // 对nowpassword进行哈希加密
     public static String hashPassword(String password) {
         try {
