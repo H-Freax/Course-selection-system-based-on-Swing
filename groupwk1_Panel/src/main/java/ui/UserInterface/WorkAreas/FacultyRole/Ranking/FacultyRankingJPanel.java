@@ -75,7 +75,15 @@ public class FacultyRankingJPanel extends JPanel {
             new String [] {
                 "Professor Ranking", "Professor name", "Professor Score"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblPro);
 
         tblCourse.setModel(new javax.swing.table.DefaultTableModel(

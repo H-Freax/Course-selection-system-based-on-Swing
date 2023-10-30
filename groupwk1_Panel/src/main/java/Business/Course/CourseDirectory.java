@@ -253,7 +253,7 @@ public class CourseDirectory {
                     "or c.name like concat('%',?,'%') " +
                     "or ct.topic like concat('%',?,'%'))" ;
         }
-        query = query + " group by language, region, professor, c.name, s.semstername ";
+        query = query + " group by c.id, c.statue, c.begintime, c.endtime, c.location, c.introduction, c.point, c.studentlimited, c.studentcount, s.semstername, css.weekday, c.name, p.language, p.region, person.PersonName";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, semester);
