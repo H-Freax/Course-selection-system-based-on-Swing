@@ -15,6 +15,8 @@ import com.mysql.cj.util.StringUtils;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -340,7 +342,7 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
                 txtStudentLimited.setText("");
                 txtStudentCount.setText("");
             }
-
+            student.updateStudentupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),connection);
         } catch (SQLException e) {
 
             e.printStackTrace();

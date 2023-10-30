@@ -14,7 +14,9 @@ import Tools.MySQLConnectionUtil;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -582,6 +584,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         txtCurrentCourseStartTime.setText("");
         txtCurrentCourseEndTime.setText("");
         txtCurrentProfessorLanguage.setText("");
+        student.updateStudentupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),connection);
     }//GEN-LAST:event_btnDropActionPerformed
 
     private void txtSearchCoursesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchCoursesActionPerformed

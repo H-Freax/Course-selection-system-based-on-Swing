@@ -19,6 +19,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -340,6 +342,7 @@ public class StudentRateJPanel extends javax.swing.JPanel {
                         commentTextArea.setText("");
                         // Optionally, you can update the table by calling populateTable() to show the updated information.
                         populateTable();
+                        student.updateStudentupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),conn);
                     } catch (SQLException e) {
                         e.printStackTrace();
                         JOptionPane.showMessageDialog(this, "Error while submitting the rating. Please try again.");

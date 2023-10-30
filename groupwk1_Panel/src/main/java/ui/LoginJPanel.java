@@ -3,6 +3,8 @@ package ui;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JButton;
@@ -147,7 +149,7 @@ public class LoginJPanel extends javax.swing.JPanel {
 
                 EmployeeDirectory adminlist = new EmployeeDirectory();
                 Employee employee = adminlist.findEmployeeByUsername(username);
-
+                employee.updateEmployeeactiveInDatabase(Timestamp.valueOf(LocalDateTime.now()),connection);
                 AdminWorkAreaJPanel admincontrolpanel = new AdminWorkAreaJPanel(ViewContainer, controlPanel,employee);
                 controlPanel.add(admincontrolpanel);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
@@ -165,7 +167,7 @@ public class LoginJPanel extends javax.swing.JPanel {
                 ProfessorDirectory professorDirectory = new ProfessorDirectory();
                 professorDirectory.loadAllProfessorsFromDatabase(connection);
                 Professor professor = professorDirectory.getProfessorByusername(username);
-
+                professor.updateProfessoractiveInDatabase(Timestamp.valueOf(LocalDateTime.now()),connection);
                 FacultyWorkAreaJPanel panel1 = new FacultyWorkAreaJPanel( ViewContainer, controlPanel,  professor);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
@@ -181,6 +183,7 @@ public class LoginJPanel extends javax.swing.JPanel {
 
                 StudentDirectory stulist = new StudentDirectory();
                 Student student = stulist.findStudentbyUsername(username);
+                student.updateStudentactiveInDatabase(Timestamp.valueOf(LocalDateTime.now()),connection);
                 StudentWorkAreaJPanel panel1 = new StudentWorkAreaJPanel(ViewContainer, controlPanel, student);
                 controlPanel.add(panel1);
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();

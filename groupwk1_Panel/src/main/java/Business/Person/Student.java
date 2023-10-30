@@ -25,6 +25,25 @@ public class Student extends Person {
     private String pwdHash;
     private List<String> professorList; // 用于存储学生的任课老师professorId信息
     private boolean isMyStu;
+
+    private String lastactive;
+    private String lastupdate;
+
+    public String getLastactive() {
+        return lastactive;
+    }
+
+    public void setLastactive(String lastactive) {
+        this.lastactive = lastactive;
+    }
+
+    public String getLastupdate() {
+        return lastupdate;
+    }
+
+    public void setLastupdate(String lastupdate) {
+        this.lastupdate = lastupdate;
+    }
     public Student(){
 
     }
@@ -153,6 +172,29 @@ public class Student extends Person {
 
         for (String courseID : courseList) {
             addStudentToCourse(connection, courseID, getPersonID());
+        }
+    }
+
+    public void updateStudentactiveInDatabase(Timestamp lastactive,Connection connection) throws SQLException {
+        super.updateInDatabase(connection);
+
+        String updateStudentQuery = "UPDATE Student SET lastactive = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateStudentQuery)) {
+
+            statement.setTimestamp(1, lastactive);
+            statement.setString(2, getPersonID());
+            statement.executeUpdate();
+        }
+    }
+    public void updateStudentupdateInDatabase(Timestamp lastupdate,Connection connection) throws SQLException {
+        super.updateInDatabase(connection);
+
+        String updateStudentQuery = "UPDATE Student SET lastupdate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateStudentQuery)) {
+
+            statement.setTimestamp(1, lastupdate);
+            statement.setString(2, getPersonID());
+            statement.executeUpdate();
         }
     }
 
