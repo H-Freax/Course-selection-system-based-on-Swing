@@ -23,6 +23,7 @@ import ui.UserInterface.WorkAreas.StudentRole.GraduationStatus.StudentGraduation
 import ui.UserInterface.WorkAreas.StudentRole.ManageProfile.StudentManageProfileJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.MyCourses.StudentManageCoursesJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.Registration.StudentRegisterJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.Schedule.StudentScheduleJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.StudentRate.StudentRateJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.Transcript.StudentTranscriptJPanel;
 
@@ -83,6 +84,7 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
         btnManageProfile = new javax.swing.JButton();
         btnGraduationStatus = new javax.swing.JButton();
         btnTranscript = new javax.swing.JButton();
+        btnRate1 = new javax.swing.JButton();
 
         stuTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -179,6 +181,19 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnRate1.setBackground(new java.awt.Color(102, 153, 255));
+        btnRate1.setForeground(new java.awt.Color(255, 255, 255));
+        btnRate1.setText("Schedule");
+        btnRate1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRate1.setMaximumSize(new java.awt.Dimension(200, 40));
+        btnRate1.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnRate1.setPreferredSize(new java.awt.Dimension(240, 25));
+        btnRate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRate1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,7 +210,8 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnManageProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnMyCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTranscript, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnTranscript, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRate1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnGraduationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,12 +234,16 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnManageProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnGraduationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(46, 46, 46)
+                        .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTranscript, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnRegisrtation, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(96, Short.MAX_VALUE))
+                            .addComponent(btnRate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegisrtation, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addComponent(btnRate1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -375,12 +395,37 @@ public class StudentManagementJPanel extends javax.swing.JPanel {
         layout.next(ViewContainer);
     }//GEN-LAST:event_btnTranscriptActionPerformed
 
+    private void btnRate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRate1ActionPerformed
+        // TODO add your handling code here:
+        Student student = null;
+        int selectedRowIndex = stuTable.getSelectedRow();
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select a row to View.");
+            return;
+        }else{
+                DefaultTableModel model = (DefaultTableModel) stuTable.getModel();
+                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                student = studentdirectory.findStudent(selectedID);              
+        }
+        StudentScheduleJPanel smpPanel = null;
+        try {
+            smpPanel = new StudentScheduleJPanel(ViewContainer,student);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("数据库异常！！");
+        }
+        ViewContainer.add("StudentManageProfileJPanel", smpPanel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
+    }//GEN-LAST:event_btnRate1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGraduationStatus;
     private javax.swing.JButton btnManageProfile;
     private javax.swing.JButton btnMyCourse;
     private javax.swing.JButton btnRate;
+    private javax.swing.JButton btnRate1;
     private javax.swing.JButton btnRegisrtation;
     private javax.swing.JButton btnTranscript;
     private javax.swing.JScrollPane jScrollPane1;

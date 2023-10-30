@@ -4,6 +4,17 @@
  */
 package ui.UserInterface.WorkAreas.AdminRole.Management;
 
+import Business.Directory.ProfessorDirectory;
+import Business.Person.Professor;
+import Tools.MySQLConnectionUtil;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author 15469
@@ -13,10 +24,39 @@ public class FacultyManagementJPanel extends javax.swing.JPanel {
     /**
      * Creates new form FacultyManagementJPanel
      */
-    public FacultyManagementJPanel() {
+    
+    private ArrayList<Professor>professorlist;
+    private ProfessorDirectory professorDirectory;
+    private Connection connection;
+    private JPanel ViewContainer;
+    public FacultyManagementJPanel(JPanel ViewContainer) throws SQLException {
         initComponents();
+        connection = MySQLConnectionUtil.getConnection();
+        this.ViewContainer= ViewContainer;
+        professorDirectory = new ProfessorDirectory();
+        professorDirectory.loadAllProfessorsFromDatabase(connection);
+        professorlist=(ArrayList<Professor>)professorDirectory.getProfessors();
+        populateTable();
     }
 
+    private void populateTable(){
+        DefaultTableModel model = (DefaultTableModel)tblProfessor.getModel();
+        model.setRowCount(0);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+        tblProfessor.setRowSorter(sorter);
+        for(Professor vs : professorlist){
+                Object[] row = new Object[5];
+                row[0] = vs.getPersonID();
+                row[1] = vs.getUsername();
+                row[2] = vs.isEnabled();
+                row[3] = vs.getRate();
+                row[4] = vs.getRegion();
+                model.addRow(row);
+        }
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,19 +66,56 @@ public class FacultyManagementJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitle = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblProfessor = new javax.swing.JTable();
+
+        lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("Faculty Management");
+
+        tblProfessor.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "isEnabled", "Rating", "Region"
+            }
+        ));
+        jScrollPane2.setViewportView(tblProfessor);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lblTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblProfessor;
     // End of variables declaration//GEN-END:variables
 }
