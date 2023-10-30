@@ -19,6 +19,8 @@ import Tools.MySQLConnectionUtil;
 import Business.Directory.ProfessorDirectory;
 import ui.UserInterface.WorkAreas.AdminRole.AdminWorkAreaJPanel;
 import ui.UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
+import ui.UserInterface.WorkAreas.FacultyRole.Schedule.FacultyScheduleJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.Schedule.StudentScheduleJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 
 /**
@@ -169,8 +171,8 @@ public class LoginJPanel extends javax.swing.JPanel {
                 CardLayout layout1 = (CardLayout)controlPanel.getLayout();
                 layout1.next(controlPanel);
 
-                JPanel panel = new JPanel();
-                ViewContainer.add("Block",panel);
+                FacultyScheduleJPanel fsPanel = new FacultyScheduleJPanel(ViewContainer,professor);
+                ViewContainer.add("FacultyScheduleJPanel",fsPanel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
             } else if (btnStudent.isSelected()) {
@@ -185,8 +187,8 @@ public class LoginJPanel extends javax.swing.JPanel {
                 layout1.next(controlPanel);
 
 
-                JPanel panel = new JPanel();
-                ViewContainer.add("Block",panel);
+                StudentScheduleJPanel ssPanel = new StudentScheduleJPanel(ViewContainer,student);
+                ViewContainer.add("StudentScheduleJPanel", ssPanel);
                 CardLayout layout = (CardLayout)ViewContainer.getLayout();
                 layout.next(ViewContainer);
             }

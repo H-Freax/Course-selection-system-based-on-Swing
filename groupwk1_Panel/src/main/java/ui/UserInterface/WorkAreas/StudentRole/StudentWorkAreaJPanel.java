@@ -239,7 +239,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     private void btnRegisrtationIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisrtationIdentifyResourceAssetsActionPerformed
         // TODO add your handling code here:
         StudentRegisterJPanel srPanel = new StudentRegisterJPanel(student);
-        ViewContainer.add("StudentManageCoursesJPanel", srPanel);
+        ViewContainer.add("StudentRegisterJPanel", srPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
         //        CardSequencePanel.removeAll();
@@ -272,7 +272,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     private void btnGraduationStatusIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraduationStatusIdentifyEventsActionPerformed
         // TODO add your handling code here:
         StudentGraduationStatusJPanel sgsPanel = new StudentGraduationStatusJPanel(ViewContainer,student);
-        ViewContainer.add("StudentManageProfileJPanel", sgsPanel);
+        ViewContainer.add("StudentGraduationStatusJPanel", sgsPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
         //        CardSequencePanel.removeAll();
@@ -292,7 +292,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
             e.printStackTrace();
             System.out.println("数据库异常！！");
         }
-        ViewContainer.add("StudentManageProfileJPanel", stPanel);
+        ViewContainer.add("StudentTranscriptJPanel", stPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
 
@@ -324,7 +324,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     private void btnMyscheduleActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnMyscheduleActionPerformed
         // TODO add your handling code here:
         StudentScheduleJPanel ssPanel = new StudentScheduleJPanel(ViewContainer,student);
-        ViewContainer.add("StudentRateJPanel", ssPanel);
+        ViewContainer.add("StudentScheduleJPanel", ssPanel);
         CardLayout layout = (CardLayout)ViewContainer.getLayout();
         layout.next(ViewContainer);
     }//GEN-LAST:event_btnMyscheduleActionPerformed
