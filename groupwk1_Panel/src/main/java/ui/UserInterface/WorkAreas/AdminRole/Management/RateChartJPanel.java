@@ -4,10 +4,13 @@
  */
 package ui.UserInterface.WorkAreas.AdminRole.Management;
 
+import Business.Directory.ProfessorDirectory;
+import Business.Person.Professor;
 import Business.Rate.Rate;
 import Tools.MySQLConnectionUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -27,9 +30,13 @@ public class RateChartJPanel extends javax.swing.JPanel {
      */
     List<Rate> rateList;
     Connection connection;
+    private ArrayList<Professor>professorlist;
+    private ProfessorDirectory professorDirectory;
    public RateChartJPanel() throws SQLException {
         connection=MySQLConnectionUtil.getConnection();
         rateList= Rate.loadAllRatesFromDatabase(connection);
+        professorDirectory=new ProfessorDirectory();
+        professorDirectory.loadAllProfessorsFromDatabase(connection);
         DefaultCategoryDataset dataset = createDataset(rateList);
         JFreeChart chart = ChartFactory.createBarChart(
                 "Rating", // 图表标题
@@ -53,11 +60,15 @@ public class RateChartJPanel extends javax.swing.JPanel {
     private DefaultCategoryDataset createDataset(List<Rate> rates) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (Rate rate : rates) {
-            dataset.addValue(Double.parseDouble(rate.getScore()), "Score", "Professor id "+rate.getProfessorId());
-            dataset.addValue(Double.parseDouble(rate.getScorePart1()), "Score Part 1", "Professor id "+rate.getProfessorId());
-            dataset.addValue(Double.parseDouble(rate.getScorePart2()), "Score Part 2", "Professor id "+rate.getProfessorId());
-            dataset.addValue(Double.parseDouble(rate.getScorePart3()), "Score Part 3", "Professor id "+rate.getProfessorId());
-            dataset.addValue(Double.parseDouble(rate.getScorePart4()), "Score Part 4", "Professor id "+rate.getProfessorId());
+            Professor p = professorDirectory.getProfessorById(rate.getProfessorId());
+            if(p!=null){
+            dataset.addValue(Double.parseDouble(rate.getScore()), "Score", "Professor "+p.getPersonName());
+            dataset.addValue(Double.parseDouble(rate.getScorePart1()), "Score Part 1", "Professor "+p.getPersonName());
+            dataset.addValue(Double.parseDouble(rate.getScorePart2()), "Score Part 2", "Professor "+p.getPersonName());
+            dataset.addValue(Double.parseDouble(rate.getScorePart3()), "Score Part 3", "Professor "+p.getPersonName());
+            dataset.addValue(Double.parseDouble(rate.getScorePart4()), "Score Part 4", "Professor "+p.getPersonName());
+            }
+
         }
         return dataset;
     }
