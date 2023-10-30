@@ -38,11 +38,12 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         populateTable();
     }
 
-
-        private void populateTable(){
+    
+    
+    
+    
+    private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)courseTable.getModel();
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        courseTable.setRowSorter(sorter);
         model.setRowCount(0);
         for(Course vs : courselist){
                 Object[] row = new Object[5];
@@ -474,10 +475,6 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void txtProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProActionPerformed
-
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
        int selectedRowIndex = courseTable.getSelectedRow();
@@ -595,6 +592,10 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void txtProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
