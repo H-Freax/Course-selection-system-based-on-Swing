@@ -34,16 +34,15 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel)rateTbl.getModel();
         model.setRowCount(0);
         for(Rate vs : rateList){
-                Object[] row = new Object[5];
-                row[0]=vs.getRateId();
-                row[1] = vs.getCourseId();
-                row[2] = vs.getProfessorId();
-                row[3] = vs.getStudentId();
-                row[4] = vs.getScore();
+                Object[] row = new Object[4];
+                row[0]=vs.getCourseId();
+                row[1] = vs.getProfessorId();
+                row[2] = vs.getStudentId();
+                row[3] = vs.getScore();
                 model.addRow(row);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,8 +57,6 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         lblTitle = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         rateTbl = new javax.swing.JTable();
-        txtSearch = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -82,8 +79,6 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         txtS4 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtComment = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        txtr = new javax.swing.JTextField();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -91,25 +86,24 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
 
         rateTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Rate ID", "Course ID", "Professor ID", "Student ID", "Score"
+                "Course ID", "Professor ID", "Student ID", "Score"
             }
-        ));
-        jScrollPane2.setViewportView(rateTbl);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        txtSearch.setText("Search ID");
-
-        btnSearch.setText("Search");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane2.setViewportView(rateTbl);
 
         jButton1.setText("View");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -121,14 +115,22 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         jButton2.setText("Create");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                try {
+                    jButton2ActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
         jButton3.setText("Update");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                try {
+                    jButton3ActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -163,14 +165,6 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
 
         jLabel9.setText("comment");
 
-        jLabel10.setText("Rate ID");
-
-        txtr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtrActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -187,10 +181,6 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSearch)
-                        .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
@@ -199,28 +189,23 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtr, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txts, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtc, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(35, 35, 35)
-                                    .addComponent(txtp, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel9)
-                                        .addComponent(txtSc, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txts, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtc, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(35, 35, 35)
+                                .addComponent(txtp, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txtSc, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(122, 122, 122)
@@ -258,17 +243,11 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSearch)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -326,34 +305,6 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-        String search=txtSearch.getText();
-        if("".equals(search)){
-            JOptionPane.showMessageDialog(this, "Please enter!");
-        }else{
-            Rate e = null;
-            for(Rate d : rateList){
-                if(d.getRateId().equals(search)){
-                    e=d;
-                }
-            }
-            if(e!=null){
-                   txtr.setText(e.getRateId());
-                   txtc.setText(e.getCourseId());
-                   txtp.setText(e.getProfessorId());
-                   txts.setText(e.getStudentId());
-                   txtSc.setText(e.getScore());
-                   txtS1.setText(e.getScorePart1());
-                   txtS2.setText(e.getScorePart2());
-                   txtS3.setText(e.getScorePart3());
-                   txtS4.setText(e.getScorePart4());
-                   txtComment.setText(e.getComment());
-                return;
-            }
-            JOptionPane.showMessageDialog(this, "Not Existed!");
-        }
-    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -363,15 +314,16 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
             return;
         }else{
                 DefaultTableModel model = (DefaultTableModel) rateTbl.getModel();
-                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                String courseId = (String) model.getValueAt(selectedRowIndex, 0);
+                String professorId =  (String) model.getValueAt(selectedRowIndex, 1);
+                String studentId = (String) model.getValueAt(selectedRowIndex,2);
                 Rate e = null;
                 for(Rate d : rateList){
-                    if(d.getRateId().equals(selectedID)){
+                    if(d.getCourseId().equals(courseId)&&d.getProfessorId().equals(professorId)&&d.getStudentId().equals(studentId)){
                         e=d;
                     }
                 }
                 if(e!=null){
-                   txtr.setText(e.getRateId());
                    txtc.setText(e.getCourseId());
                    txtp.setText(e.getProfessorId());
                    txts.setText(e.getStudentId());
@@ -387,17 +339,10 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String id=txtr.getText();
-        for(Rate e : rateList){
-                if(e.getRateId().equals(id)){
-                    JOptionPane.showMessageDialog(this, "ID Already Existed");
-                    return;
-                    }
-                }
-        String rId=txtr.getText();
-        String cId=txtc.getText(); 
+
+        String cId=txtc.getText();
         String pId=txtp.getText();
         String sId=txts.getText();
         String score=txtSc.getText();
@@ -407,13 +352,17 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         String score4=txtS4.getText();
         String comment = txtComment.getText();
 
-        if(rId==""||cId==""||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
+        if(cId==""||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
             JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
+        if(Rate.doesRateExist(connection,pId,sId,cId)){
+            JOptionPane.showMessageDialog(this, "Already Rate");
             return;
         }
         Rate e=null;
         try {
-            e = new Rate( rId,pId, sId, cId, score1, score2,score3,  score4,  comment,  score);
+            e = new Rate(pId, sId, cId, score1, score2,score3,  score4,  comment,  score);
         } catch (SQLException ex) {
             Logger.getLogger(RateComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -427,10 +376,9 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        String rId=txtr.getText();
-        String cId=txtc.getText(); 
+        String cId=txtc.getText();
         String pId=txtp.getText();
         String sId=txts.getText();
         String score=txtSc.getText();
@@ -440,30 +388,23 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         String score4=txtS4.getText();
         String comment = txtComment.getText();
 
-        if("".equals(rId)||"".equals(cId)||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
+        if("".equals(cId)||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
-       
+        if(Rate.doesRateExist(connection,pId,sId,cId)){
+            JOptionPane.showMessageDialog(this, "Already Rate");
+            return;
+        }
+
        int selectedRowIndex = rateTbl.getSelectedRow();
        if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to update.");
             return;
         }else{
                 DefaultTableModel model = (DefaultTableModel) rateTbl.getModel();
-                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
                 Rate c = null;
-                for(Rate e : rateList){
-                    if(e.getRateId().equals(selectedID)){
-                        c = e;
-                    }
-                    if(e.getRateId().equals(rId)&&!selectedID.equals(rId)){
-                        JOptionPane.showMessageDialog(this, "ID Already Existed");
-                        return;
-                    }
-                }
                 if(c!=null){
-                    c.setRateId(rId);
                     c.setComment(comment);
                     c.setCourseId(cId);
                     c.setProfessorId(pId);
@@ -485,7 +426,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Not Existed!");
 
         }
-      
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -496,10 +437,12 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
             return;
         }else{
             DefaultTableModel model = (DefaultTableModel) rateTbl.getModel();
-            String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+
+            String courseId = (String) model.getValueAt(selectedRowIndex, 0);
+            String professorId =  (String) model.getValueAt(selectedRowIndex, 1);
+            String studentId = (String) model.getValueAt(selectedRowIndex,2);
             for(Rate vs : rateList){
-                if(vs.getRateId().equals(selectedID)){
-                    //
+                if(vs.getCourseId().equals(courseId)&&vs.getProfessorId().equals(professorId)&&vs.getStudentId().equals(studentId)){
                     rateList.remove(vs);
                     try {
                         vs.deleteRateFromDatabase(connection);
@@ -519,19 +462,13 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcActionPerformed
 
-    private void txtrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtrActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtrActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSearch;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -551,10 +488,8 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtS3;
     private javax.swing.JTextField txtS4;
     private javax.swing.JTextField txtSc;
-    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtc;
     private javax.swing.JTextField txtp;
-    private javax.swing.JTextField txtr;
     private javax.swing.JTextField txts;
     // End of variables declaration//GEN-END:variables
 }

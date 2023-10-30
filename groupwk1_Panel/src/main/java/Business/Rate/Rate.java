@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rate {
-    private String rateId;
     private String professorId;
     private String studentId;
     private String courseId;
@@ -23,9 +22,9 @@ public class Rate {
     public Rate(){
 
     }
-    public Rate(String rateId,String professorId, String studentId, String courseId, String scorePart1, String scorePart2,
+    public Rate(String professorId, String studentId, String courseId, String scorePart1, String scorePart2,
                 String scorePart3, String scorePart4, String comment, String score) throws SQLException {
-        this.rateId = rateId;
+
         this.professorId = professorId;
         this.studentId = studentId;
         this.courseId = courseId;
@@ -74,10 +73,6 @@ public class Rate {
         return score;
     }
 
-    public String getRateId() {
-        return rateId;
-    }
-
     public void setProfessorId(String professorId) {
         this.professorId = professorId;
     }
@@ -116,16 +111,12 @@ public class Rate {
 
 
 
-    public void setRateId(String rateId) {
-        this.rateId = rateId;
-    }
     public static List<Rate> loadAllRatesFromDatabase(Connection connection) throws SQLException {
         List<Rate> rates = new ArrayList<>();
         String query = "SELECT * FROM Rate";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                String rateId = resultSet.getString("rate_id");
                 String professorId = resultSet.getString("professor_id");
                 String studentId = resultSet.getString("studuent_id");
                 String courseId = resultSet.getString("course_id");
@@ -135,7 +126,7 @@ public class Rate {
                 String scorePart4 = resultSet.getString("scorepart4");
                 String comment = resultSet.getString("comment");
                 String score = resultSet.getString("score");
-                Rate rate = new Rate(rateId,professorId, studentId, courseId, scorePart1, scorePart2, scorePart3, scorePart4, comment, score);
+                Rate rate = new Rate(professorId, studentId, courseId, scorePart1, scorePart2, scorePart3, scorePart4, comment, score);
                 rates.add(rate);
             }
         }
@@ -157,7 +148,6 @@ public class Rate {
             statement.setString(7, scorePart4);
             statement.setString(8, comment);
             statement.setString(9, score);
-            statement.setString(10,rateId);
             statement.executeUpdate();
         }
     }
@@ -170,7 +160,6 @@ public class Rate {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                String rateId = resultSet.getString("rate_id");
                 String professorId = resultSet.getString("professor_id");
                 String studentId = resultSet.getString("studuent_id");
                 String courseId = resultSet.getString("course_id");
@@ -180,7 +169,7 @@ public class Rate {
                 String scorePart4 = resultSet.getString("scorepart4");
                 String comment = resultSet.getString("comment");
                 String score = resultSet.getString("score");
-                Rate rate = new Rate(rateId,professorId, studentId, courseId, scorePart1, scorePart2, scorePart3, scorePart4, comment, score);
+                Rate rate = new Rate(professorId, studentId, courseId, scorePart1, scorePart2, scorePart3, scorePart4, comment, score);
                 rates.add(rate);
             }
         }
@@ -200,7 +189,6 @@ public class Rate {
             statement.setString(7, scorePart4);
             statement.setString(8, comment);
             statement.setString(9, score);
-            statement.setString(10, rateId);
             statement.executeUpdate();
         }
     }
@@ -264,14 +252,13 @@ public class Rate {
             statement.setString(3, courseId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String rateID= resultSet.getString("rate_id");
                 String scorePart1 = resultSet.getString("scorepart1");
                 String scorePart2 = resultSet.getString("scorepart2");
                 String scorePart3 = resultSet.getString("scorepart3");
                 String scorePart4 = resultSet.getString("scorepart4");
                 String comment = resultSet.getString("comment");
                 String score = resultSet.getString("score");
-                return new Rate(rateID,professorId, studentId, courseId, scorePart1, scorePart2, scorePart3, scorePart4, comment, score);
+                return new Rate(professorId, studentId, courseId, scorePart1, scorePart2, scorePart3, scorePart4, comment, score);
             }
         }
         return null;
