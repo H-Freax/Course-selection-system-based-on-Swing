@@ -21,6 +21,7 @@ import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.PersonScheduleComb
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.RateComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.SemesterComboBoxAreaJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea.StudentComboBoxAreaJPanel;
+import ui.UserInterface.WorkAreas.AdminRole.Management.FacultyManagementJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.Management.RateChartJPanel;
 import ui.UserInterface.WorkAreas.AdminRole.Management.StudentManagementJPanel;
 import ui.UserInterface.WorkAreas.General.GeneralJPanel;
@@ -213,7 +214,16 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-
+        
+            FacultyManagementJPanel cPanel=null;
+        try {
+            cPanel = new FacultyManagementJPanel(ViewContainer);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminWorkAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            ViewContainer.add("FacultyManagementJPanel", cPanel);
+            CardLayout layout = (CardLayout)ViewContainer.getLayout();
+            layout.next(ViewContainer);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed

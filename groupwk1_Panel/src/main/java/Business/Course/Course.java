@@ -285,7 +285,7 @@ public class Course {
             return null;
         }
     }
-    public static Course resultSetToCourse(ResultSet resultSet) throws SQLException {
+    private static Course resultSetToCourse(ResultSet resultSet) throws SQLException {
         return new Course(
                 resultSet.getString("id"),
                 resultSet.getString("name"),
