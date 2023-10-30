@@ -57,10 +57,10 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         lblTitle = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         rateTbl = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
+        btnCreate = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtc = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -105,39 +105,39 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(rateTbl);
 
-        jButton1.setText("View");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnViewActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Create");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    jButton2ActionPerformed(evt);
+                    btnCreateActionPerformed(evt);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
 
-        jButton3.setText("Update");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    jButton3ActionPerformed(evt);
+                    btnUpdateActionPerformed(evt);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
 
-        jButton4.setText("Delete");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
@@ -181,11 +181,11 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnView)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnCreate)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3))
+                        .addComponent(btnUpdate))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -231,7 +231,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                                 .addGap(7, 7, 7)
                                 .addComponent(txtComment, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btnDelete)
                 .addGap(100, 100, 100))
         );
         jPanel1Layout.setVerticalGroup(
@@ -243,10 +243,10 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnView)
+                    .addComponent(btnCreate)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete))
                 .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -306,7 +306,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = rateTbl.getSelectedRow();
         if(selectedRowIndex<0){
@@ -337,9 +337,9 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(this, "Not Existed!");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnViewActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
 
         String cId=txtc.getText();
@@ -374,9 +374,9 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         JOptionPane.showMessageDialog(this, "Added!");
         populateTable();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCreateActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         String cId=txtc.getText();
         String pId=txtp.getText();
@@ -427,9 +427,9 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
 
         }
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = rateTbl.getSelectedRow();
         if(selectedRowIndex<0){
@@ -456,7 +456,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
             }
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void txtcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcActionPerformed
         // TODO add your handling code here:
@@ -464,10 +464,10 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

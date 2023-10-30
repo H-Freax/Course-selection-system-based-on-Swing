@@ -81,10 +81,10 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
         txtRole = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
+        Createbtn = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDisable = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -130,31 +130,31 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
 
         txtSearch.setText("Search ID");
 
-        jButton1.setText("View");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnViewActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Create");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Createbtn.setText("Create");
+        Createbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                CreatebtnActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Update");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Disable");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnDisable.setText("Disable");
+        btnDisable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnDisableActionPerformed(evt);
             }
         });
 
@@ -174,13 +174,13 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                                 .addGap(123, 123, 123)
                                 .addComponent(btnSearch)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1)
+                                .addComponent(btnView)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2)
+                                .addComponent(Createbtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)
+                                .addComponent(btnUpdate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4))
+                                .addComponent(btnDisable))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(79, 79, 79)
@@ -216,10 +216,10 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSearch)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnView)
+                    .addComponent(Createbtn)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDisable))
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,7 +279,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = EmployeeTable.getSelectedRow();
         if(selectedRowIndex<0){
@@ -301,9 +301,9 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(this, "Not Existed!");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnViewActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void CreatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatebtnActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
         if(employeeDirectory.findEmployeeByID(id)!=null){
@@ -331,9 +331,9 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
         }
 
         populateTable();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_CreatebtnActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
         String personName=txtname.getText();
@@ -391,9 +391,9 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
 
         }
         
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnDisableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisableActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = EmployeeTable.getSelectedRow();
         if(selectedRowIndex<0){
@@ -415,16 +415,16 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnDisableActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Createbtn;
     private javax.swing.JTable EmployeeTable;
+    private javax.swing.JButton btnDisable;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

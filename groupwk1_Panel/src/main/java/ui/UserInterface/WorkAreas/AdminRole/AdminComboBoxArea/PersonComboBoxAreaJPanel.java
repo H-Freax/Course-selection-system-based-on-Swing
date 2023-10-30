@@ -66,16 +66,16 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         personTbl = new javax.swing.JTable();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
+        btnCreate = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtname = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtid = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtRole = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -103,24 +103,24 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("View");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnViewActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Create");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCreateActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Update");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -136,10 +136,10 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
 
         jLabel6.setText("Role");
 
-        jButton4.setText("Delete");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
@@ -159,11 +159,11 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnSearch)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
+                        .addComponent(btnView)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnCreate)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3))
+                        .addComponent(btnUpdate))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +179,7 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                         .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btnDelete)
                 .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -193,10 +193,10 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSearch)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnView)
+                    .addComponent(btnCreate)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +241,7 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = personTbl.getSelectedRow();
         if(selectedRowIndex<0){
@@ -257,9 +257,9 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                 txtRole.setText(e.getRole());
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnViewActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
         if(personDirectory.findPersonById(id)!=null){
@@ -282,9 +282,9 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         }
 
         populateTable();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCreateActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
 
@@ -326,13 +326,13 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnameActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = personTbl.getSelectedRow();
         if(selectedRowIndex<0){
@@ -358,15 +358,15 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
