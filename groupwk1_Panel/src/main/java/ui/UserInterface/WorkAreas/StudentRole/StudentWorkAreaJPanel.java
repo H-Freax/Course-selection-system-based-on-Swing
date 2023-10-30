@@ -12,6 +12,7 @@ import ui.UserInterface.WorkAreas.StudentRole.GraduationStatus.StudentGraduation
 import ui.UserInterface.WorkAreas.StudentRole.ManageProfile.StudentManageProfileJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.MyCourses.StudentManageCoursesJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.Registration.StudentRegisterJPanel;
+import ui.UserInterface.WorkAreas.StudentRole.Schedule.StudentScheduleJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.StudentRate.StudentRateJPanel;
 import ui.UserInterface.WorkAreas.StudentRole.Transcript.StudentTranscriptJPanel;
 
@@ -61,6 +62,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         btnTranscript = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnRate = new javax.swing.JButton();
+        btnMyschedule = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("My Student Profie");
@@ -154,6 +156,23 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnMyschedule.setBackground(new java.awt.Color(102, 153, 255));
+        btnMyschedule.setForeground(new java.awt.Color(255, 255, 255));
+        btnMyschedule.setText("Schedule");
+        btnMyschedule.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnMyschedule.setMaximumSize(new java.awt.Dimension(200, 40));
+        btnMyschedule.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnMyschedule.setPreferredSize(new java.awt.Dimension(240, 25));
+        btnMyschedule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    btnMyscheduleActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,7 +191,10 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(btnRate, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addComponent(btnLogout)))
+                        .addComponent(btnLogout))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnMyschedule, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -180,7 +202,9 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
+                .addGap(48, 48, 48)
+                .addComponent(btnMyschedule, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnMyCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(btnRegisrtation, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,7 +214,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnGraduationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnTranscript, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(btnRate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(btnLogout)
@@ -297,12 +321,21 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         layout.next(ViewContainer);
     }//GEN-LAST:event_btnRateActionPerformed
 
+    private void btnMyscheduleActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnMyscheduleActionPerformed
+        // TODO add your handling code here:
+        StudentScheduleJPanel ssPanel = new StudentScheduleJPanel(ViewContainer,student);
+        ViewContainer.add("StudentRateJPanel", ssPanel);
+        CardLayout layout = (CardLayout)ViewContainer.getLayout();
+        layout.next(ViewContainer);
+    }//GEN-LAST:event_btnMyscheduleActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGraduationStatus;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnManageProfile;
     private javax.swing.JButton btnMyCourse;
+    private javax.swing.JButton btnMyschedule;
     private javax.swing.JButton btnRate;
     private javax.swing.JButton btnRegisrtation;
     private javax.swing.JButton btnTranscript;
