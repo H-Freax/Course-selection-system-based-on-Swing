@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CourseDirectory {
@@ -119,6 +121,40 @@ public class CourseDirectory {
     public List<Course> getAllCourses() {
         return courses;
     }
+    public List<CourseVO> getCoursesWithRatings() throws SQLException {
+        List<CourseVO> courses = this.loadCourseListFromDatabase("");
+        Map<String, Double> courseRatings = this.fetchCourseRatingsFromDatabase();
+
+        for (CourseVO course : courses) {
+            if (course != null && course.getId() != null) {
+                Double rating = courseRatings.get(course.getId());
+                if (rating != null) {
+                    course.setScore(rating);
+                }
+            }
+        }
+
+        return courses;
+    }
+
+    public Map<String, Double> fetchCourseRatingsFromDatabase() throws SQLException {
+        Map<String, Double> courseRatings = new HashMap<>();
+        String query = "SELECT course_id, AVG(score) AS average_rating FROM Rate GROUP BY course_id";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String courseId = resultSet.getString("course_id");
+                if (courseId != null) {
+                    double averageRating = resultSet.getDouble("average_rating");
+                    courseRatings.put(courseId, averageRating);
+                }
+            }
+        }
+        return courseRatings;
+    }
+
 
     public List<CourseVO> loadCourseListFromDatabase(String keyWords) throws SQLException{
         List<CourseVO> list = new ArrayList<>();
@@ -132,6 +168,7 @@ public class CourseDirectory {
                 "left join CourseTopic ct on c.id = ct.course_id " +
                 "left join Semester s on s.id = c.semesterid " +
                 "left join CourseSchedule css on c.id = css.course_id " +
+
                 "where c.statue ='Open' ";
 
                 if(keyWords != null){

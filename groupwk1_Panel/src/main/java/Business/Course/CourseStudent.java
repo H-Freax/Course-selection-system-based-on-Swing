@@ -1,4 +1,6 @@
 package Business.Course;
+import Business.Person.Student;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,15 +85,15 @@ public class CourseStudent {
             statement.executeUpdate();
         }
     }
-    
+
     public List<CourseData> getAllCoursesDataForStudent(String studentId) throws SQLException {
         List<CourseData> courseDataList = new ArrayList<>();
         String query = "SELECT * FROM CourseStudent WHERE studuent_id = ?";
-        
+
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, studentId);
             ResultSet resultSet = statement.executeQuery();
-            
+
             while (resultSet.next()) {
                 String courseId = resultSet.getString("course_id");
                 double grade = resultSet.getDouble("score");
@@ -99,7 +101,7 @@ public class CourseStudent {
                 courseDataList.add(courseData);
             }
         }
-        
+
         return courseDataList;
     }
 
@@ -129,15 +131,15 @@ public class CourseStudent {
             return grade;
         }
     }
-    
-    public List<StudentData> getAllStudentsDataForCourse(Course course) throws SQLException {
+
+    public List<StudentData> getAllStudentsDataForCourse(String courseID) throws SQLException {
         List<StudentData> studentDataList = new ArrayList<>();
         String query = "SELECT * FROM coursestudent WHERE course_id = ?";
-        
+
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, course.getId());
+            statement.setString(1, courseID);
             ResultSet resultSet = statement.executeQuery();
-            
+
             while (resultSet.next()) {
                 String studentId = resultSet.getString("studuent_id");
                 double grade = resultSet.getDouble("score");
@@ -145,7 +147,7 @@ public class CourseStudent {
                 studentDataList.add(studentData);
             }
         }
-        
+
         return studentDataList;
     }
 

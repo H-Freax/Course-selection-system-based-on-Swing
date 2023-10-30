@@ -4,9 +4,21 @@
  */
 package ui.UserInterface.WorkAreas.FacultyRole.Ranking;
 
+import Business.Course.Course;
+import Business.Course.CourseDirectory;
+import Business.Course.CourseVO;
+import Business.Directory.ProfessorDirectory;
 import Business.Person.Professor;
+import Tools.MySQLConnectionUtil;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -15,13 +27,24 @@ import javax.swing.*;
 public class FacultyRankingJPanel extends JPanel {
     private JPanel ViewContainer;
     private Professor professor;
+    private ProfessorDirectory professorDirectory =new ProfessorDirectory();
+    Connection conn= MySQLConnectionUtil.getConnection();
+    CourseDirectory courseDirectory=new CourseDirectory(MySQLConnectionUtil.getConnection());;
+
     /**
      * Creates new form FacultyRanking
      */
-    public FacultyRankingJPanel(JPanel ViewContainer, Professor professor) {
+    public FacultyRankingJPanel(JPanel ViewContainer, Professor professor) throws SQLException {
         initComponents();
         this.ViewContainer = ViewContainer;
         this.professor = professor;
+        List<CourseVO> coursesWithRatings = courseDirectory.getCoursesWithRatings();
+
+        professorDirectory.loadAllProfessorsFromDatabase(conn);
+        popularTable(professorDirectory.getProfessors(), coursesWithRatings);
+//        courseDirectory.loadCourseListFromDatabase("");
+//        professorDirectory.loadAllProfessorsFromDatabase(conn);
+//        popularTable(professorDirectory.getProfessors(),courseDirectory.loadCourseListFromDatabase(""));
     }
 
     /**
@@ -33,12 +56,11 @@ public class FacultyRankingJPanel extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new JLabel();
-        jScrollPane1 = new JScrollPane();
-        tblPro = new JTable();
-        jScrollPane2 = new JScrollPane();
-        tblCourse = new JTable();
-        jButton1 = new JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPro = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblCourse = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 3, 24)); // NOI18N
         jLabel1.setText("Ranking");
@@ -58,61 +80,125 @@ public class FacultyRankingJPanel extends JPanel {
 
         tblCourse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Course Ranking", "Professor name", "Course Score"
+                "Course Ranking", "Course Name", "Professor name", "Course Score"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblCourse);
 
-        jButton1.setText("View");
-
-        GroupLayout layout = new GroupLayout(this);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel1)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(51, 51, 51))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel1)
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    // 基于教授的评分对教授进行排名
+    public List<Map<String, Object>> rankProfessors(List<Professor> professors) {
+        return professors.stream()
+                .sorted((a, b) -> Double.compare(b.getRate(), a.getRate())) // 根据评分降序排列
+                .map(professor -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("Professor Name", professor.getPersonName());
+                    map.put("Professor Score", professor.getRate());
+                    return map;
+                })
+                .collect(Collectors.toList());
+    }
 
+    // 基于课程的评分对课程进行排名
+    public List<Map<String, Object>> rankCourses(List<CourseVO> courses) {
+        return courses.stream()
+                .sorted((a, b) -> Double.compare(b.getScore(), a.getScore())) // 根据评分降序排列
+                .map(course -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("Course Name",course.getName());
+                    map.put("Professor Name", course.getProfessor());
+                    map.put("Course Score", course.getScore());
+                    return map;
+                })
+                .collect(Collectors.toList());
+    }
+
+    // 主函数用于显示排名
+    public void popularTable(List<Professor> professors, List<CourseVO> courses) {
+        List<Map<String, Object>> professorRanking = rankProfessors(professors);
+        List<Map<String, Object>> courseRanking = rankCourses(courses);
+
+        // Setting data for Professor Table
+        DefaultTableModel modelPro = (DefaultTableModel) tblPro.getModel();
+        modelPro.setRowCount(0); // Clear existing rows
+        for (Map<String, Object> row : professorRanking) {
+            int i=1;
+            modelPro.addRow(new Object[]{i,row.get("Professor Name"), row.get("Professor Score")});
+            i+=1;
+        }
+        tblPro.setModel(modelPro);
+
+        // Setting data for Course Table
+        DefaultTableModel modelCourse = (DefaultTableModel) tblCourse.getModel();
+        modelCourse.setRowCount(0); // Clear existing rows
+        for (Map<String, Object> row : courseRanking) {
+            int i=1;
+            modelCourse.addRow(new Object[]{i,row.get("Course Name"),row.get("Professor Name"), row.get("Course Score")});
+            i+=1;
+        }
+        tblCourse.setModel(modelCourse);
+    }
+    public void popularTableoutput(List<Professor> professors, List<CourseVO> courses) {
+        List<Map<String, Object>> professorRanking = rankProfessors(professors);
+        List<Map<String, Object>> courseRanking = rankCourses(courses);
+
+        System.out.println("Professor Ranking");
+        for (int i = 0; i < professorRanking.size(); i++) {
+            System.out.println((i + 1) + " - " + professorRanking.get(i).get("Professor Name") + " - " + professorRanking.get(i).get("Professor Score"));
+        }
+
+        System.out.println("\nCourse Ranking");
+        for (int i = 0; i < courseRanking.size(); i++) {
+            System.out.println((i + 1) + " - " + courseRanking.get(i).get("Professor Name") + " - " + courseRanking.get(i).get("Course Score"));
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JButton jButton1;
-    private JLabel jLabel1;
-    private JScrollPane jScrollPane1;
-    private JScrollPane jScrollPane2;
-    private JTable tblCourse;
-    private JTable tblPro;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblCourse;
+    private javax.swing.JTable tblPro;
     // End of variables declaration//GEN-END:variables
 }

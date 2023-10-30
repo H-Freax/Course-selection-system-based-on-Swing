@@ -125,7 +125,11 @@ public class FacultyWorkAreaJPanel extends JPanel {
         btnRanking.setPreferredSize(new java.awt.Dimension(240, 25));
         btnRanking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRankingActionPerformed(evt);
+                try {
+                    btnRankingActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -212,7 +216,7 @@ public class FacultyWorkAreaJPanel extends JPanel {
 
     }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
 
-    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
+    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnRankingActionPerformed
         // TODO add your handling code here:
         FacultyRankingJPanel prPanel = new FacultyRankingJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyRankingJPanel", prPanel);
