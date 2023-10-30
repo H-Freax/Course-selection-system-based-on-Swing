@@ -418,6 +418,11 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
             Logger.getLogger(RateComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         rateList.add(e);
+        try {
+            e.saveToDatabase(connection);
+        } catch (SQLException ex) {
+            Logger.getLogger(RateComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         JOptionPane.showMessageDialog(this, "Added!");
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -435,7 +440,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         String score4=txtS4.getText();
         String comment = txtComment.getText();
 
-        if(rId==""||cId==""||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
+        if("".equals(rId)||"".equals(cId)||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
@@ -452,7 +457,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                     if(e.getRateId().equals(selectedID)){
                         c = e;
                     }
-                    if(e.getRateId().equals(selectedID)&&!rId.equals(selectedID)){
+                    if(e.getRateId().equals(rId)&&!selectedID.equals(rId)){
                         JOptionPane.showMessageDialog(this, "ID Already Existed");
                         return;
                     }
@@ -469,6 +474,11 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setScorePart3(score3);
                     c.setScorePart4(score4);
                     populateTable();
+                    try {
+                        c.updateInDatabase(connection);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(RateComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
                 }
@@ -480,7 +490,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-                int selectedRowIndex = rateTbl.getSelectedRow();
+        int selectedRowIndex = rateTbl.getSelectedRow();
         if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this, "Please select a row to Deleted.");
             return;
@@ -491,6 +501,11 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
                 if(vs.getRateId().equals(selectedID)){
                     //
                     rateList.remove(vs);
+                    try {
+                        vs.deleteRateFromDatabase(connection);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(RateComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Deleted!");
                     return;

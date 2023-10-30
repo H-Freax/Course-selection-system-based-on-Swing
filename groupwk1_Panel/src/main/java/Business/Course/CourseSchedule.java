@@ -148,6 +148,57 @@ public class CourseSchedule {
         }
     }
 
+    public void saveCourseScheduleInDatabase(CourseInfo course) throws SQLException {
+        String query = "INSERT INTO CourseSchedule (courseId) VALUES (?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, course.getCourseId());
+            statement.setString(2, course.getWeekday());
+            statement.setString(3, course.getStarttime());
+            statement.setString(4, course.getEndtime());
+            statement.executeUpdate();
+        }
+    }
+    
+    
+    public void insertCourseInfoIntoDatabase(CourseInfo course) throws SQLException {
+    String query = "INSERT INTO CourseSchedule (course_id, weekday, starttime, endtime) VALUES (?, ?, ?, ?)";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, course.getCourseId());
+        statement.setString(2, course.getWeekday());
+        statement.setString(3, course.getStarttime());
+        statement.setString(4, course.getEndtime());
+        statement.executeUpdate();
+    }
+}
+    
+    
+    
+    public void updateCourseInfoInDatabase(CourseInfo course1,CourseInfo course) throws SQLException {
+    String query = "UPDATE CourseSchedule SET course_id=?,weekday = ?, starttime = ?, endtime = ? WHERE course_id = ? AND weekday = ? AND starttime = ? AND endtime = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, course.getCourseId());
+            statement.setString(2, course.getWeekday());
+            statement.setString(3, course.getStarttime());
+            statement.setString(4, course.getEndtime());
+            statement.setString(5, course1.getCourseId());
+            statement.setString(6, course1.getWeekday());
+            statement.setString(7, course1.getStarttime());
+            statement.setString(8, course1.getEndtime());
+        statement.executeUpdate();
+    }
+}
+    public void deleteCourseInfoFromDatabase(CourseInfo course) throws SQLException {
+    String query = "DELETE FROM CourseSchedule WHERE course_id = ? AND weekday = ? AND starttime = ? AND endtime = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, course.getCourseId());
+        statement.setString(2, course.getWeekday());
+        statement.setString(3, course.getStarttime());
+        statement.setString(4, course.getEndtime());
+        statement.executeUpdate();
+    }
+}
+
+    
     private void deleteCourseFromScheduleInDatabase(Course course) throws SQLException {
         String query = "DELETE FROM CourseSchedule WHERE courseId = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {

@@ -2,9 +2,14 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 
 import Business.Directory.EmployeeDirectory;
 import Business.Person.Employee;
+import Tools.MySQLConnectionUtil;
+import Tools.PasswordUtils;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -23,9 +28,10 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
      */
     private EmployeeDirectory employeeDirectory;
     private ArrayList<Employee> employeeList;
-
+    Connection connection;
     public EmployeeComboBoxAreaJPanel() {
         initComponents();
+        connection = MySQLConnectionUtil.getConnection();
         employeeDirectory=new EmployeeDirectory();
         employeeList=employeeDirectory.getAllEmployees();
         populateTable();
@@ -145,7 +151,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton4.setText("Delete");
+        jButton4.setText("Disable");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -308,23 +314,28 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
         String personID=txtid.getText(); 
         String username=txtuser.getText();
         String nowPassword=txtpwd.getText();
+        nowPassword=PasswordUtils.hashPassword(nowPassword);
+        
         boolean enabled=Boolean.getBoolean(txtEnabled.getText());
         String role=txtRole.getText();
-        if(personName==""||personID==""||username==""||nowPassword==""||role==""){
+        if("".equals(personName)||"".equals(personID)||"".equals(username)||"".equals(nowPassword)||"".equals(role)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
         Employee e = new Employee( personName,  personID,  username,  nowPassword,  enabled,  role);
         employeeList.add(e);
+        try {
+            e.saveToDatabase(connection);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
-
-        
-
         String personName=txtname.getText();
         String personID=txtid.getText(); 
         String username=txtuser.getText();
@@ -365,7 +376,14 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setNowPassword(nowPassword);
                     c.setPersonID(personID);
                     c.setRole(role);
+                    try {
+                        c.updateEmployeeInDatabase1(connection, personName, role, personID, username, enabled, nowPassword,id);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(EmployeeComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     populateTable();
+                    
+
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
                 }
@@ -389,6 +407,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                     //
                     vs.setEnabled(false);
                     populateTable();
+                    employeeDirectory.updateEmployee(vs);
                     JOptionPane.showMessageDialog(this, "Disabled!");
                     return;
                 }

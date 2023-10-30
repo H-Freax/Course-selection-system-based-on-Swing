@@ -114,7 +114,20 @@ public class Semester {
             semesterEnd = LocalDateTime.of(year, 12, 31, 23, 59);
         }
     }
-
+    
+    
+    public void updateInDatabase(Connection connection) throws SQLException {
+        String query = "UPDATE Semester SET semstername = ?, semesterstart = ?, semesterend = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, semesterName);
+            statement.setTimestamp(2, Timestamp.valueOf(semesterStart));
+            statement.setTimestamp(3, Timestamp.valueOf(semesterEnd));
+            statement.setString(4, id);
+            statement.executeUpdate();
+    }
+}
+    
+    
     public void saveToDatabase(Connection connection) throws SQLException {
         String query = "INSERT INTO Semester (id, semstername, semesterstart, semesterend) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {

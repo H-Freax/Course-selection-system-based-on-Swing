@@ -22,7 +22,7 @@ public class Employee extends Person {
     }
     public Employee(String personName, String personID, String username, String nowPassword, boolean enabled, String role) {
         super(personName, personID, role);
-        this.nowPassword = Tools.PasswordUtils.hashPassword(nowPassword);
+        this.nowPassword =nowPassword;
         this.username = username;
         this.enabled = enabled;
         this.pwdHash = Tools.PasswordUtils.hashPassword(nowPassword);
@@ -104,6 +104,34 @@ public class Employee extends Person {
         savePasswordHistoryToDatabase(connection,getPersonID(),pwdHash); // 保存密码历史
     }
 
+    
+    public void updateEmployeeInDatabase1(Connection connection,String personName,String role,String personID,String username,Boolean enabled,String nowPassword,String id) throws SQLException {
+        super.updateInDatabase(connection); // 更新基本人员信息
+        String updatePersonQuery = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
+            statement.setString(1, personName);
+            statement.setString(2, role);
+            statement.setString(3, id);
+            statement.executeUpdate();
+        }
+        String updateEmployeeQuery = "UPDATE Employee SET id=?, username = ?, nowpassword = ?, enabled = ?, lastactive = ?, lastupdate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateEmployeeQuery)) {
+            statement.setString(1, personID);
+            statement.setString(2, username);
+            statement.setString(3, nowPassword);
+            statement.setString(4, enabled ? "1" : "0");
+            statement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now())); // 设置当前时间为最后活动时间
+            statement.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now())); // 设置当前时间为最后更新时间
+            statement.setString(7, id);
+            statement.executeUpdate();
+        }
+
+        savePasswordHistoryToDatabase(connection,getPersonID(),pwdHash); // 保存最新密码历史
+    }
+    
+    
+    
+    
     public void updateEmployeeInDatabase(Connection connection) throws SQLException {
         super.updateInDatabase(connection); // 更新基本人员信息
 
@@ -120,6 +148,7 @@ public class Employee extends Person {
 
         savePasswordHistoryToDatabase(connection,getPersonID(),pwdHash); // 保存最新密码历史
     }
+    
 
     public static Employee loadFromDatabase(Connection connection, String personID) throws SQLException {
         Person person = Person.loadFromDatabase(connection, personID);

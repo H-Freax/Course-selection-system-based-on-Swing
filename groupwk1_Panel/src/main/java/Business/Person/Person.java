@@ -55,6 +55,21 @@ public class Person {
         }
     }
 
+    public void updateInDatabase1(Connection connection,String personID,String personName,String role,String id) throws SQLException {
+        // 更新数据库中的 Person 对象信息
+        String updatePersonQuery = "UPDATE Person SET PersonID = ?,PersonName = ?, role = ? WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
+            statement.setString(1, personID);
+            statement.setString(2, personName);
+            statement.setString(3, role);
+            statement.setString(4, id);
+            statement.executeUpdate();
+        }
+    }
+    
+    
+    
+    
     public void updateInDatabase(Connection connection) throws SQLException {
         // 更新数据库中的 Person 对象信息
         String updatePersonQuery = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";

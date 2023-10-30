@@ -1,4 +1,5 @@
 package Business.Rate;
+import Business.Person.Professor;
 import Tools.MySQLConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +10,6 @@ import java.util.List;
 
 public class Rate {
     private String rateId;
-
-
-
     private String professorId;
     private String studentId;
     private String courseId;
@@ -22,6 +20,9 @@ public class Rate {
     private String comment;
     private String score;
 
+    public Rate(){
+
+    }
     public Rate(String rateId,String professorId, String studentId, String courseId, String scorePart1, String scorePart2,
                 String scorePart3, String scorePart4, String comment, String score) throws SQLException {
         this.rateId = rateId;
@@ -112,8 +113,8 @@ public class Rate {
     public void setScore(String score) {
         this.score = score;
     }
-    
-    
+
+
 
     public void setRateId(String rateId) {
         this.rateId = rateId;
@@ -186,7 +187,73 @@ public class Rate {
         return rates;
     }
 
+    public void updateInDatabase(Connection connection) throws SQLException {
+        // 更新数据库中的 Person 对象信息
+        String updatePersonQuery = "UPDATE Rate SET Professor_id = ?, Studuent_id = ?, Course_id = ?, scorepart1 = ?,scorepart2 = ?, scorepart3 = ?,scorepart4 = ?,comment = ?,score=? WHERE rate_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
+            statement.setString(1, professorId);
+            statement.setString(2, studentId);
+            statement.setString(3, courseId);
+            statement.setString(4, scorePart1);
+            statement.setString(5, scorePart2);
+            statement.setString(6, scorePart3);
+            statement.setString(7, scorePart4);
+            statement.setString(8, comment);
+            statement.setString(9, score);
+            statement.setString(10, rateId);
+            statement.executeUpdate();
+        }
+    }
 
+    public void updateProfessorRating(String professorId, Connection conn) throws SQLException {
+        // Fetch all ratings for this professor
+        String query = "SELECT score FROM Rate WHERE professor_id = ?";
+        List<Integer> scores = new ArrayList<>();
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, professorId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                scores.add(resultSet.getInt("score"));
+            }
+        }
+
+        // Compute the average rating
+        double averageScore = scores.stream().mapToInt(Integer::intValue).average().orElse(0.0);
+
+        // Load the professor object, update the rate and save back to database
+        Professor professor = Professor.loadFromDatabase(conn, professorId);
+        professor.setRate(averageScore);
+        professor.updateProfessorInDatabase(conn);
+    }
+
+
+    public void deleteRateFromDatabase(Connection connection) throws SQLException {
+    String query = "DELETE FROM Rate WHERE professor_id = ? AND studuent_id = ? AND course_id = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, professorId);
+        statement.setString(2, studentId);
+        statement.setString(3, courseId);
+        statement.executeUpdate();
+    }
+}
+
+
+
+
+    public static boolean doesRateExist(Connection connection, String professorId, String studentId, String courseId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM Rate WHERE professor_id = ? AND studuent_id = ? AND course_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, professorId);
+            statement.setString(2, studentId);
+            statement.setString(3, courseId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        }
+        return false;
+    }
 
 
     public static Rate loadFromDatabase(Connection connection, String professorId, String studentId, String courseId) throws SQLException {
@@ -209,4 +276,26 @@ public class Rate {
         }
         return null;
     }
+    public static AverageScore calculateAverageScoreForProfessor(Connection connection, String professorId, String courseId) throws SQLException {
+        String query = "SELECT AVG(scorepart1) as avgScorePart1, AVG(scorepart2) as avgScorePart2, AVG(scorepart3) as avgScorePart3, AVG(scorepart4) as avgScorePart4, AVG(score) as avgScore " +
+                "FROM Rate WHERE professor_id = ? AND course_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, professorId);
+            statement.setString(2, courseId);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                double avgScorePart1 = resultSet.getDouble("avgScorePart1");
+                double avgScorePart2 = resultSet.getDouble("avgScorePart2");
+                double avgScorePart3 = resultSet.getDouble("avgScorePart3");
+                double avgScorePart4 = resultSet.getDouble("avgScorePart4");
+                double avgScore = resultSet.getDouble("avgScore");
+
+                return new AverageScore(avgScorePart1, avgScorePart2, avgScorePart3, avgScorePart4, avgScore);
+            }
+        }
+        return null;
+    }
+
 }

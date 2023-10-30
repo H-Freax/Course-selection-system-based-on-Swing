@@ -26,6 +26,7 @@ public class CourseVO {
     private String location;
     private int studentLimit;
     private int studentCount;
+    private String weekday;
     private LocalDateTime beginTime;
 
     private LocalDateTime endTime;
@@ -37,9 +38,33 @@ public class CourseVO {
 
     public CourseVO() {
     }
-
     public CourseVO(String id, String name, String introduction, int point, String semesterId, String status,
-                    String professor, String location, int studentLimit, int studentCount, LocalDateTime beginTime, LocalDateTime endTime,
+                    String professor, String location, int studentLimit, int studentCount, String weekday,LocalDateTime beginTime, LocalDateTime endTime,
+                    String region, String language, String topics, String semester) {
+        this.id = id;
+        this.name = name;
+        this.introduction = introduction;
+        this.point = point;
+        this.semesterId = semesterId;
+        this.semester = semester;
+        this.status = status;
+        this.professor = professor;
+        this.location = location;
+        this.studentLimit = studentLimit;
+        this.studentCount = studentCount;
+        this.weekday = weekday;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.topics = new ArrayList<>();
+        this.enrolledStudents = new ArrayList<>();
+        this.region = region;
+        this.language = language;
+        if(topics != null){
+            this.topics = Arrays.asList(topics.split(","));
+        }
+    }
+    public CourseVO(String id, String name, String introduction, int point, String semesterId, String status,
+                    String professor, String location, int studentLimit, int studentCount,String weekday, LocalDateTime beginTime, LocalDateTime endTime,
                     Double score, String region, String language, String topics, String semester) {
         this.id = id;
         this.name = name;
@@ -52,6 +77,7 @@ public class CourseVO {
         this.location = location;
         this.studentLimit = studentLimit;
         this.studentCount = studentCount;
+        this.weekday = weekday;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.topics = new ArrayList<>();
@@ -176,6 +202,14 @@ public class CourseVO {
         this.studentCount = studentCount;
     }
 
+    public String getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(String weekday) {
+        this.weekday = weekday;
+    }
+
     public LocalDateTime getBeginTime() {
         return beginTime;
     }
@@ -297,6 +331,9 @@ public class CourseVO {
             return null;
         }
     }
+
+
+
     public static CourseVO resultSetToCourseVO(ResultSet resultSet) throws SQLException {
         double a;
         try{
@@ -315,6 +352,7 @@ public class CourseVO {
                 resultSet.getString("location"),
                 resultSet.getInt("studentlimited"),
                 resultSet.getInt("studentcount"),
+                resultSet.getString("weekday"),
                 resultSet.getTimestamp("begintime").toLocalDateTime(),
                 resultSet.getTimestamp("endtime").toLocalDateTime(),
                 a,
@@ -324,6 +362,31 @@ public class CourseVO {
                 resultSet.getString("semstername")
         );
     }
+    public static CourseVO resultSetToProfessorCourseVO(ResultSet resultSet) throws SQLException {
+
+        return new CourseVO(
+                resultSet.getString("id"),
+                resultSet.getString("name"),
+                resultSet.getString("introduction"),
+                resultSet.getInt("point"),
+                null,
+                resultSet.getString("statue"),
+                resultSet.getString("professor"),
+                resultSet.getString("location"),
+                resultSet.getInt("studentlimited"),
+                resultSet.getInt("studentcount"),
+                resultSet.getString("weekday"),
+                resultSet.getTimestamp("begintime").toLocalDateTime(),
+                resultSet.getTimestamp("endtime").toLocalDateTime(),
+                resultSet.getString("region"),
+                resultSet.getString("language"),
+                resultSet.getString("topics"),
+                resultSet.getString("semstername")
+        );
+    }
+
+
+
     public void addTopic(Connection connection, String topic) throws SQLException {
         String query = "INSERT INTO CourseTopic (course_id, topic) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {

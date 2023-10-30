@@ -3,6 +3,7 @@ package ui.UserInterface.WorkAreas.AdminRole.AdminComboBoxArea;
 import Business.Directory.ProfessorDirectory;
 import Business.Person.Professor;
 import Tools.MySQLConnectionUtil;
+import Tools.PasswordUtils;
 import com.mysql.cj.util.StringUtils;
 
 import java.sql.Connection;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -27,10 +30,10 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
      */
     private ArrayList<Professor>professorlist;
     private ProfessorDirectory professorDirectory;
-
+    private Connection connection;
     public FacultyComboBoxAreaJPanel() throws SQLException {
         initComponents();
-        Connection connection = MySQLConnectionUtil.getConnection();
+        connection = MySQLConnectionUtil.getConnection();
         professorDirectory = new ProfessorDirectory();
         professorDirectory.loadAllProfessorsFromDatabase(connection);
         professorlist=(ArrayList<Professor>)professorDirectory.getProfessors();
@@ -131,7 +134,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Delete");
+        jButton3.setText("Disable");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -384,7 +387,12 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         if(id!=""&&name!=""&&isEnabled!=""&&region!=""&pwd!=""&&language!=""&&rate!=""&&user!=""&&topic!=""){
             boolean isRight=false;
             Set<String> stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
-            Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(","))); 
+            Set<String> stringSet1 = new HashSet<>(Arrays.asList(his.split(",")));
+            Set<String> stringSet2 = new HashSet<>();
+            for(String s : stringSet1){
+                s=PasswordUtils.hashPassword(s);
+                stringSet2.add(s);
+            }
             if("true".equals(isEnabled)){
                 isRight=true;
             }else if("false".equals(isEnabled)){
@@ -398,7 +406,15 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             p.setLanguage(language);
             p.setRegion(region);
             p.setTopics(stringSet);
-            p.setPasswordHistory(stringSet1);
+            p.setPasswordHistory(stringSet2);
+            try {
+                
+                p.saveToDatabase(connection);
+            } catch (SQLException ex) {
+                Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            
             populateTable();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -447,6 +463,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     if(vs.getPersonID().equals(selectedID)){
                     //
                     vs.setEnabled(false);
+                        try {
+                            vs.updateProfessorInDatabase(connection);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Disabled!");
                     return;
@@ -462,7 +483,7 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         String id = txtid.getText();
 
-
+        Set<String> stringSet2 = new HashSet<>();
         String name = txtname.getText();
         String isEnabled = txtisEnabled.getText();
         String region = txtRegion.getText();
@@ -480,6 +501,11 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
             isRight=false;
             stringSet = new HashSet<>(Arrays.asList(topic.split(",")));
             stringSet1=new HashSet<>(Arrays.asList(his.split(",")));
+
+            for(String s : stringSet1){
+                s=PasswordUtils.hashPassword(s);
+                stringSet2.add(s);
+            }
             if("true".equals(isEnabled)){
                 isRight=true;
             }else if("false".equals(isEnabled)){
@@ -511,7 +537,14 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setPersonID(id);
                     c.setRate(Double.parseDouble(rate));
                     c.setTopics(stringSet);
-                    c.setPasswordHistory(stringSet1);
+                    c.setPasswordHistory(stringSet2);
+
+                    try {
+                        c.updateProfessorInDatabase1( connection, name, "professor", id, language, user, Double.parseDouble(rate), region, isRight, pwd, id);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;

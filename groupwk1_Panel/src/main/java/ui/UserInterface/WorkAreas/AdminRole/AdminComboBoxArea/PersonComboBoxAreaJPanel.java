@@ -7,6 +7,8 @@ import Tools.MySQLConnectionUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -233,6 +235,7 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                 txtname.setText(e.getPersonName());
                 txtid.setText(e.getPersonID());
                 txtRole.setText(e.getRole());
+                return;
             }
             JOptionPane.showMessageDialog(this, "Not Existed!");
         }
@@ -272,6 +275,12 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         Person e = new Person( personName,  personID,  role);
         personlist.add(e);
+        try {
+            e.saveToDatabase(connection);
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -305,6 +314,11 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                     d.setPersonID(personID);
                     d.setPersonName(personName);
                     d.setRole(role);
+                try {
+                    d.updateInDatabase1(connection,personID,personName,role,id);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PersonComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
@@ -331,6 +345,11 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
                 if(vs.getPersonID().equals(selectedID)){
                     //
                     personlist.remove(vs);
+                    try {
+                        vs.deleteFromDatabase(connection,vs.getPersonID());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PersonComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Deleted!");
                     return;

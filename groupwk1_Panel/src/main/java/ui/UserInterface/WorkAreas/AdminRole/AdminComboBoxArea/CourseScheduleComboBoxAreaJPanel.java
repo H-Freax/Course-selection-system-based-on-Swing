@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -75,8 +77,6 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         txtweek = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtE = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
-        txtSearch = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -113,15 +113,6 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
 
         jLabel4.setText("End Time");
 
-        btnSearch.setText("Search");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
-            }
-        });
-
-        txtSearch.setText("Search ID");
-
         jButton1.setText("View");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,27 +145,21 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(122, 122, 122))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(148, 148, 148)
-                                .addComponent(btnSearch)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4))
-                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1)
+                    .addGap(18, 18, 18)
+                    .addComponent(jButton2)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton3)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton4)
+                    .addContainerGap())
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(126, Short.MAX_VALUE)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(122, 122, 122)))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -213,8 +198,6 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSearch)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
@@ -252,25 +235,6 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidActionPerformed
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-        String search=txtSearch.getText();
-        if("".equals(search)){
-            JOptionPane.showMessageDialog(this, "Please enter!");
-        }else{
-            for(CourseInfo c : courseInfoList){
-                if(c.getCourseId().equals(search)){
-                    txtid.setText(c.getCourseId());
-                    txtweek.setText(c.getWeekday());
-                    txtS.setText(c.getStarttime());
-                    txtE.setText(c.getEndtime());
-                    return;
-                }
-            }
-            JOptionPane.showMessageDialog(this, "Not Existed!");
-        }
-    }//GEN-LAST:event_btnSearchActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = cSchtbl.getSelectedRow();
@@ -280,8 +244,9 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) cSchtbl.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                String weekday = (String) model.getValueAt(selectedRowIndex, 1);
                 for(CourseInfo c : courseInfoList){
-                    if(c.getCourseId().equals(selectedID)){
+                    if(c.getCourseId().equals(selectedID)&&c.getWeekday().equals(weekday)){
                     txtid.setText(c.getCourseId());
                     txtweek.setText(c.getWeekday());
                     txtS.setText(c.getStarttime());
@@ -297,23 +262,28 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String id=txtid.getText();
-        for(CourseInfo e : courseInfoList){
-                if(e.getCourseId().equals(id)){
-                    JOptionPane.showMessageDialog(this, "ID Already Existed");
-                    return;
-                    }
-                }
         String cId=txtid.getText();
         String week=txtweek.getText(); 
         String start=txtS.getText();
         String end=txtE.getText();
 
-        if(cId==""||week==""||start==""||end==""){
+        if("".equals(cId)||"".equals(week)||"".equals(start)||"".equals(end)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
        CourseInfo c = new CourseInfo(cId, week, start, end);
+        for(CourseInfo e : courseInfoList){
+                if(e.getCourseId().equals(c.getCourseId())&&e.getEndtime().equals(c.getEndtime())&&e.getStarttime().equals(c.getStarttime())&&e.getWeekday().equals(c.getWeekday())){
+                    JOptionPane.showMessageDialog(this, "Already Existed");
+                    return;
+                    }
+                }
        courseInfoList.add(c);
+        try {
+            courseSch.insertCourseInfoIntoDatabase(c);
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -339,22 +309,32 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
                 DefaultTableModel model = (DefaultTableModel) cSchtbl.getModel();
                 String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+                String weekday = (String) model.getValueAt(selectedRowIndex, 1);
                 CourseInfo c = null;
+                CourseInfo f = new CourseInfo(cId, week, start, end);
                 for(CourseInfo e : courseInfoList){
-                    if(e.getCourseId().equals(selectedID)){
-                        c = e;
+                if(e.getCourseId().equals(f.getCourseId())&&e.getEndtime().equals(f.getEndtime())&&e.getStarttime().equals(f.getStarttime())&&e.getWeekday().equals(f.getWeekday())){
+                    JOptionPane.showMessageDialog(this, "Already Existed");
+                    return;
                     }
-                    if(e.getCourseId().equals(cId)&&!selectedID.equals(cId)){
-                        JOptionPane.showMessageDialog(this, "ID Already Existed");
-                        return;
+                }
+                for(CourseInfo e : courseInfoList){
+                    if(e.getCourseId().equals(selectedID)&&e.getWeekday().equals(weekday)){
+                        c = e;
                     }
                 }
                 if(c!=null){
+                    try {
+                        courseSch.updateCourseInfoInDatabase(c, f);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CourseScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     c.setCourseId(cId);
                     c.setWeekday(week);
                     c.setStarttime(start);
                     c.setEndtime(end);
                     populateTable();
+
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
                 }
@@ -372,10 +352,16 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         }else{
             DefaultTableModel model = (DefaultTableModel) cSchtbl.getModel();
             String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
+            String weekday = (String) model.getValueAt(selectedRowIndex, 1);
             for(CourseInfo e : courseInfoList){
-                if(e.getCourseId().equals(selectedID)){
-                    //
+                
+                if(e.getCourseId().equals(selectedID)&&e.getWeekday().equals(weekday)){
                     courseInfoList.remove(e);
+                    try {
+                        courseSch.deleteCourseInfoFromDatabase(e);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CourseScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Deleted!");
                     return;
@@ -387,7 +373,6 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSearch;
     private javax.swing.JTable cSchtbl;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -403,7 +388,6 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTextField txtE;
     private javax.swing.JTextField txtS;
-    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtweek;
     // End of variables declaration//GEN-END:variables

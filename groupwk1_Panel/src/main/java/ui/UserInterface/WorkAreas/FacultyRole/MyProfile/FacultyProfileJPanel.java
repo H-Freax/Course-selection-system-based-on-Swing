@@ -4,31 +4,67 @@
  */
 package ui.UserInterface.WorkAreas.FacultyRole.MyProfile;
 
+import Business.Course.Course;
+import Business.Course.CourseDirectory;
+import Business.Course.CourseVO;
 import Business.Person.Professor;
+import Business.Rate.AverageScore;
+import Business.Rate.Rate;
+import Tools.MySQLConnectionUtil;
+import Tools.PasswordUtils;
 
-import java.awt.CardLayout;
-import javax.swing.JPanel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author zhangjinming
  */
-public class FacultyProfileJPanel extends javax.swing.JPanel {
+public class FacultyProfileJPanel extends JPanel {
 
     /**
      * Creates new form ProfessorProfileJPanel
      */
     private JPanel ViewContainer;
+    private CourseDirectory courseDirectory=new CourseDirectory();
+
     private Professor professor;
 
+    List<CourseVO> courseList;
+    CourseVO courseVO;
+
+    Connection conn = MySQLConnectionUtil.getConnection();
     public FacultyProfileJPanel() {
         initComponents();
     }
 
-    public FacultyProfileJPanel(JPanel ViewContainer, Professor professor) {
+    public FacultyProfileJPanel(JPanel ViewContainer, Professor professor) throws SQLException {
+        Rate rate = new Rate();
+        rate.updateProfessorRating(professor.getPersonID(),conn);
         initComponents();
         this.ViewContainer = ViewContainer;
         this.professor = professor;
+
+        initProfessorInfo(professor);
+    }
+
+
+    private void initProfessorInfo(Professor professor) throws SQLException {
+        txtProfessorId.setText(professor.getPersonID());
+        txtProfessorName.setText(professor.getPersonName());
+        txtProfessorUsername.setText(professor.getUsername());
+        txtProfessorLanguage.setText(professor.getLanguage());
+        txtProfessorRating.setText(professor.getRate() + "");
+//        txtProfessorPassword.setText(professor.getNowPassword());
+        txtProfessorRegion.setText(professor.getRegion());
+        populateTable();
     }
 
     /**
@@ -53,16 +89,20 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         txtProfessorLanguage = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtProfessorPassword = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txtStudentUsername = new javax.swing.JTextField();
+        txtProfessorUsername = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtProfessorRegion = new javax.swing.JTextField();
+        txtProfessorPassword = new javax.swing.JPasswordField();
 
         jLabel3.setText("Professor ID:");
 
+        txtProfessorId.setEditable(false);
+
         jLabel4.setText("Professor Name:");
+
+        txtProfessorName.setEditable(false);
 
         jLabel5.setText("Courses");
 
@@ -74,18 +114,32 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "Course Name", "Course Region", "Course Rating"
+                "Course Name", "Course Time", "Course Rating"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblProfile);
 
         jLabel6.setText("Professor Rate:");
+
+        txtProfessorRating.setEditable(false);
 
         btnSave.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                try {
+                    btnSaveActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -111,10 +165,6 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
                         .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)
@@ -125,13 +175,9 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
                                     .addComponent(txtProfessorName, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtProfessorId, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(54, 54, 54)
-                                .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(txtProfessorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtProfessorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -139,8 +185,16 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
                                 .addGap(49, 49, 49)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtProfessorRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtProfessorRating, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(131, 131, 131))
+                                    .addComponent(txtProfessorRating, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(txtProfessorUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(34, 34, 34))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnSave)
                         .addGap(115, 115, 115))))
@@ -170,7 +224,7 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtProfessorRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -181,20 +235,115 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(txtStudentUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProfessorUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtProfessorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(181, 181, 181)
+                .addGap(178, 178, 178)
                 .addComponent(btnSave)
                 .addGap(90, 90, 90))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        // Extract values from JTextField components
+        String username = txtProfessorUsername.getText();
+        String password = Arrays.toString(txtProfessorPassword.getPassword());
+        String language = txtProfessorLanguage.getText();
+        String region = txtProfessorRegion.getText();
+
+        // Check if any of the fields are empty after trimming
+        if (username.trim().isEmpty() || password.trim().isEmpty() || language.trim().isEmpty() || region.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are mandatory. Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!username.equals(professor.getUsername()) && !isUsernameUnique(username)) {
+            JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different one.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Check password validity
+        if (!isValidPassword(password)) {
+            JOptionPane.showMessageDialog(this, "Invalid password. Please ensure it meets the criteria.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Update the professor object with new values
+        professor.setUsername(username);
+        professor.setLanguage(language);
+        professor.setRegion(region);
+
+        professor.updateProfessorInDatabase2(MySQLConnectionUtil.getConnection());
+        initProfessorInfo(professor);
+        JOptionPane.showMessageDialog(this, "Succuss!");
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private boolean isValidPassword(String password) throws SQLException {
+
+        System.out.println("isValidPassword(String password)"+password);
+        System.out.println("PasswordUtils.hashPassword(password)"+PasswordUtils.hashPassword(password));
+
+        if(PasswordUtils.isPasswordInHistory(conn,professor.getPersonID(),PasswordUtils.hashPassword(password))){
+            JOptionPane.showMessageDialog(this,"Please don't use history password!");
+            return false;
+        }else{
+            if(PasswordUtils.updatePassword(conn,professor.getUsername(),password,"Professor")){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+    }
+
+
+    private boolean isUsernameUnique(String username) {
+        boolean isUnique = true;
+
+        // Query the database to check for the existence of the username
+        try {
+            String query = "SELECT COUNT(*) FROM Professor WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                isUnique = false;
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return isUnique;
+    }
+    private void populateTable() throws SQLException {
+
+        DefaultTableModel model = (DefaultTableModel) tblProfile.getModel(); //Have the access to the table;
+        model.setRowCount(0); //初始化？？
+        List<CourseVO> courseList = courseDirectory.loadCourseListFromDatabase(null, professor.getPersonID());
+
+        for(CourseVO course : courseList){
+            Object[] row = new Object[3];
+            row[0] = course.getName();
+            DateTimeFormatter startformatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+            String scheduletime =  course.getWeekday()+" "+course.getBeginTime().format(startformatter)+"-"+course.getEndTime().format(startformatter);
+
+            row[1] = scheduletime;
+
+            AverageScore averageScore = Rate.calculateAverageScoreForProfessor(conn,professor.getPersonID(),course.getId());
+            row[2] = averageScore.getAvgScore();
+
+            //设置3R对应
+            model.addRow(row);
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -213,9 +362,9 @@ public class FacultyProfileJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtProfessorId;
     private javax.swing.JTextField txtProfessorLanguage;
     private javax.swing.JTextField txtProfessorName;
-    private javax.swing.JTextField txtProfessorPassword;
+    private javax.swing.JPasswordField txtProfessorPassword;
     private javax.swing.JTextField txtProfessorRating;
     private javax.swing.JTextField txtProfessorRegion;
-    private javax.swing.JTextField txtStudentUsername;
+    private javax.swing.JTextField txtProfessorUsername;
     // End of variables declaration//GEN-END:variables
 }
