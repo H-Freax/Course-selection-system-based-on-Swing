@@ -7,22 +7,13 @@ package ui.UserInterface.WorkAreas.AdminRole.Management;
 import Business.Directory.ProfessorDirectory;
 import Business.Person.Professor;
 import Tools.MySQLConnectionUtil;
-import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import ui.UserInterface.WorkAreas.FacultyRole.ManageCourses.FacultyManageCoursesJPanel;
-import ui.UserInterface.WorkAreas.FacultyRole.ManageStudents.FacultyManageStudentsJPanel;
-import ui.UserInterface.WorkAreas.FacultyRole.MyProfile.FacultyProfileJPanel;
-import ui.UserInterface.WorkAreas.FacultyRole.Ranking.FacultyRankingJPanel;
-import ui.UserInterface.WorkAreas.FacultyRole.Schedule.FacultyScheduleJPanel;
 
 /**
  *
@@ -38,7 +29,6 @@ public class FacultyManagementJPanel extends javax.swing.JPanel {
     private ProfessorDirectory professorDirectory;
     private Connection connection;
     private JPanel ViewContainer;
-    private Professor professor;
     public FacultyManagementJPanel(JPanel ViewContainer) throws SQLException {
         initComponents();
         connection = MySQLConnectionUtil.getConnection();
@@ -46,7 +36,6 @@ public class FacultyManagementJPanel extends javax.swing.JPanel {
         professorDirectory = new ProfessorDirectory();
         professorDirectory.loadAllProfessorsFromDatabase(connection);
         professorlist=(ArrayList<Professor>)professorDirectory.getProfessors();
-        professor=null;
         populateTable();
     }
 
@@ -80,11 +69,6 @@ public class FacultyManagementJPanel extends javax.swing.JPanel {
         lblTitle = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProfessor = new javax.swing.JTable();
-        btnRanking = new javax.swing.JButton();
-        btnSchedule = new javax.swing.JButton();
-        btnManageCourses = new javax.swing.JButton();
-        btnManageStudents = new javax.swing.JButton();
-        btnMyProfile = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -103,71 +87,6 @@ public class FacultyManagementJPanel extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(tblProfessor);
 
-        btnRanking.setBackground(new java.awt.Color(102, 153, 255));
-        btnRanking.setForeground(new java.awt.Color(255, 255, 255));
-        btnRanking.setText("Ranking");
-        btnRanking.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnRanking.setMaximumSize(new java.awt.Dimension(200, 40));
-        btnRanking.setMinimumSize(new java.awt.Dimension(20, 20));
-        btnRanking.setPreferredSize(new java.awt.Dimension(240, 25));
-        btnRanking.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRankingActionPerformed(evt);
-            }
-        });
-
-        btnSchedule.setBackground(new java.awt.Color(102, 153, 255));
-        btnSchedule.setForeground(new java.awt.Color(255, 255, 255));
-        btnSchedule.setText("Schedule");
-        btnSchedule.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnSchedule.setMaximumSize(new java.awt.Dimension(145, 40));
-        btnSchedule.setMinimumSize(new java.awt.Dimension(20, 20));
-        btnSchedule.setPreferredSize(new java.awt.Dimension(240, 25));
-        btnSchedule.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnScheduleIdentifyEventsActionPerformed(evt);
-            }
-        });
-
-        btnManageCourses.setBackground(new java.awt.Color(102, 153, 255));
-        btnManageCourses.setForeground(new java.awt.Color(255, 255, 255));
-        btnManageCourses.setText(" Manage Courses");
-        btnManageCourses.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnManageCourses.setMaximumSize(new java.awt.Dimension(200, 40));
-        btnManageCourses.setMinimumSize(new java.awt.Dimension(20, 23));
-        btnManageCourses.setPreferredSize(new java.awt.Dimension(240, 30));
-        btnManageCourses.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageCoursesIdentifyResourceAssetsActionPerformed(evt);
-            }
-        });
-
-        btnManageStudents.setBackground(new java.awt.Color(102, 153, 255));
-        btnManageStudents.setForeground(new java.awt.Color(255, 255, 255));
-        btnManageStudents.setText("Manage Student");
-        btnManageStudents.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnManageStudents.setMaximumSize(new java.awt.Dimension(200, 40));
-        btnManageStudents.setMinimumSize(new java.awt.Dimension(20, 20));
-        btnManageStudents.setPreferredSize(new java.awt.Dimension(240, 25));
-        btnManageStudents.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageStudentsActionPerformed(evt);
-            }
-        });
-
-        btnMyProfile.setBackground(new java.awt.Color(102, 153, 255));
-        btnMyProfile.setForeground(new java.awt.Color(255, 255, 255));
-        btnMyProfile.setText("My Profile");
-        btnMyProfile.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnMyProfile.setMaximumSize(new java.awt.Dimension(145, 40));
-        btnMyProfile.setMinimumSize(new java.awt.Dimension(20, 20));
-        btnMyProfile.setPreferredSize(new java.awt.Dimension(240, 25));
-        btnMyProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMyProfileIdentifyEventsActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,17 +98,7 @@ public class FacultyManagementJPanel extends javax.swing.JPanel {
                         .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(56, 56, 56)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnManageStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(105, 105, 105)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnManageCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnMyProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(303, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -199,129 +108,12 @@ public class FacultyManagementJPanel extends javax.swing.JPanel {
                 .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnManageCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnManageStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMyProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addComponent(btnRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
-        professor = null;
-        int selectedRowIndex = tblProfessor.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to View.");
-            return;
-        }else{
-                DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
-                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                professor = professorDirectory.getProfessorById(selectedID);              
-        }
-        FacultyRankingJPanel prPanel = null;
-        try {
-            prPanel = new FacultyRankingJPanel(ViewContainer,professor);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacultyManagementJPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ViewContainer.add("FacultyRankingJPanel", prPanel);
-        CardLayout layout = (CardLayout)ViewContainer.getLayout();
-        layout.next(ViewContainer);
-
-    }//GEN-LAST:event_btnRankingActionPerformed
-
-    private void btnScheduleIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleIdentifyEventsActionPerformed
-        // TODO add your handling code here:
-        professor = null;
-        int selectedRowIndex = tblProfessor.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to View.");
-            return;
-        }else{
-                DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
-                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                professor = professorDirectory.getProfessorById(selectedID);              
-        }
-        FacultyScheduleJPanel fsPanel = null;
-        try {
-            fsPanel = new FacultyScheduleJPanel(ViewContainer,professor);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacultyManagementJPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ViewContainer.add("FacultyScheduleJPanel",fsPanel);
-        CardLayout layout = (CardLayout)ViewContainer.getLayout();
-        layout.next(ViewContainer);
-    }//GEN-LAST:event_btnScheduleIdentifyEventsActionPerformed
-
-    private void btnManageCoursesIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageCoursesIdentifyResourceAssetsActionPerformed
-        professor = null;
-        int selectedRowIndex = tblProfessor.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to View.");
-            return;
-        }else{
-                DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
-                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                professor = professorDirectory.getProfessorById(selectedID);              
-        }
-        FacultyManageCoursesJPanel fmcPanel = new FacultyManageCoursesJPanel(ViewContainer,professor);
-        ViewContainer.add("FacultyManageCoursesJPanel",fmcPanel);
-        CardLayout layout = (CardLayout)ViewContainer.getLayout();
-        layout.next(ViewContainer);
-    }//GEN-LAST:event_btnManageCoursesIdentifyResourceAssetsActionPerformed
-
-    private void btnManageStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStudentsActionPerformed
-        professor = null;
-        int selectedRowIndex = tblProfessor.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to View.");
-            return;
-        }else{
-                DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
-                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                professor = professorDirectory.getProfessorById(selectedID);              
-        }
-        FacultyManageStudentsJPanel fmsPanel = new FacultyManageStudentsJPanel(ViewContainer,professor);
-        ViewContainer.add("FacultyManageStudentsJPanel", fmsPanel);
-        CardLayout layout = (CardLayout)ViewContainer.getLayout();
-        layout.next(ViewContainer);
-    }//GEN-LAST:event_btnManageStudentsActionPerformed
-
-    private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
-        professor = null;
-        int selectedRowIndex = tblProfessor.getSelectedRow();
-        if(selectedRowIndex<0){
-            JOptionPane.showMessageDialog(this, "Please select a row to View.");
-            return;
-        }else{
-                DefaultTableModel model = (DefaultTableModel) tblProfessor.getModel();
-                String selectedID = (String) model.getValueAt(selectedRowIndex, 0);
-                professor = professorDirectory.getProfessorById(selectedID);              
-        }
-        FacultyProfileJPanel ppPanel = null;
-        try {
-            ppPanel = new FacultyProfileJPanel(ViewContainer,professor);
-        } catch (SQLException ex) {
-            Logger.getLogger(FacultyManagementJPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ViewContainer.add("FacultyProfileJPanel", ppPanel);
-        CardLayout layout = (CardLayout)ViewContainer.getLayout();
-        layout.next(ViewContainer);
-    }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnManageCourses;
-    private javax.swing.JButton btnManageStudents;
-    private javax.swing.JButton btnMyProfile;
-    private javax.swing.JButton btnRanking;
-    private javax.swing.JButton btnSchedule;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblProfessor;
