@@ -538,11 +538,13 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setRate(Double.parseDouble(rate));
                     c.setTopics(stringSet);
                     c.setPasswordHistory(stringSet2);
+
                     try {
-                        c.updateProfessorInDatabase(connection);
+                        c.updateProfessorInDatabase1( connection, name, "professor", id, language, user, Double.parseDouble(rate), region, isRight, pwd, id);
                     } catch (SQLException ex) {
                         Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;

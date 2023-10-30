@@ -138,6 +138,41 @@ public class Professor extends Person {
         savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
     }
 
+    
+    
+    
+    public void updateProfessorInDatabase1(Connection connection,String personName,String role,String personID,String language,String username,Double rate,String region,Boolean enabled,String nowPassword,String id) throws SQLException {
+        String updatePersonQuery = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
+            statement.setString(1, personName);
+            statement.setString(2, role);
+            statement.setString(3, id);
+            statement.executeUpdate();
+        }
+        String updateProfessorQuery = "UPDATE Professor SET id = ?,username = ?, nowpassword = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateProfessorQuery)) {
+            statement.setString(1, personID);
+            statement.setString(2, username);
+            statement.setString(3, nowPassword);
+            statement.setString(4, language);
+            int i = (enabled.equals("true"))?1:0;
+            statement.setDouble(5, i);
+            statement.setDouble(6, rate);
+            statement.setString(7, region);
+            statement.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setString(10, id);
+            statement.executeUpdate();
+        }
+
+        // 保存教授的研究领域信息
+        saveProfessorTopicsToDatabase(connection, getPersonID(), topics);
+
+        // 保存密码历史
+        savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
+    }
+    
+    
     public void updateProfessorInDatabase(Connection connection) throws SQLException {
         super.updateInDatabase(connection);
         String updateProfessorQuery = "UPDATE Professor SET username = ?, nowpassword = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";

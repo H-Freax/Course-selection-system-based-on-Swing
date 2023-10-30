@@ -377,7 +377,7 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setPersonID(personID);
                     c.setRole(role);
                     try {
-                        c.updateEmployeeInDatabase(connection);
+                        c.updateEmployeeInDatabase1(connection, personName, role, personID, username, enabled, nowPassword,id);
                     } catch (SQLException ex) {
                         Logger.getLogger(EmployeeComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
