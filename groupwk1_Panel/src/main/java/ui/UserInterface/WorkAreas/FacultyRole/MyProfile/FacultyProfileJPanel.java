@@ -241,7 +241,7 @@ public class FacultyProfileJPanel extends JPanel {
             Object[] row = new Object[3];
             row[0] = course.getName();
             row[1] = course.getRegion();
-//            row[2] = stu.isMyStu();
+//            row[2] = course.getScore();
             //设置3R对应
             model.addRow(row);
         }
