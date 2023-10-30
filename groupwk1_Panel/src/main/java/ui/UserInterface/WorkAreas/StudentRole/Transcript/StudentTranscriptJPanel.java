@@ -2,6 +2,7 @@ package ui.UserInterface.WorkAreas.StudentRole.Transcript;
 
 import Business.Course.Course;
 import Business.Course.CourseDirectory;
+import Business.Course.CourseVO;
 import Business.Person.Student;
 import Business.Semester.Semester;
 import Tools.MySQLConnectionUtil;
@@ -10,6 +11,7 @@ import java.awt.CardLayout;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -34,13 +36,26 @@ public class StudentTranscriptJPanel extends javax.swing.JPanel {
 
     public StudentTranscriptJPanel(JPanel ViewContainer, Student student) throws SQLException {
         initComponents();
-        this.ViewContainer = ViewContainer;
 
         this.ViewContainer = ViewContainer;
         this.student = student;
         initStudentProfile(student);
         populateTable();
-        txtStudentGpa.setText(String.valueOf(student.getGpa()));
+        List<Semester> semesters = Semester.getAllSemestersFromDatabase(conn);
+        List<String> semesternames=new ArrayList<>();
+        for(Semester s : semesters){
+            semesternames.add(s.getSemesterName());
+        }
+        CourseVO courseVO = new CourseVO();
+        double gpa = courseVO.calculateGPA(student.getPersonID(),semesternames);
+        if(Double.compare(gpa, student.getGpa()) == 0){
+            txtStudentGpa.setText(String.valueOf(student.getGpa()));
+        }else{
+            txtStudentGpa.setText(String.valueOf(gpa));
+            student.setGpa(gpa);
+            student.updateStudentInDatabase(conn);
+        }
+
     }
 
     private void initStudentProfile(Student student) {

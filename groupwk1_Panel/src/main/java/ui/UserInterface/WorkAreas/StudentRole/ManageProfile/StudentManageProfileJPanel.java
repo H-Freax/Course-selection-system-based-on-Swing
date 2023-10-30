@@ -7,6 +7,7 @@ package ui.UserInterface.WorkAreas.StudentRole.ManageProfile;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
@@ -14,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Business.Course.Course;
 import Business.Course.CourseDirectory;
+import Business.Course.CourseVO;
 import Business.Directory.StudentDirectory;
 import Business.Person.Employee;
 import Business.Person.Professor;
@@ -48,7 +50,21 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
 
     }
 
-    public void initStudentProfile(Student student){
+    public void initStudentProfile(Student student) throws SQLException {
+        List<Semester> semesters = Semester.getAllSemestersFromDatabase(conn);
+        List<String> semesternames=new ArrayList<>();
+        for(Semester s : semesters){
+            semesternames.add(s.getSemesterName());
+        }
+        CourseVO courseVO = new CourseVO();
+        double gpa = courseVO.calculateGPA(student.getPersonID(),semesternames);
+        if(Double.compare(gpa, student.getGpa()) == 0){
+            txtStudentGpa.setText(String.valueOf(student.getGpa()));
+        }else{
+            txtStudentGpa.setText(String.valueOf(gpa));
+            student.setGpa(gpa);
+            student.updateStudentInDatabase(conn);
+        }
         txtStudentGpa.setText(String.valueOf(student.getGpa()));
         txtStudentId.setText(String.valueOf(student.getPersonID()));
         txtStudentUsername.setText(String.valueOf(student.getUsername()));
