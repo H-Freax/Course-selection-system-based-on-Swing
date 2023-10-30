@@ -57,12 +57,12 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
             semesternames.add(s.getSemesterName());
         }
         CourseVO courseVO = new CourseVO();
-        double gpa = courseVO.calculateGPA(student.getPersonID(),semesternames);
-        if(Double.compare(gpa, student.getGpa()) == 0){
+        String gpa = courseVO.calculateGPA(student.getPersonID(),semesternames);
+        if(gpa.equals(String.valueOf(student.getGpa()))){
             txtStudentGpa.setText(String.valueOf(student.getGpa()));
         }else{
             txtStudentGpa.setText(String.valueOf(gpa));
-            student.setGpa(gpa);
+            student.setGpa(Double.parseDouble(gpa));
             student.updateStudentInDatabase(conn);
         }
         txtStudentGpa.setText(String.valueOf(student.getGpa()));
