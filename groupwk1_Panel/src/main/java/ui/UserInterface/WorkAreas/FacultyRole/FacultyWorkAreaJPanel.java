@@ -5,6 +5,7 @@
 package ui.UserInterface.WorkAreas.FacultyRole;
 
 import java.awt.CardLayout;
+import java.sql.SQLException;
 import javax.swing.JPanel;
 
 import Business.Person.Professor;
@@ -64,7 +65,11 @@ public class FacultyWorkAreaJPanel extends JPanel {
         btnSchedule.setPreferredSize(new java.awt.Dimension(240, 25));
         btnSchedule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnScheduleIdentifyEventsActionPerformed(evt);
+                try {
+                    btnScheduleIdentifyEventsActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -168,7 +173,7 @@ public class FacultyWorkAreaJPanel extends JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnScheduleIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleIdentifyEventsActionPerformed
+    private void btnScheduleIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnScheduleIdentifyEventsActionPerformed
         // TODO add your handling code here:
         FacultyScheduleJPanel fsPanel = new FacultyScheduleJPanel(ViewContainer,professor);
         ViewContainer.add("FacultyScheduleJPanel",fsPanel);
