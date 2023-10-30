@@ -120,6 +120,7 @@ public class Employee extends Person {
 
         savePasswordHistoryToDatabase(connection,getPersonID(),pwdHash); // 保存最新密码历史
     }
+    
 
     public static Employee loadFromDatabase(Connection connection, String personID) throws SQLException {
         Person person = Person.loadFromDatabase(connection, personID);

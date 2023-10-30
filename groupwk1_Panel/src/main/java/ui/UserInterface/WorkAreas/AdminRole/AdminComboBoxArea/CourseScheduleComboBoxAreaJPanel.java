@@ -267,7 +267,7 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         String start=txtS.getText();
         String end=txtE.getText();
 
-        if(cId==""||week==""||start==""||end==""){
+        if("".equals(cId)||"".equals(week)||"".equals(start)||"".equals(end)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
@@ -280,7 +280,7 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
                 }
        courseInfoList.add(c);
         try {
-            courseSch.saveCourseScheduleInDatabase(c);
+            courseSch.insertCourseInfoIntoDatabase(c);
         } catch (SQLException ex) {
             Logger.getLogger(CourseScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -324,11 +324,17 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
                     }
                 }
                 if(c!=null){
+                    try {
+                        courseSch.updateCourseInfoInDatabase(c, f);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CourseScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     c.setCourseId(cId);
                     c.setWeekday(week);
                     c.setStarttime(start);
                     c.setEndtime(end);
                     populateTable();
+
                     JOptionPane.showMessageDialog(this, "Updated!");
                     return;
                 }
@@ -351,6 +357,11 @@ public class CourseScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
                 
                 if(e.getCourseId().equals(selectedID)&&e.getWeekday().equals(weekday)){
                     courseInfoList.remove(e);
+                    try {
+                        courseSch.deleteCourseInfoFromDatabase(e);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CourseScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Deleted!");
                     return;

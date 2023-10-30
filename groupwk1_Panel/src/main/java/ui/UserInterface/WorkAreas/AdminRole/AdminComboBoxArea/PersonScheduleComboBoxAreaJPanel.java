@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -313,7 +315,11 @@ public class PersonScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         PersonSchedule.PersonInfo c = new PersonSchedule.PersonInfo(cId, week, start, end,pId);
         personInfoList.add(c);
-        
+        try {
+            personSchedule.savePersonInfoToDatabase(c);
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -358,6 +364,12 @@ public class PersonScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
                         return;
                     }
                 }
+                PersonSchedule.PersonInfo f = new PersonSchedule.PersonInfo(cId,sem,start,end,pId);
+                try {
+                    personSchedule.updatePersonInfoInDatabase(f, c);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PersonScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 c.setCourseId(cId);
                 c.setSemeId(sem);
                 c.setStarttime(start);
@@ -385,6 +397,11 @@ public class PersonScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
                 if(e.getCourseId().equals(selectedID)){
                     //
                     personInfoList.remove(e);
+                    try {
+                        personSchedule.deletePersonInfoFromDatabase(e);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PersonScheduleComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     populateTable();
                     JOptionPane.showMessageDialog(this, "Deleted!");
                     return;

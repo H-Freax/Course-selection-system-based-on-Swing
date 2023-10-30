@@ -539,7 +539,6 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
                     c.setTopics(stringSet);
                     c.setPasswordHistory(stringSet2);
                     try {
-                        
                         c.updateProfessorInDatabase(connection);
                     } catch (SQLException ex) {
                         Logger.getLogger(FacultyComboBoxAreaJPanel.class.getName()).log(Level.SEVERE, null, ex);

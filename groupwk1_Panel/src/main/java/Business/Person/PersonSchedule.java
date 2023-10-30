@@ -102,7 +102,7 @@ public class PersonSchedule {
     }
 
     // 保存PersonInfo对象到数据库
-    private void savePersonInfoToDatabase(PersonInfo personInfo) throws SQLException {
+    public void savePersonInfoToDatabase(PersonInfo personInfo) throws SQLException {
         String query = "INSERT INTO PersonSchedule (course_id, semesterid, starttime, endtime, personid) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, personInfo.getCourseId());
@@ -141,5 +141,34 @@ public class PersonSchedule {
         }
     }
     
+    public void deletePersonInfoFromDatabase(PersonInfo oldPerson) throws SQLException {
+    String query = "DELETE FROM PersonSchedule WHERE course_id = ? AND semesterid = ? AND starttime = ? AND endtime = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, oldPerson.getCourseId());
+        statement.setString(2, oldPerson.getSemeId());
+        statement.setString(3, oldPerson.getStarttime());
+        statement.setString(4, oldPerson.getEndtime());
+        statement.executeUpdate();
+        
+    }
+}
+
     
+    
+    public void updatePersonInfoInDatabase(PersonInfo newPerson, PersonInfo oldPerson) throws SQLException {
+    String query = "UPDATE PersonSchedule SET course_id = ?, semesterid = ?, starttime = ?, endtime = ? , personid=? WHERE course_id = ? AND semesterid = ? AND starttime = ? AND endtime = ? AND personid=?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, newPerson.getCourseId());
+        statement.setString(2, newPerson.getSemeId());
+        statement.setString(3, newPerson.getStarttime());
+        statement.setString(4, newPerson.getEndtime());
+        statement.setString(5, oldPerson.getCourseId());
+        statement.setString(6, oldPerson.getSemeId());
+        statement.setString(7, oldPerson.getStarttime());
+        statement.setString(8, oldPerson.getEndtime());
+        statement.executeUpdate();
+        
+    }
+}
+
 }

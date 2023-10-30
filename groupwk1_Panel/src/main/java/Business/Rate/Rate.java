@@ -188,7 +188,7 @@ public class Rate {
     
     public void updateInDatabase(Connection connection) throws SQLException {
         // 更新数据库中的 Person 对象信息
-        String updatePersonQuery = "UPDATE Rate SET Professor_id = ?, Studuent_id = ?, Course_id = ?, scorepart1 = ?,scorepart2 = ?, scorepart3 = ?,scorepart4 = ?,role = ? WHERE rate_id = ?";
+        String updatePersonQuery = "UPDATE Rate SET Professor_id = ?, Studuent_id = ?, Course_id = ?, scorepart1 = ?,scorepart2 = ?, scorepart3 = ?,scorepart4 = ?,comment = ?,score=? WHERE rate_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
             statement.setString(1, professorId);
             statement.setString(2, studentId);
@@ -199,6 +199,7 @@ public class Rate {
             statement.setString(7, scorePart4);
             statement.setString(8, comment);
             statement.setString(9, score);
+            statement.setString(10, rateId);
             statement.executeUpdate();
         }
     }

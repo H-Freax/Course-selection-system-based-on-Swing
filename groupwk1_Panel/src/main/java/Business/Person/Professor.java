@@ -140,7 +140,6 @@ public class Professor extends Person {
 
     public void updateProfessorInDatabase(Connection connection) throws SQLException {
         super.updateInDatabase(connection);
-
         String updateProfessorQuery = "UPDATE Professor SET username = ?, nowpassword = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(updateProfessorQuery)) {
             statement.setString(1, username);
