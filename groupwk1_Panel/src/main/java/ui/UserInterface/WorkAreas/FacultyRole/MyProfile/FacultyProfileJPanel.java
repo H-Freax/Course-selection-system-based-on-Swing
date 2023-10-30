@@ -13,10 +13,8 @@ import Business.Rate.Rate;
 import Tools.MySQLConnectionUtil;
 import Tools.PasswordUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -279,6 +277,7 @@ public class FacultyProfileJPanel extends JPanel {
         professor.updateProfessorInDatabase2(MySQLConnectionUtil.getConnection());
         initProfessorInfo(professor);
         JOptionPane.showMessageDialog(this, "Succuss!");
+        professor.updateProfessorupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),conn);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private boolean isValidPassword(String password) throws SQLException {

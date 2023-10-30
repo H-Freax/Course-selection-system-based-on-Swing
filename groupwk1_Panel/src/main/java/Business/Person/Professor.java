@@ -20,6 +20,25 @@ public class Professor extends Person {
     private String region;
     private Set<String> topics;
     private Set<String> passwordHistory;
+
+    private String lastactive;
+    private String lastupdate;
+
+    public String getLastactive() {
+        return lastactive;
+    }
+
+    public void setLastactive(String lastactive) {
+        this.lastactive = lastactive;
+    }
+
+    public String getLastupdate() {
+        return lastupdate;
+    }
+
+    public void setLastupdate(String lastupdate) {
+        this.lastupdate = lastupdate;
+    }
     public Professor(){
 
     }
@@ -138,9 +157,9 @@ public class Professor extends Person {
         savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
     }
 
-    
-    
-    
+
+
+
     public void updateProfessorInDatabase1(Connection connection,String personName,String role,String personID,String language,String username,Double rate,String region,Boolean enabled,String nowPassword,String id) throws SQLException {
         String updatePersonQuery = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";
         try (PreparedStatement statement = connection.prepareStatement(updatePersonQuery)) {
@@ -171,8 +190,8 @@ public class Professor extends Person {
         // 保存密码历史
         savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
     }
-    
-    
+
+
     public void updateProfessorInDatabase(Connection connection) throws SQLException {
         super.updateInDatabase(connection);
         String updateProfessorQuery = "UPDATE Professor SET username = ?, nowpassword = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";
@@ -195,7 +214,28 @@ public class Professor extends Person {
         // 保存密码历史
         savePasswordHistoryToDatabase(connection, getPersonID(), pwdHash);
     }
+    public void updateProfessoractiveInDatabase(Timestamp lastactive,Connection connection) throws SQLException {
+        super.updateInDatabase(connection);
 
+        String updateStudentQuery = "UPDATE Professor SET lastactive = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateStudentQuery)) {
+
+            statement.setTimestamp(1, lastactive);
+            statement.setString(2, getPersonID());
+            statement.executeUpdate();
+        }
+    }
+    public void updateProfessorupdateInDatabase(Timestamp lastupdate,Connection connection) throws SQLException {
+        super.updateInDatabase(connection);
+
+        String updateStudentQuery = "UPDATE Professor SET lastupdate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateStudentQuery)) {
+
+            statement.setTimestamp(1, lastupdate);
+            statement.setString(2, getPersonID());
+            statement.executeUpdate();
+        }
+    }
     public void updateProfessorInDatabase2(Connection connection) {
 
         String updateProfessorQuery = "UPDATE Professor SET username = ?, language = ?, enabled = ?, rate = ?, region = ?, lastactive = ?, lastupdate = ? WHERE id = ?";

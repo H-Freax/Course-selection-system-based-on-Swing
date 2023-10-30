@@ -11,6 +11,7 @@ import Tools.MySQLConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     private Professor professor;
     private String thisterm;
     List<CourseStudent.StudentData> coursestudentlist;
+
+    public DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     List<Student> studentList;
     private CourseDirectory courseDirectory ;
@@ -66,13 +69,16 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             e.printStackTrace();
             System.out.println("数据库异常！！");
         }
-//        Semester sem=null;
+        Semester sem=null;
         for(Semester s: semesters){
-//            if(s.getSemesterName().equals(thisterm)){
-//                sem = s;
-//            }
+            if(s.getSemesterName().equals(thisterm)){
+                sem = s;
+                semstertime.setText("Semester Time: "+s.getSemesterStart().format(formatter) +"~" +s.getSemesterEnd().format(formatter));
+            }
             selectSemComboBox.addItem(s.getSemesterName());
         }
+
+
 
 //        getEnrolledCourses("",thisterm);
 ////        getHistoryCourses(null);
@@ -106,10 +112,20 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                             txtCurrentCourseLocation.setText(courseVO.getLocation());
                             currentCourseIntroductionTextArea.setText(courseVO.getIntroduction());
                             txtCurrentStudentLimited.setText(courseVO.getStudentLimit() + "");
-                            txtCurrentStudentCount.setText(courseVO.getStudentCount() + "");
+                            try {
+                                if((courseVO.getStudentCount()+"").equals(selectedCourse.calculateStudentCount(connection)+"")){
+                                    txtCurrentStudentCount.setText(courseVO.getStudentCount() + "");
+                                }else{
+                                    courseVO.setStudentCount(selectedCourse.calculateStudentCount(connection));
+                                    courseVO.updateInDatabase(connection);
+                                }
+
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
                             txtCurrentCoursePoint.setText(courseVO.getPoint() + "");
-                            txtCurrentCourseStartTime.setText(courseVO.getBeginTime().format(formatter));
-                            txtCurrentCourseEndTime.setText(courseVO.getEndTime().format(formatter));
+                            txtCurrentCourseTime.setText(courseVO.getBeginTime().format(formatter)+"-"+courseVO.getEndTime().format(formatter));
+                            txtCourseWeekday.setText(courseVO.getWeekday());
                             txtProfessor1.setText(courseVO.getProfessor());
                             try {
                                 averageScore = Rate.calculateAverageScoreForProfessor(conn,professor.getPersonID(),courseVO.getId());
@@ -183,9 +199,9 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         txtCurrentCourseLocation = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        txtCurrentCourseStartTime = new javax.swing.JTextField();
+        txtCurrentCourseTime = new javax.swing.JTextField();
         lblCourseEndTime2 = new javax.swing.JLabel();
-        txtCurrentCourseEndTime = new javax.swing.JTextField();
+        txtCourseWeekday = new javax.swing.JTextField();
         lblStudentLimited2 = new javax.swing.JLabel();
         txtCurrentStudentLimited = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
@@ -203,6 +219,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         tblStudent1 = new javax.swing.JTable();
         txtProfessor1 = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
+        semstertime = new javax.swing.JLabel();
         createCoursePanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtCreateCourseId = new javax.swing.JTextField();
@@ -217,9 +234,9 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         jLabel24 = new javax.swing.JLabel();
         txtCreateCourseLocation = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
-        txtCreateCourseStartTime = new javax.swing.JTextField();
+        txtCreateTime = new javax.swing.JTextField();
         lblCourseEndTime1 = new javax.swing.JLabel();
-        txtCreateCourseEndTime = new javax.swing.JTextField();
+        txtCreateWeekday = new javax.swing.JTextField();
         lblStudentLimited1 = new javax.swing.JLabel();
         txtCreateStudentLimited = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
@@ -289,15 +306,20 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
         jLabel33.setText("Course Location:");
 
-        jLabel34.setText("Course Begintime:");
+        jLabel34.setText("Course Time:");
 
-        lblCourseEndTime2.setText("Course Endtime:");
+        lblCourseEndTime2.setText("Course Weekday:");
 
         lblStudentLimited2.setText("Student Limited:");
 
         jLabel35.setText("Student Count:");
 
         btnSaveCurrentCourse.setText("Save");
+        btnSaveCurrentCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveCurrentCourseActionPerformed(evt);
+            }
+        });
 
         jLabel36.setText("Course Introduction:");
 
@@ -342,103 +364,106 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(tblStudent1);
 
+        txtProfessor1.setEditable(false);
+
         jLabel39.setText("Professor:");
+
+        semstertime.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(31, 31, 31)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(selectSemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(13, 13, 13)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(txtProfessor1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                    .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel36)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addGap(18, 18, 18)
-                                                            .addComponent(txtCurrentCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                                .addComponent(jLabel30)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(txtCurrentCourseName))
-                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                                .addComponent(jLabel29)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(txtCurrentCourseTopic, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                    .addComponent(jLabel31)
-                                                                    .addComponent(jLabel32))
-                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                        .addGap(18, 18, 18)
-                                                                        .addComponent(txtCurrentSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                        .addGap(17, 17, 17)
-                                                                        .addComponent(txtCurrentCoursePoint, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                            .addGap(28, 28, 28)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtProfessor1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel36)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(txtCurrentCourseId, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                            .addComponent(jLabel30)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                            .addComponent(txtCurrentCourseName))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                            .addComponent(jLabel29)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                            .addComponent(txtCurrentCourseTopic, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(lblCourseEndTime2)
-                                                                .addComponent(lblStudentLimited2)
-                                                                .addComponent(jLabel35)
-                                                                .addComponent(jLabel33))
-                                                            .addGap(27, 27, 27))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                            .addComponent(jLabel34)
-                                                            .addGap(18, 18, 18)))
-                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(txtCurrentCourseLocation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                                .addGap(2, 2, 2)
-                                                                .addComponent(txtCurrentCourseEndTime))
-                                                            .addComponent(txtCurrentCourseStartTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                                .addGap(3, 3, 3)
-                                                                .addComponent(txtCurrentStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                                .addGap(2, 2, 2)
-                                                                .addComponent(txtCurrentStudentLimited, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btnSaveCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(146, 146, 146)
-                            .addComponent(txtSearchCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(46, 46, 46)
-                            .addComponent(btnSearchCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                .addComponent(jLabel31)
+                                                                .addComponent(jLabel32))
+                                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                    .addGap(18, 18, 18)
+                                                                    .addComponent(txtCurrentSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                    .addGap(17, 17, 17)
+                                                                    .addComponent(txtCurrentCoursePoint, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                .addGap(28, 28, 28)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblCourseEndTime2)
+                                                    .addComponent(lblStudentLimited2)
+                                                    .addComponent(jLabel35)
+                                                    .addComponent(jLabel33)
+                                                    .addComponent(jLabel34))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                            .addGap(29, 29, 29)
+                                                            .addComponent(txtCourseWeekday))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                            .addGap(30, 30, 30)
+                                                            .addComponent(txtCurrentStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                            .addGap(29, 29, 29)
+                                                            .addComponent(txtCurrentStudentLimited, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                        .addGap(27, 27, 27)
+                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(txtCurrentCourseLocation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(txtCurrentCourseTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addGap(93, 93, 93)
+                                                .addComponent(txtSearchCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnSearchCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnSaveCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(selectSemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(semstertime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39))
         );
         jPanel1Layout.setVerticalGroup(
@@ -447,13 +472,14 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                 .addGap(3, 3, 3)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(selectSemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(semstertime))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSearchCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearchCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSearchCurrentCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchCurrentCourse, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -463,7 +489,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel29)
-                            .addComponent(txtCurrentCourseTopic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCurrentCourseTopic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel34))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel30)
@@ -481,12 +508,10 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                             .addComponent(txtCurrentCourseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel33))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCurrentCourseStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel34))
+                        .addComponent(txtCurrentCourseTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCurrentCourseEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCourseWeekday, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCourseEndTime2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -538,9 +563,9 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
         jLabel24.setText("Course Location:");
 
-        jLabel25.setText("Course Begintime:");
+        jLabel25.setText("Course Time:");
 
-        lblCourseEndTime1.setText("Course Endtime:");
+        lblCourseEndTime1.setText("Course Weekday:");
 
         lblStudentLimited1.setText("Student Limited:");
 
@@ -602,8 +627,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                     .addGroup(createCoursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, createCoursePanelLayout.createSequentialGroup()
                             .addGap(2, 2, 2)
-                            .addComponent(txtCreateCourseEndTime))
-                        .addComponent(txtCreateCourseStartTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCreateWeekday))
+                        .addComponent(txtCreateTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, createCoursePanelLayout.createSequentialGroup()
                             .addGap(3, 3, 3)
                             .addComponent(txtCreateStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -662,11 +687,11 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(createCoursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel25)
-                            .addComponent(txtCreateCourseStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCreateTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(createCoursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCourseEndTime1)
-                            .addComponent(txtCreateCourseEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCreateWeekday, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(createCoursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStudentLimited1)
@@ -734,8 +759,36 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             addCourse.setName(txtCreateCourseName.getText());
             addCourse.setLocation(txtCreateCourseLocation.getText());
             addCourse.setId(txtCreateCourseId.getText());
-//            addCourse.setBeginTime(LocalDateTime.parse(txtCreateCourseStartTime.getText()));
-//            addCourse.setEndTime(LocalDateTime.parse(txtCreateCourseEndTime.getText()));
+            addCourse.setWeekday(txtCreateWeekday.getText());
+            String[] timeParts = txtCreateTime.getText().split("-"); // 以破折号分割时间范围
+
+            String startTime = timeParts[0]; // 提取开始时间
+            String endTime = timeParts[1]; // 提取结束时间
+
+            String semText = semstertime.getText();
+
+
+            String dateRange = semText.replace("Semester Time: ", "");
+
+
+            String[] dateParts = dateRange.split("~");
+
+
+            String startDateStr = dateParts[0].trim().split(" ")[0];  // 拆分并获取日期部分
+            String endDateStr = dateParts[1].trim().split(" ")[0];    // 拆分并获取日期部分
+
+
+            String startcombinedDateTime = startDateStr + "T" + startTime;
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            LocalDateTime startlocalDateTime = LocalDateTime.parse(startcombinedDateTime, formatter);
+
+            String endcombinedDateTime = endDateStr + "T" + endTime;
+
+            LocalDateTime endlocalDateTime = LocalDateTime.parse(endcombinedDateTime, formatter);
+
+            addCourse.setBeginTime(startlocalDateTime);
+            addCourse.setEndTime(endlocalDateTime);
             addCourse.setPoint(Integer.parseInt(txtCreateCoursePoint.getText()));
             addCourse.setStudentLimit(Integer.parseInt(txtCreateStudentLimited.getText()));
             addCourse.setStudentCount(Integer.parseInt(txtCreateStudentCount.getText()));
@@ -746,6 +799,12 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
             CourseTopic courseTopic = new CourseTopic();
             courseTopic.addTopicToCourse(txtCreateCourseTopic.getText(), addCourse);
+
+            CourseSchedule courseSchedule= new CourseSchedule(connection);
+            courseSchedule.loadCourseInfoFromDatabase();
+            CourseSchedule.CourseInfo courseInfo1 = new CourseSchedule.CourseInfo(txtCreateCourseId.getText(),txtCreateWeekday.getText(),startlocalDateTime.toString(),endlocalDateTime.toString());
+            courseSchedule.insertCourseInfoIntoDatabase(courseInfo1);
+
 
             courseDirectory.addCourseProfessor(connection, addCourse.getId(), professor.getPersonID());
 
@@ -758,6 +817,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             createCourseIntroductionTextArea.setText("");
             txtCreateCourseTopic.setText("");
             txtCreateStudentCount.setText("");
+            professor.updateProfessorupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),conn);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -781,6 +841,39 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             updateCourse.setId(txtCurrentCourseId.getText());
 //            addCourse.setBeginTime(LocalDateTime.parse(txtCreateCourseStartTime.getText()));
 //            addCourse.setEndTime(LocalDateTime.parse(txtCreateCourseEndTime.getText()));
+//            updateCourse.setWeekday(txtCourseWeekday.getText());
+            String[] timeParts = txtCurrentCourseTime.getText().split("-"); // 以破折号分割时间范围
+
+            String startTime = timeParts[0]; // 提取开始时间
+            String endTime = timeParts[1]; // 提取结束时间
+
+            String semText = semstertime.getText();
+
+
+            String dateRange = semText.replace("Semester Time: ", "");
+
+
+            String[] dateParts = dateRange.split("~");
+
+
+            String startDateStr = dateParts[0].trim().split(" ")[0];  // 拆分并获取日期部分
+            String endDateStr = dateParts[1].trim().split(" ")[0];    // 拆分并获取日期部分
+
+            System.out.println("startDateStr:::"+startDateStr);
+
+            String startcombinedDateTime = startDateStr + "T" + startTime;
+
+            System.out.println("startcombinedDateTime:::"+startcombinedDateTime);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            LocalDateTime startlocalDateTime = LocalDateTime.parse(startcombinedDateTime, formatter);
+
+            String endcombinedDateTime = endDateStr + "T" + endTime;
+
+            LocalDateTime endlocalDateTime = LocalDateTime.parse(endcombinedDateTime, formatter);
+
+            updateCourse.setBeginTime(startlocalDateTime);
+            updateCourse.setEndTime(endlocalDateTime);
             updateCourse.setPoint(Integer.parseInt(txtCurrentCoursePoint.getText()));
             updateCourse.setStudentLimit(Integer.parseInt(txtCurrentStudentLimited.getText()));
             updateCourse.setStudentCount(Integer.parseInt(txtCurrentStudentCount.getText()));
@@ -793,6 +886,11 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             CourseTopic courseTopic = new CourseTopic();
 
             courseTopic.updateTopicToCourse(txtCurrentCourseTopic.getText(), updateCourse);
+            CourseSchedule courseSchedule= new CourseSchedule(connection);
+            courseSchedule.loadCourseInfoFromDatabase();
+            CourseSchedule.CourseInfo courseInfo = courseSchedule.getCourseInfoByid(txtCurrentCourseId.getText());
+            CourseSchedule.CourseInfo courseInfo1 = new CourseSchedule.CourseInfo(txtCurrentCourseId.getText(),txtCourseWeekday.getText(),startlocalDateTime.toString(),endlocalDateTime.toString());
+            courseSchedule.updateCourseInfoInDatabase(courseInfo1,courseInfo);
 
 //            courseDirectory.addCourseProfessor(connection, updateCourse.getId(), professor.getPersonID());
 
@@ -805,6 +903,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 //            createCourseIntroductionTextArea.setText("");
 //            txtCreateCourseTopic.setText("");
 //            txtCreateStudentCount.setText("");
+            professor.updateProfessorupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),conn);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -838,8 +937,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         txtCurrentStudentLimited.setText("");
         txtCurrentStudentCount.setText("");
         txtCurrentCoursePoint.setText("");
-        txtCurrentCourseStartTime.setText("");
-        txtCurrentCourseEndTime.setText("");
+        txtCurrentCourseTime.setText("");
+        txtCourseWeekday.setText("");
         populateStudentTable(false,null,null);
 //        txtCurrentProfessorLanguage.setText("");
     }//GEN-LAST:event_selectSemComboBoxItemStateChanged
@@ -870,8 +969,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         txtCurrentStudentLimited.setText("");
         txtCurrentStudentCount.setText("");
         txtCurrentCoursePoint.setText("");
-        txtCurrentCourseStartTime.setText("");
-        txtCurrentCourseEndTime.setText("");
+        txtCurrentCourseTime.setText("");
+        txtCourseWeekday.setText("");
         populateStudentTable(false,null,null);        // TODO add your handling code here:
     }//GEN-LAST:event_btnSearchCurrentCourseMouseClicked
 
@@ -958,25 +1057,26 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JTabbedPane manageCourseDetailTabbedPane;
     private javax.swing.JPanel manageCoursePanel;
     private javax.swing.JComboBox<String> selectSemComboBox;
+    private javax.swing.JLabel semstertime;
     private javax.swing.JTable tblCurrentCourses;
     private javax.swing.JTable tblStudent1;
-    private javax.swing.JTextField txtCreateCourseEndTime;
+    private javax.swing.JTextField txtCourseWeekday;
     private javax.swing.JTextField txtCreateCourseId;
     private javax.swing.JTextField txtCreateCourseLocation;
     private javax.swing.JTextField txtCreateCourseName;
     private javax.swing.JTextField txtCreateCoursePoint;
-    private javax.swing.JTextField txtCreateCourseStartTime;
     private javax.swing.JTextField txtCreateCourseTopic;
     private javax.swing.JTextField txtCreateProfessor;
     private javax.swing.JTextField txtCreateSemester;
     private javax.swing.JTextField txtCreateStudentCount;
     private javax.swing.JTextField txtCreateStudentLimited;
-    private javax.swing.JTextField txtCurrentCourseEndTime;
+    private javax.swing.JTextField txtCreateTime;
+    private javax.swing.JTextField txtCreateWeekday;
     private javax.swing.JTextField txtCurrentCourseId;
     private javax.swing.JTextField txtCurrentCourseLocation;
     private javax.swing.JTextField txtCurrentCourseName;
     private javax.swing.JTextField txtCurrentCoursePoint;
-    private javax.swing.JTextField txtCurrentCourseStartTime;
+    private javax.swing.JTextField txtCurrentCourseTime;
     private javax.swing.JTextField txtCurrentCourseTopic;
     private javax.swing.JTextField txtCurrentSemester;
     private javax.swing.JTextField txtCurrentStudentCount;

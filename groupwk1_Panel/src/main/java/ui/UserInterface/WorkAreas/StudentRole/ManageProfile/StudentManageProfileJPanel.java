@@ -7,6 +7,8 @@ package ui.UserInterface.WorkAreas.StudentRole.ManageProfile;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -278,7 +280,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this,"Please use a new username! This username is exist!");
         }
 
-
+        student.updateStudentupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),conn);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -303,6 +305,7 @@ public class StudentManageProfileJPanel extends javax.swing.JPanel {
             }
 
         }
+        student.updateStudentupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),conn);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnChangepwdActionPerformed
 

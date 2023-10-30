@@ -227,8 +227,8 @@ public class Course {
 
 
     public void saveToDatabase(Connection connection) throws SQLException {
-        String query = "INSERT INTO Course (id, name, introduction, point, semesterid, statue, location, studentlimited, studentcount) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Course (id, name, introduction, point, semesterid, statue, location, studentlimited, studentcount, begintime, endtime) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, id);
             statement.setString(2, name);
@@ -239,8 +239,8 @@ public class Course {
             statement.setString(7, location);
             statement.setInt(8, studentLimit);
             statement.setInt(9, studentCount);
-//            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
-//            statement.setTimestamp(12, Timestamp.valueOf(endTime));
+            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
+            statement.setTimestamp(12, Timestamp.valueOf(endTime));
             statement.executeUpdate();
         }
     }
@@ -408,9 +408,9 @@ public class Course {
 //    EndTime暂定
     public void updateCourseToDatabase(Connection connection) throws SQLException {
         String query = "UPDATE Course SET name = ?, introduction = ?, point = ?, semesterid = ?, statue = ?, " +
-                "location = ?, studentlimited = ?, studentcount = ? WHERE id = ?";
+                "location = ?, studentlimited = ?, studentcount = ?,begintime = ?, endtime = ?  WHERE id = ?";
 //        String query = "UPDATE Course SET name = ?, introduction = ?, point = ?, semesterid = ?, statue = ?, " +
-//                "location = ?, studentlimited = ?, studentcount = ?, begintime = ?, endtime = ? WHERE id = ?";
+//                "location = ?, studentlimited = ?, studentcount = ?, weekday = ?,begintime = ?, endtime = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, name);
@@ -421,9 +421,9 @@ public class Course {
             statement.setString(6, location);
             statement.setInt(7, studentLimit);
             statement.setInt(8, studentCount);
-//            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
-//            statement.setTimestamp(12, Timestamp.valueOf(endTime));
-            statement.setString(9, id);
+            statement.setTimestamp(9, Timestamp.valueOf(beginTime));
+            statement.setTimestamp(10, Timestamp.valueOf(endTime));
+            statement.setString(11, id);
             statement.executeUpdate();
         }
     }
