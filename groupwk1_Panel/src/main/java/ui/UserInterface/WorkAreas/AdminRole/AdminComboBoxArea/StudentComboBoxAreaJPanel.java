@@ -64,8 +64,6 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         
         DefaultTableModel model = (DefaultTableModel)stuTable.getModel();
         model.setRowCount(0);
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        stuTable.setRowSorter(sorter);
         for(Student vs : studentList){
             System.out.print(vs.getUsername());
                 Object[] row = new Object[4];

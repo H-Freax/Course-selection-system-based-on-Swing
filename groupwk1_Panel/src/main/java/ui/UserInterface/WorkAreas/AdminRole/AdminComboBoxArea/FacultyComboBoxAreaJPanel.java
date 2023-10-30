@@ -43,8 +43,6 @@ public class FacultyComboBoxAreaJPanel extends javax.swing.JPanel {
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)tblProfessor.getModel();
         model.setRowCount(0);
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        tblProfessor.setRowSorter(sorter);
         for(Professor vs : professorlist){
             
                 Object[] row = new Object[5];

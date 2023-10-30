@@ -39,8 +39,6 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)personTbl.getModel();
         model.setRowCount(0);
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        personTbl.setRowSorter(sorter);
         for(Person vs : personlist){
                 Object[] row = new Object[3];
                 row[0] = vs.getPersonID();

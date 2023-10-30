@@ -40,8 +40,6 @@ public class EmployeeComboBoxAreaJPanel extends javax.swing.JPanel {
     private void populateTable(){
         DefaultTableModel model = (DefaultTableModel)EmployeeTable.getModel();
         model.setRowCount(0);
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        EmployeeTable.setRowSorter(sorter);
         for(Employee vs : employeeList){
                 Object[] row = new Object[4];
                 row[0] = vs.getPersonID();
