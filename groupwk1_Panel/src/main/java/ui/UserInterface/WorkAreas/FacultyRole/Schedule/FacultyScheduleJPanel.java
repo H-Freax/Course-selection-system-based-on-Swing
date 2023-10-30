@@ -55,7 +55,7 @@ public class FacultyScheduleJPanel extends JPanel {
         for(Semester s: semesters){
             if(s.getSemesterName().equals(thisterm)){
                 sem=s;
-                labelSemesterTime.setText("Semester Time: "+s.getSemesterStart().format(formatter) +"-" +s.getSemesterEnd().format(formatter));
+                labelSemesterTime.setText("Semester Time: "+s.getSemesterStart().format(formatter) +"~" +s.getSemesterEnd().format(formatter));
             }
             cbSemester.addItem(s.getSemesterName());
         }

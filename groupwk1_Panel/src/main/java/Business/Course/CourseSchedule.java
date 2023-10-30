@@ -39,11 +39,21 @@ public class CourseSchedule {
          CourseInfo e = new CourseInfo(cId, week, start, end);
          courseInfoList.add(e);
      }
-     
-     
-     
+
+
+
     public List<CourseInfo> getCourseInfoList() {
         return courseInfoList;
+    }
+
+    public CourseInfo getCourseInfoByid(String courseId) {
+
+        for (CourseInfo courseinfo : courseInfoList) {
+            if (courseinfo.courseId.equals(courseId)) {
+                return courseinfo;
+            }
+        }
+        return null;
     }
 
     // CourseInfo类用于存储从数据库中读取的课程信息
@@ -93,13 +103,13 @@ public class CourseSchedule {
             return endtime;
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
     public void addCourseToSchedule(Course course) throws SQLException {
         // 添加到内存
         courseSchedule.add(course);
@@ -158,8 +168,8 @@ public class CourseSchedule {
             statement.executeUpdate();
         }
     }
-    
-    
+
+
     public void insertCourseInfoIntoDatabase(CourseInfo course) throws SQLException {
     String query = "INSERT INTO CourseSchedule (course_id, weekday, starttime, endtime) VALUES (?, ?, ?, ?)";
     try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -170,9 +180,9 @@ public class CourseSchedule {
         statement.executeUpdate();
     }
 }
-    
-    
-    
+
+
+
     public void updateCourseInfoInDatabase(CourseInfo course1,CourseInfo course) throws SQLException {
     String query = "UPDATE CourseSchedule SET course_id=?,weekday = ?, starttime = ?, endtime = ? WHERE course_id = ? AND weekday = ? AND starttime = ? AND endtime = ?";
     try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -198,7 +208,7 @@ public class CourseSchedule {
     }
 }
 
-    
+
     private void deleteCourseFromScheduleInDatabase(Course course) throws SQLException {
         String query = "DELETE FROM CourseSchedule WHERE courseId = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -206,11 +216,11 @@ public class CourseSchedule {
             statement.executeUpdate();
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
 }
