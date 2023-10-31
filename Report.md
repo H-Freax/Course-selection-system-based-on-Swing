@@ -86,10 +86,7 @@ By employing these solutions and advantages, we can manage and utilize the `Prof
 
 ## 3. Architectural Diagram and Design
 
-
-```
-
-```
+![[截屏2023-10-30 23.01.47.png]]
 
 In this model, all people (whether employees, professors, or students) are stored in a centralized `Person` table and differentiated by a `Role` field. This is unlike traditional models, which may scatter these roles across multiple different tables or databases.
 
@@ -99,14 +96,14 @@ In this model, all people (whether employees, professors, or students) are store
 ## 4. Class Diagram and New Capabilities
 
 ### Class Diagram
-![Image](https://limyoonaxis-team.monday.com/protected_static/19437721/resources/1103091297/groupwork1.png)
+![[WechatIMG2621.jpg]]
 
 
 In the new model, almost all tables are connected to other tables through foreign keys to ensure data referential integrity. This ensures that any updates to a table at any time will correctly reflect in other tables associated with it.
 
 
 #### Database Architecture
-
+![[WechatIMG2623.jpg]]
 The database uses a Relational Database Management System (RDBMS) for organizing and managing the data. MySQL is the primary database system used here.
 
 
@@ -955,6 +952,7 @@ To maintain data referential integrity, multiple foreign key relationships exist
 - **User Type Selection**: Users can choose their role, e.g., Admin, Faculty, or Student.
 - **Login Button**: Click to log in.
 - **Register Button**: Click to register if the user does not have an account.
+![[截屏2023-10-30 22.34.44.png]]
 
 #### 2.Validation Page:
 - **Person Id**: Input for the user's ID.
@@ -962,11 +960,13 @@ To maintain data referential integrity, multiple foreign key relationships exist
 - **User Type Selection**: Similar to the login page, users can choose their role.
 - **Register Button**: Click to complete registration.
 - **Back Button**: Click to return to the previous page.
+![[截屏2023-10-30 22.19.12 1.png]]
 
 #### 3.Create Account :
 - **Username**: Input for the username.
 - **Password**: Input for the user's password.
 - **Create**: Click to create user's account
+![[截屏2023-10-30 22.19.57.png]]
 
 ---
 
@@ -979,6 +979,7 @@ To maintain data referential integrity, multiple foreign key relationships exist
   - **Manage Student**: Enter the student management page to view, create, and edit courses.
   - **Rate Chart**: View and edit your personal information.
   - **Log out**: Click to log out of the system.
+![[截屏2023-10-30 22.29.21.png]]
 
 #### 2. Universal ComboxArea:
 
@@ -1023,6 +1024,7 @@ Click to view details and manage your courses.
 - **Topic**: A space where specific topics or subjects covered in the course can be detailed.
 **List Display**:
 - **Enrolled Student**: Shows a list of students currently enrolled in the particular course.
+- ![[截屏2023-10-30 22.29.55.png]]
 
 #### **CourseScheduleComboBoxAreaJPanel**:
 
@@ -1045,6 +1047,7 @@ Click to view details and manage your courses.
 - **Create**: Enables the user to add a new course schedule using the input fields provided.
 - **Update**: Allows the user to modify or update an existing course schedule.
 - **Delete**: Provides an option to remove a selected course schedule from the list.
+![[截屏2023-10-30 22.37.07.png]]
 
 #### EmployeeComboBoxAreaJPanel: 
 Navigate to the employee management page to oversee, add, or modify employee data.
@@ -1078,6 +1081,7 @@ Navigate to the employee management page to oversee, add, or modify employee dat
 - **Password**: Lets users input or change the password for the employee's account.
 - **isEnabled**: A checkbox or toggle to indicate if the employee account is active.
 - **Role**: Specifies the role or designation of the employee within the organization.
+- ![[截屏2023-10-30 22.30.27.png]]
 
 #### FacultyComboBoxAreaJPanel: 
 Engage with the faculty management area to network, share, or gather faculty-specific resources.
@@ -1116,6 +1120,7 @@ Engage with the faculty management area to network, share, or gather faculty-spe
 - **UserName**: Allows users to provide or change the username used by the professor for login purposes.
 - **Topics**: A larger text field where users can enter or modify the subjects or areas of expertise of the professor.
 - **History Password**: A text area for users to view or input the password history associated with a professor's account.
+- ![[截屏2023-10-30 22.29.33.png]]
 
 #### PersonComboBoxAreaJPanel: 
 Access and edit individual information or connect with others on the platform.
@@ -1145,6 +1150,7 @@ Access and edit individual information or connect with others on the platform.
 - **Name**: A field where users can enter or modify an individual's name.
 - **Role**: Allows users to specify the role of the individual, such as Employee, Professor, or Student.
 - **ID**: Where users can input or change the identification number of an individual.
+![[截屏2023-10-30 22.30.17.png]]
 
 #### PersonScheduleComboBoxAreaJPanel: 
 View and make changes to your personal schedule or appointments.
@@ -1174,6 +1180,7 @@ View and make changes to your personal schedule or appointments.
 - **Start Time**: Provides space for users to input or adjust the commencement time of the course.
 - **End Time**: A field where users can set or change the conclusion time of the course.
 - **Person ID**: Enables users to enter or modify the identification number of the individual associated with the course.
+![[截屏2023-10-30 22.30.58.png]]
 
 #### RateComboBoxAreaJPanel: 
 Navigate to view or modify rates, perhaps related to courses or services.
@@ -1210,6 +1217,7 @@ Navigate to view or modify rates, perhaps related to courses or services.
 
 **Comment Box**:
 - **comment**: Provides a space for users to leave feedback or comments about the course, complementing their score.
+![[截屏2023-10-30 22.30.06.png]]
 
 #### SemesterComboBoxAreaJPanel: 
 Access to view, plan, or modify academic semester details.
@@ -1241,6 +1249,7 @@ Access to view, plan, or modify academic semester details.
 - **Name**: Allows users to specify or view the name of the semester.
 - **Start Time**: A field where users can input or see the starting date and time of the semester.
 - **End Time**: Enables users to input or check the ending date and time of the semester.
+![[截屏2023-10-30 22.30.35.png]]
 
 #### StudentComboBoxAreaJPanel: 
 Enter the student section to oversee, communicate, or modify student data.
@@ -1277,10 +1286,13 @@ Enter the student section to oversee, communicate, or modify student data.
 
 **Text Area**:
 - **History Password**: Provides a space for users to view the password history associated with the student's profile.
+![[截屏2023-10-30 22.29.43.png]]
 
 #### 3. FacultyManagementJPanel:
 
 Engage with the faculty management panel to oversee, collaborate, and manage faculty-related activities and resources.
+![[截屏2023-10-30 22.40.59.png]]
+
 ##### 1. Faculty Navigation Panel:
 
   - **Schedule**: Click to view your course timetable.
@@ -1415,7 +1427,7 @@ Engage with the faculty management panel to oversee, collaborate, and manage fac
 
 - **Information Label**: A label that informs users they can only view details about their own students.
 
-#### 5.MyProfileJPanel
+##### 5.MyProfileJPanel
 
 **Personal Information**:
 
@@ -1478,6 +1490,8 @@ Engage with the faculty management panel to oversee, collaborate, and manage fac
 #### 4. StudentManagementJPanel:
 
 Access the student management area to oversee, communicate with, or make necessary modifications to student profiles, data, or academic status.
+![[截屏2023-10-30 22.41.06.png]]
+
 
 ##### 1. Student Navigation Panel:
 
@@ -1516,6 +1530,7 @@ Access the student management area to oversee, communicate with, or make necessa
 **Button**:
 
 - **Add To Calendar**: Enables students to synchronize the listed schedule with their personal calendar for better time management.
+
 
 ##### 3.My Course JPanel
 
@@ -1768,6 +1783,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 - **Score Part 3**: Yellow color depicts the score for the third part.
 
 - **Score Part 4**: Green color marks the score for the fourth part.
+![[截屏2023-10-30 22.41.12.png]]
 
 #### 6. MyProfileJPanel:
 
@@ -1786,6 +1802,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 **Button**:
 
 - **Save**: Enables the user to save any changes made to their profile.
+![[截屏2023-10-30 22.41.18.png]]
 
 ---
 
@@ -1799,6 +1816,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
   - **My Profile**: View and edit your personal information.
   - **Ranking**: View your teaching ranking or evaluations.
   - **Log out**: Click to log out of the system.
+![[截屏2023-10-30 22.49.58.png]]
 
 #### 2. MyScheduleJPanel:
 
@@ -1813,6 +1831,8 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 - 
 **Button**:
 - **Add To Calendar**: Allows the user to add the displayed courses to their personal calendar.
+![[截屏2023-10-30 22.44.48.png]]
+![[截屏2023-10-30 22.45.13.png]]
 
 #### 3. ManageCoursesJPanel:
 
@@ -1855,6 +1875,8 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 - **Save**: Saves any changes made to course details.
 - **Create** (in Create Course Tab): Creates a new course based on the inputted details.
 - **View** (in Create Course Tab): Views the created or updated course details.
+![[截屏2023-10-30 22.45.40.png]]
+![[截屏2023-10-30 22.47.52.png]]
 
 ---
 
@@ -1875,6 +1897,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 - **Student GPA**: Input field for the student's Grade Point Average.
 - **View Button**: Allows users to view detailed information about the student.
 - **Information Label**: A label that informs users they can only view details about their own students.
+![[截屏2023-10-30 22.48.11.png]]
 
 #### 5.MyProfileJPanel
 
@@ -1898,6 +1921,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 
 **Action Button**:
 - **Save**: Button to save any changes or updates made to the profile.
+![[截屏2023-10-30 22.48.17.png]]
 
 ---
 
@@ -1914,6 +1938,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 - **Course Name**: Lists the name of the courses in ranked order.
 - **Professor Name (for Course)**: Shows the name of the professor teaching the ranked course.
 - **Course Score**: Provides the score or feedback given to the course by students.
+![[截屏2023-10-30 22.48.23.png]]
 
 ---
 
@@ -1930,6 +1955,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
   - **Transcript**: View your academic transcript with grades and credits.
   - **Rate**: Provide feedback and ratings for your courses and professors.
   - **Log out**: Click to securely exit the system.
+- ![[截屏2023-10-30 22.56.47.png]]
 
 #### 2. MyScheduleJPanel:
 
@@ -1944,6 +1970,8 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 
 **Button**:
 - **Add To Calendar**: Enables students to synchronize the listed schedule with their personal calendar for better time management.
+![[截屏2023-10-30 22.53.25.png]]
+![[截屏2023-10-30 22.53.40.png]]
 
 #### 3.My Course JPanel
 
@@ -1979,6 +2007,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 
 **Button**:
 - **Drop**: Allows students to unenroll from the selected course.
+![[截屏2023-10-30 22.54.00.png]]
 
 #### 4. Registration Page:
 
@@ -2008,7 +2037,8 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 
 **Button**:
 - **Enroll**: Permits students to register for the selected course from the list.
-- 
+- ![[截屏2023-10-30 22.54.30.png]]
+
 
 ---
 #### 5.Student Profile Panel:
@@ -2040,6 +2070,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 **Buttons**:
 - **Save**: Allows the student to save any changes they've made to their profile.
 - **Change**: Enables the student to modify or update their password.
+![[截屏2023-10-30 22.54.47.png]]
 
 #### 6. Graduation Status:
 
@@ -2053,9 +2084,9 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 **Button**:
 - **Checking Status**: Allows the user to verify their current academic status and see how many more courses they need to complete for graduation.
 - **Apply for Graduation**: Enables the student to officially apply for graduation once they've met the required criteria. This button may be active or inactive depending on the student's academic status.
+![[截屏2023-10-30 22.55.02.png]]
 
-####### **Student Transcript Panel**:
-
+---
 #### 7. Transcript Overview:
 
 **Title**: Clearly labels the section as "Transcript".
@@ -2073,6 +2104,8 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 
 **Button**:
 - **Print**: Allows the user to print a physical copy or save a digital copy of their transcript.
+![[截屏2023-10-30 22.55.16.png]]
+![[截屏2023-10-30 22.55.59.png]]
 
 #### 8.Student Rate Panel:
 
@@ -2096,6 +2129,7 @@ Comment Box**: Allows the student to provide additional feedback or comments reg
  Button**:
 - **Submit**: Enables the student to submit their ratings and feedback for the courses and professors listed.
 - **View**: (If applicable) Allows the student to view detailed ratings and comments from other students or view their own previous ratings.
+![[截屏2023-10-30 22.56.21.png]]
 
 ---
 
