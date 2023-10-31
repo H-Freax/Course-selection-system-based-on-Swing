@@ -6,6 +6,8 @@ package ui.UserInterface.WorkAreas.AdminRole;
 
 import Business.Person.Employee;
 import Tools.MySQLConnectionUtil;
+import Tools.PasswordUtils;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -29,15 +31,15 @@ public class MyProfileJPanel extends javax.swing.JPanel {
         setTxt();
     }
 
-    
+
     private void setTxt(){
         txtEmployeeId.setText(employee.getPersonID());
         txtEmployeeName.setText(employee.getPersonName());
         txtEmployeeUsername.setText(employee.getUsername());
         txtEmployeePassword.setText(employee.getNowPassword());
     }
-    
-    
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,7 +79,11 @@ public class MyProfileJPanel extends javax.swing.JPanel {
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                try {
+                    btnSaveActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -136,7 +142,7 @@ public class MyProfileJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
         // Extract values from JTextField components
         String username = txtEmployeeUsername.getText();
@@ -147,7 +153,10 @@ public class MyProfileJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "All fields are mandatory. Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        if (!isValidPassword(password)) {
+            JOptionPane.showMessageDialog(this, "Invalid password. Please ensure it meets the criteria.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         // Update the professor object with new values
         employee.setUsername(username);
         employee.setNowPassword(password);
@@ -161,6 +170,23 @@ public class MyProfileJPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Succuss!");
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private boolean isValidPassword(String password) throws SQLException {
+
+        System.out.println("isValidPassword(String password)"+password);
+        System.out.println("PasswordUtils.hashPassword(password)"+ PasswordUtils.hashPassword(password));
+
+        if(PasswordUtils.isPasswordInHistory(MySQLConnectionUtil.getConnection(),employee.getPersonID(),PasswordUtils.hashPassword(password))){
+            JOptionPane.showMessageDialog(this,"Please don't use history password!");
+            return false;
+        }else{
+            if(PasswordUtils.updatePassword(MySQLConnectionUtil.getConnection(),employee.getUsername(),password,"Employee")){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
