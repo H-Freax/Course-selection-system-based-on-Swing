@@ -135,8 +135,8 @@ public class Rate {
 
 
     public void saveToDatabase(Connection connection) throws SQLException {
-        String query = "INSERT INTO Rate (professor_id, studuent_id, course_id, scorepart1, scorepart2, scorepart3, scorepart4, comment, score,rate_id) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        String query = "INSERT INTO Rate (professor_id, studuent_id, course_id, scorepart1, scorepart2, scorepart3, scorepart4, comment, score) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, professorId);
