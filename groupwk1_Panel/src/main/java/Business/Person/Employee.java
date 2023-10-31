@@ -17,6 +17,26 @@ public class Employee extends Person {
     private String pwdHash;
     private Set<String> passwordHistory; // 用于存储密码历史
 
+
+    private String lastactive;
+    private String lastupdate;
+
+    public String getLastactive() {
+        return lastactive;
+    }
+
+    public void setLastactive(String lastactive) {
+        this.lastactive = lastactive;
+    }
+
+    public String getLastupdate() {
+        return lastupdate;
+    }
+
+    public void setLastupdate(String lastupdate) {
+        this.lastupdate = lastupdate;
+    }
+
     public Employee(){
 
     }
@@ -104,7 +124,29 @@ public class Employee extends Person {
         savePasswordHistoryToDatabase(connection,getPersonID(),pwdHash); // 保存密码历史
     }
 
-    
+    public void updateEmployeeactiveInDatabase(Timestamp lastactive,Connection connection) throws SQLException {
+        super.updateInDatabase(connection);
+
+        String updateStudentQuery = "UPDATE Employee SET lastactive = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateStudentQuery)) {
+
+            statement.setTimestamp(1, lastactive);
+            statement.setString(2, getPersonID());
+            statement.executeUpdate();
+        }
+    }
+
+    public void updateEmployeeupdateInDatabase(Timestamp lastupdate,Connection connection) throws SQLException {
+        super.updateInDatabase(connection);
+
+        String updateStudentQuery = "UPDATE Employee SET lastupdate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateStudentQuery)) {
+
+            statement.setTimestamp(1, lastupdate);
+            statement.setString(2, getPersonID());
+            statement.executeUpdate();
+        }
+    }
     public void updateEmployeeInDatabase1(Connection connection,String personName,String role,String personID,String username,Boolean enabled,String nowPassword,String id) throws SQLException {
         super.updateInDatabase(connection); // 更新基本人员信息
         String updatePersonQuery = "UPDATE Person SET PersonName = ?, role = ? WHERE PersonID = ?";
@@ -128,10 +170,10 @@ public class Employee extends Person {
 
         savePasswordHistoryToDatabase(connection,getPersonID(),pwdHash); // 保存最新密码历史
     }
-    
-    
-    
-    
+
+
+
+
     public void updateEmployeeInDatabase(Connection connection) throws SQLException {
         super.updateInDatabase(connection); // 更新基本人员信息
 
@@ -148,7 +190,7 @@ public class Employee extends Person {
 
         savePasswordHistoryToDatabase(connection,getPersonID(),pwdHash); // 保存最新密码历史
     }
-    
+
 
     public static Employee loadFromDatabase(Connection connection, String personID) throws SQLException {
         Person person = Person.loadFromDatabase(connection, personID);

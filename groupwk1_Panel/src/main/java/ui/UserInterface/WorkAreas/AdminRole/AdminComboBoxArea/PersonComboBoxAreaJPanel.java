@@ -267,7 +267,7 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         String personName=txtname.getText();
         String personID=txtid.getText();
         String role=txtRole.getText();
-        if(personName==""||personID==""||role==""){
+        if("".equals(personName)||"".equals(personID)||"".equals(role)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
@@ -289,7 +289,7 @@ public class PersonComboBoxAreaJPanel extends javax.swing.JPanel {
         String personName=txtname.getText();
         String personID=txtid.getText();
         String role=txtRole.getText();
-        if(personName==""||personID==""||role==""){
+        if("".equals(personName)||"".equals(personID)||"".equals(role)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }

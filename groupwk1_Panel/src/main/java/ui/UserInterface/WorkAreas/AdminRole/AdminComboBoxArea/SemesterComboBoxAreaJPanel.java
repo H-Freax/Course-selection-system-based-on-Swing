@@ -315,6 +315,10 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
         String semesterName=txtname.getText();
         String startTime = txtStart.getText();
         String endTime = txtEnd.getText();
+        if(txtStart.getText().equals("")||txtEnd.getText().equals("")){
+                    JOptionPane.showMessageDialog(this, "Please Input");
+                    return;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         // 将字符串转换为LocalDate对象
         LocalDateTime localDate = LocalDateTime.parse(startTime, formatter);
@@ -340,6 +344,10 @@ public class SemesterComboBoxAreaJPanel extends javax.swing.JPanel {
         String semesterName=txtname.getText();
         String startTime = txtStart.getText();
         String endTime = txtEnd.getText();
+        if(txtStart.getText().equals("")||txtEnd.getText().equals("")){
+                    JOptionPane.showMessageDialog(this, "Please Input");
+                    return;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         // 将字符串转换为LocalDate对象
         LocalDateTime localDate = LocalDateTime.parse(startTime, formatter);

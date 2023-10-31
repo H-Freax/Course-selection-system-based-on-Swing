@@ -334,8 +334,13 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         }
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
-        enabled=("true".equals(txtEnabled.getText()))? true:false;
+        enabled=("true".equals(txtEnabled.getText()));
+        if(GPA.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
         gpa=(Double.parseDouble(GPA.getText()));
+
         if(!"".equals(personName)&&!"".equals(personID)&&!"".equals(username)&&!"".equals(nowPassword)){
             Student stu1 = new Student( personName,  personID,  username,  nowPassword,  enabled,  gpa);
             Set<String> stringSet1 = new HashSet<>(Arrays.asList(txtHis.getText().split(",")));
@@ -387,6 +392,10 @@ public class StudentComboBoxAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         personName=txtname.getText();
         personID=txtid.getText();
+        if(GPA.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
         username=txtuser.getText();
         nowPassword=txtpwd.getText();
         enabled=("true".equals(txtEnabled.getText()));

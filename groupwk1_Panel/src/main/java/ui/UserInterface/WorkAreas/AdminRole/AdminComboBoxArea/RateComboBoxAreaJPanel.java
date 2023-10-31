@@ -352,7 +352,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         String score4=txtS4.getText();
         String comment = txtComment.getText();
 
-        if(cId==""||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
+        if("".equals(cId)||"".equals(pId)||"".equals(sId)||"".equals(score)||"".equals(score1)||"".equals(score2)||"".equals(score3)||"".equals(score4)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }
@@ -388,7 +388,7 @@ public class RateComboBoxAreaJPanel extends javax.swing.JPanel {
         String score4=txtS4.getText();
         String comment = txtComment.getText();
 
-        if("".equals(cId)||pId==""||sId==""||score==""||score1==""||score2==""||score3==""||score4==""){
+        if("".equals(cId)||"".equals(pId)||"".equals(sId)||"".equals(score)||"".equals(score1)||"".equals(score2)||"".equals(score3)||"".equals(score4)){
             JOptionPane.showMessageDialog(this, "Please Input!");
             return;
         }

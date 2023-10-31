@@ -460,6 +460,10 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "ID already existed!");
             return;
         }
+        if(txtCurrentCoursePoint.getText().equals("")||txtCurrentStudentLimited.getText().equals("")||txtCurrentStudentCount.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Please Input");
+            return;
+        }
         String name=txtCurrentCourseName.getText();
         String introduction=txtIntro.getText();
         int point=Integer.parseInt(txtCurrentCoursePoint.getText());
@@ -482,8 +486,13 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         
         //
         
-        
-        if(id!=""&&name!=""&&semesterId!=""&&status!=""&&professor!=""&&location!=""&&studentLimit!=0&&studentCount!=0){
+        if("".equals(id)||"".equals(name)||"".equals(semesterId)||"".equals(status)||"".equals(professor)||"".equals(location)||studentLimit==0||studentCount==0){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+            
+        }
+
+        if(!"".equals(id)&&!"".equals(name)&&!"".equals(semesterId)&&!"".equals(status)&&!"".equals(professor)&&!"".equals(location)&&studentLimit!=0&&studentCount!=0){
             String region="";
             String professorid=cp.getProfessorId(id);
             String language="";
@@ -499,7 +508,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                 }
             }
             for(Semester s1: semList){
-                if(s1.getId()==semesterId){
+                if(s1.getId() == null ? semesterId == null : s1.getId().equals(semesterId)){
                     semester=s1.getSemesterName();
                     g=1;
                 }
@@ -540,6 +549,10 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
         String id=txtCurrentCourseId.getText();
         String name=txtCurrentCourseName.getText();
         String introduction=txtIntro.getText();
+        if(txtCurrentCoursePoint.getText().equals("")||txtCurrentStudentLimited.getText().equals("")||txtCurrentStudentCount.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Please Input");
+            return;
+        }
         int point=Integer.parseInt(txtCurrentCoursePoint.getText());
         String semesterId=txtCurrentSemester.getText();
         String status=txtStatus.getText();
@@ -564,7 +577,7 @@ public class CourseComboBoxAreaJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Already Exist ID");
                 return;
             }}
-        if("".equals(id)||"".equals(name)||"".equals(semesterId)||"".equals(status)||"".equals(professor)||"".equals(location)||studentLimit==0||studentCount==0){
+        if("".equals(id)||"".equals(name)||"".equals(semesterId)||"".equals(status)||"".equals(professor)||"".equals(location)){
             System.out.println(id);
             System.out.println(name);
             System.out.println(semesterId);

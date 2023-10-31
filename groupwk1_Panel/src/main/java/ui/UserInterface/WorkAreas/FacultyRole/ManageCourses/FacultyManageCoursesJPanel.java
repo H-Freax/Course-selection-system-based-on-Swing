@@ -11,6 +11,7 @@ import Tools.MySQLConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -816,6 +817,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             createCourseIntroductionTextArea.setText("");
             txtCreateCourseTopic.setText("");
             txtCreateStudentCount.setText("");
+            professor.updateProfessorupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),conn);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -901,6 +903,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 //            createCourseIntroductionTextArea.setText("");
 //            txtCreateCourseTopic.setText("");
 //            txtCreateStudentCount.setText("");
+            professor.updateProfessorupdateInDatabase(Timestamp.valueOf(LocalDateTime.now()),conn);
 
         }catch (Exception e){
             e.printStackTrace();
