@@ -6,6 +6,7 @@
       {
         "id": "6ba93073f1c5e33d",
         "type": "tabs",
+        "dimension": 48.38028169014085,
         "children": [
           {
             "id": "ee3b7f9723507e87",
@@ -25,6 +26,7 @@
       {
         "id": "9c4e595c0970b9e1",
         "type": "tabs",
+        "dimension": 51.61971830985915,
         "children": [
           {
             "id": "fd78e2d8725d6307",
@@ -168,5 +170,17 @@
     }
   },
   "active": "ee3b7f9723507e87",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$6.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$5.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$4.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$3.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$2.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$1.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/PersonScheduleComboBoxAreaJPanel.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/PersonScheduleComboBoxAreaJPanel$5.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/PersonScheduleComboBoxAreaJPanel$4.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/PersonScheduleComboBoxAreaJPanel$3.class"
+  ]
 }
