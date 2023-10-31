@@ -276,7 +276,7 @@ public class CourseVO {
 
 
     public void saveToDatabase(Connection connection) throws SQLException {
-        String query = "INSERT INTO Course (id, name, introduction, point, semesterid, statue, professor, location, studentlimited, studentcount, begintime, endtime) " +
+        String query = "INSERT INTO Course (id, name, introduction, point, semesterid, statue, location, studentlimited, studentcount, begintime, endtime) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, id);
@@ -285,18 +285,17 @@ public class CourseVO {
             statement.setInt(4, point);
             statement.setString(5, semesterId);
             statement.setString(6, status);
-            statement.setString(7, professor);
-            statement.setString(8, location);
-            statement.setInt(9, studentLimit);
-            statement.setInt(10, studentCount);
-            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
-            statement.setTimestamp(12, Timestamp.valueOf(endTime));
+            statement.setString(7, location);
+            statement.setInt(8, studentLimit);
+            statement.setInt(9, studentCount);
+            statement.setTimestamp(10, Timestamp.valueOf(beginTime));
+            statement.setTimestamp(11, Timestamp.valueOf(endTime));
             statement.executeUpdate();
         }
     }
 
     public void updateInDatabase(Connection connection) throws SQLException {
-        String query = "UPDATE Course SET name = ?, introduction = ?, point = ?, semesterid = ?, statue = ?, professor = ?, " +
+        String query = "UPDATE Course SET name = ?, introduction = ?, point = ?, semesterid = ?, statue = ?,  " +
                 "location = ?, studentlimited = ?, studentcount = ?, begintime = ?, endtime = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, id);
@@ -305,12 +304,12 @@ public class CourseVO {
             statement.setInt(4, point);
             statement.setString(5, semesterId);
             statement.setString(6, status);
-            statement.setString(7, professor);
-            statement.setString(8, location);
-            statement.setInt(9, studentLimit);
-            statement.setInt(10, studentCount);
-            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
-            statement.setTimestamp(12, Timestamp.valueOf(endTime));
+//            statement.setString(7, professor);
+            statement.setString(7, location);
+            statement.setInt(8, studentLimit);
+            statement.setInt(9, studentCount);
+            statement.setTimestamp(10, Timestamp.valueOf(beginTime));
+            statement.setTimestamp(11, Timestamp.valueOf(endTime));
             statement.executeUpdate();
         }
     }

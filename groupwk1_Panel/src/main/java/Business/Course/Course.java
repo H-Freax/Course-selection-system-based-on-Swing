@@ -239,8 +239,8 @@ public class Course {
             statement.setString(7, location);
             statement.setInt(8, studentLimit);
             statement.setInt(9, studentCount);
-            statement.setTimestamp(11, Timestamp.valueOf(beginTime));
-            statement.setTimestamp(12, Timestamp.valueOf(endTime));
+            statement.setTimestamp(10, Timestamp.valueOf(beginTime));
+            statement.setTimestamp(11, Timestamp.valueOf(endTime));
             statement.executeUpdate();
         }
     }

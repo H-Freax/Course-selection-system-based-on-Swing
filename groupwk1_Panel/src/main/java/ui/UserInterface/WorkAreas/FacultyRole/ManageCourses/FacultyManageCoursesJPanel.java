@@ -580,6 +580,11 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         jScrollPane7.setViewportView(createCourseIntroductionTextArea);
 
         btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         btnView.setText("View");
 
@@ -750,7 +755,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
         try{
-
+//
             Map<String, String> semesterMap = semesters.stream()
                     .collect(Collectors.toMap(Semester::getSemesterName, Semester::getId));
 
@@ -792,7 +797,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             addCourse.setPoint(Integer.parseInt(txtCreateCoursePoint.getText()));
             addCourse.setStudentLimit(Integer.parseInt(txtCreateStudentLimited.getText()));
             addCourse.setStudentCount(Integer.parseInt(txtCreateStudentCount.getText()));
-            addCourse.setSemesterId(semesterMap.get(selectSemComboBox.getSelectedItem().toString()));
+            addCourse.setSemesterId(semesterMap.get(txtCreateSemester.getText()));
             addCourse.setStatus("Open");
             addCourse.setIntroduction(createCourseIntroductionTextArea.getText());
             addCourse.saveToDatabase(connection);
