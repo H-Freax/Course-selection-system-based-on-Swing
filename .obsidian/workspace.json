@@ -171,6 +171,9 @@
   },
   "active": "ee3b7f9723507e87",
   "lastOpenFiles": [
+    "Report.pdf",
+    "groupwk1_Panel/target/classes/Business/Business.class",
+    "groupwk1_Panel/src/main/java/Business/Business.java",
     "WechatIMG2623.jpg",
     "截屏2023-10-30 23.01.47.png",
     "WechatIMG2621.jpg",
@@ -181,7 +184,6 @@
     "截屏2023-10-30 22.54.47.png",
     "截屏2023-10-30 22.54.30.png",
     "截屏2023-10-30 22.54.00.png",
-    "截屏2023-10-30 22.53.40.png",
     "groupwk1_Panel/2023-10-30T22:53:16.756038courseschedule.ics",
     "groupwk1_Panel/2023-10-30T22:44:40.207811courseschedule.ics",
     "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/Registration/StudentRegisterJPanel$4.class",
@@ -189,8 +191,6 @@
     "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/MyProfileJPanel.class",
     "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/MyProfileJPanel$1.class",
     "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/StudentComboBoxAreaJPanel.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/StudentComboBoxAreaJPanel$6.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/StudentComboBoxAreaJPanel$5.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/StudentComboBoxAreaJPanel$4.class"
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/StudentComboBoxAreaJPanel$6.class"
   ]
 }
