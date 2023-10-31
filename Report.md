@@ -974,7 +974,7 @@ To maintain data referential integrity, multiple foreign key relationships exist
 
 #### 1. Left Navigation Panel:
 
-  - **Common ComboxArea**: Click to go Where you want to visit and operate.
+  - **Universal ComboxArea**: Click to go Where you want to visit and operate.
   - **Manage Courses**: Enter the course management page to view, create, and edit courses.
   - **Manage Student**: Enter the student management page to view, create, and edit courses.
   - **Rate Chart**: View and edit your personal information.
@@ -1575,7 +1575,7 @@ Access the student management area to oversee, communicate with, or make necessa
 
 - **Drop**: Allows students to unenroll from the selected course.
 
-##### 4. My Student Profile Page:
+##### 4. Registration Page:
 
 **Course Selection:**
 
@@ -1980,7 +1980,7 @@ Navigate through this panel to view, analyze, or adjust the rate charts, possibl
 **Button**:
 - **Drop**: Allows students to unenroll from the selected course.
 
-#### 4. My Student Profile Page:
+#### 4. Registration Page:
 
 **Course Selection:**
 **Search Bar**: Enables students to search for specific courses using parameters such as Course ID, Course Name, Professor Name, Professor Topic, Professor Language, and Course Region.
