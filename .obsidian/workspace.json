@@ -171,16 +171,16 @@
   },
   "active": "ee3b7f9723507e87",
   "lastOpenFiles": [
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$6.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$5.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$4.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$3.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$2.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/SemesterComboBoxAreaJPanel$1.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/PersonScheduleComboBoxAreaJPanel.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/PersonScheduleComboBoxAreaJPanel$5.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/PersonScheduleComboBoxAreaJPanel$4.class",
-    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/AdminRole/AdminComboBoxArea/PersonScheduleComboBoxAreaJPanel$3.class"
+    "groupwk1_Panel/target/classes/Tools/MySQLConnectionUtil.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/StudentRate/StudentRateJPanel.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/StudentRate/StudentRateJPanel$3.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/StudentRate/StudentRateJPanel$2.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/StudentRate/StudentRateJPanel$1.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/StudentRate",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/ManageProfile/StudentManageProfileJPanel.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/ManageProfile/StudentManageProfileJPanel$4.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/ManageProfile/StudentManageProfileJPanel$3.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/ManageProfile/StudentManageProfileJPanel$2.class",
+    "groupwk1_Panel/target/classes/ui/UserInterface/WorkAreas/StudentRole/ManageProfile/StudentManageProfileJPanel$1.class"
   ]
 }
