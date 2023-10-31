@@ -1,4 +1,5 @@
 # University Information Management System: New Business Model and Architectural Design
+
 ## Abstract
 This report aims to provide an improved data model for university information management systems. Compared to traditional university information systems, the new model offers a more unified and efficient approach to handling large amounts of data and relationships by centralizing storage and management.
 
@@ -1280,14 +1281,511 @@ Enter the student section to oversee, communicate, or modify student data.
 #### 3. FacultyManagementJPanel:
 
 Engage with the faculty management panel to oversee, collaborate, and manage faculty-related activities and resources.
+##### 1. Faculty Navigation Panel:
+
+  - **Schedule**: Click to view your course timetable.
+
+  - **Manage Courses**: Enter the course management page to view, create, and edit courses.
+
+  - **Manage Student**: Click to manage student information related to you.
+
+  - **My Profile**: View and edit your personal information.
+
+  - **Ranking**: View your teaching ranking or evaluations.
+
+  - **Log out**: Click to log out of the system.
+
+##### 2. MyScheduleJPanel:
+
+**Dropdown Menu**: Allows the user to select the desired semester.
+
+**Information Label**: Displays the semester's time range.
+
+**Table**:
+
+- **Course Name**: Lists the names of the courses for the selected semester.
+
+- **Location**: Provides the room or venue where the course will take place.
+
+- **Course Time**: Specifies the days and times the courses will be held.
+
+- **Semester**: Indicates the academic semester for the listed courses.
+
+
+**Button**:
+
+- **Add To Calendar**: Allows the user to add the displayed courses to their personal calendar.
+
+##### 3. ManageCoursesJPanel:
+
+**Tabs**:
+
+- **Current Course**: Displays the current courses for a selected semester.
+
+- **Create Course**: Allows users to create a new course.
+
+**Dropdown Menu**:
+
+- **Select Semester**: Enables the user to select the desired semester to view the courses.
+
+**Table (Current Course Tab)**:
+
+- **Course ID**: Lists the ID of the courses.
+
+- **Course Name**: Specifies the name of each course.
+
+- **Course Topic**: Describes the main subject or topic of each course.
+
+- **Time**: Provides the timing details for each course.
+
+**Search Bar**:
+
+- **Course Name/Course Topic**: Allows users to search for courses based on name or topic.
+
+
+**Form Fields (Both Tabs)**:
+
+- **Course ID**: Input for the course's identification number.
+
+- **Course Location**: Input for the location or room where the course will be conducted.
+
+- **Course Topic**: Input for the main subject or topic of the course.
+
+- **Course Name**: Input for the name of the course.
+
+- **Course point**: Input for the credit or point value of the course.
+
+- **Course Begintime**: Input for the start time of the course.
+
+- **Course Endtime**: Input for the end time of the course.
+
+- **Student Limited**: Input for the maximum number of students allowed in the course.
+
+- **Student Count**: Input to display the current number of enrolled students.
+
+- **Semester**: Input for the academic semester.
+
+- **Course Introduction**: Text area to provide a detailed introduction or description of the course.
+
+- **Professor**: Input for the name of the course instructor.
+
+- **Professor Rating in this class**: Input to display or update the professor's rating for this particular course.
+
+**Student List (Current Course Tab)**:
+
+- Columns for **Student Name**, **Student NUID**, and **Student Score**. Allows for viewing and editing student details for a specific course.
+
+**Buttons**:
+
+- **Search**: Initiates the search based on the input in the search bar.
+
+- **Save**: Saves any changes made to course details.
+
+- **Create** (in Create Course Tab): Creates a new course based on the inputted details.
+
+- **View** (in Create Course Tab): Views the created or updated course details.
+
+---
+
+##### 4.ManageStudentJPanel
+
+**Search Section**:
+
+- **Search Bar**: Allows users to input search criteria.
+
+- **Search Button**: Initiates the search based on the criteria entered in the search bar.
+
+**Student Listing**:
+
+- **Student ID**: Displays the unique identification number of the student.
+
+- **Student Name**: Shows the full name of the student.
+
+- **If Choose my course**: Checkbox indicating if the student has chosen the user's course.
+
+**Student Details Section**:
+
+- **Student Name**: Input field for the student's full name.
+
+- **Student ID**: Input field for the student's unique identification number.
+
+- **Student GPA**: Input field for the student's Grade Point Average.
+
+- **View Button**: Allows users to view detailed information about the student.
+
+- **Information Label**: A label that informs users they can only view details about their own students.
+
+#### 5.MyProfileJPanel
+
+**Personal Information**:
+
+- **Professor ID**: Displays the unique identification number of the professor.
+
+- **Professor Name**: Shows the full name of the professor.
+
+- **Professor Language**: Indicates the language proficiency or preferred language of the professor.
+
+
+**Courses Taught**:
+
+- **Course Name**: Lists the name of the courses taught by the professor.
+
+- **Course Time**: Shows the scheduled time for each course.
+
+- **Course Rating**: Provides the average rating or feedback score given to the course by students.
+
+
+**Rating and Region**:
+
+- **Professor Rate**: Displays the overall rating or feedback score given to the professor by students.
+
+- **Professor Region**: Indicates the geographical region or campus location where the professor is based.
+
+**Login Credentials**:
+
+- **Username**: Shows the username used by the professor to log into the system.
+
+- **Professor Password**: Input field for the professor's password.
+
+**Action Button**:
+
+- **Save**: Button to save any changes or updates made to the profile.
+
+---
+
+##### 6.RankingJPanel
+
+**Professor Rankings**:
+
+- **Professor Ranking**: Lists the numerical rank of the professor based on score.
+
+- **Professor Name**: Specifies the name of the professor being ranked.
+
+- **Professor Score**: Provides the score or feedback given to the professor, usually by students or peers.
+
+**Course Rankings**:
+
+- **Course Ranking**: Displays the numerical rank of courses.
+
+- **Course Name**: Lists the name of the courses in ranked order.
+
+- **Professor Name (for Course)**: Shows the name of the professor teaching the ranked course.
+
+- **Course Score**: Provides the score or feedback given to the course by students.
+
+---
 
 #### 4. StudentManagementJPanel:
 
 Access the student management area to oversee, communicate with, or make necessary modifications to student profiles, data, or academic status.
 
+##### 1. Student Navigation Panel:
+
+  - **Schedule**: Click to view your personal course timetable.
+
+  - **My Courses**: Access your current course list for the semester.
+
+  - **Registration**: Navigate to the course registration page to enroll in new courses.
+
+  - **Manage Profile**: View and edit your personal and academic details.
+
+  - **Graduation Status**: Check your academic progress and any pending requirements for graduation.
+
+  - **Transcript**: View your academic transcript with grades and credits.
+
+  - **Rate**: Provide feedback and ratings for your courses and professors.
+
+  - **Log out**: Click to securely exit the system.
+
+##### 2. MyScheduleJPanel:
+
+**Dropdown Menu**: Allows you to select the relevant academic semester.
+
+**Information Label**: Displays the date range for the chosen semester.
+
+**Table**:
+
+- **Course Name**: Lists the names of enrolled courses for the selected semester.
+
+- **Location**: Shows the designated room or venue for each course session.
+
+- **Course Time**: Indicates the specific days and time slots when the courses are scheduled.
+
+- **Semester**: Highlights the academic term for the mentioned courses.
+
+**Button**:
+
+- **Add To Calendar**: Enables students to synchronize the listed schedule with their personal calendar for better time management.
+
+##### 3.My Course JPanel
+
+**Current Course Selection:**
+
+**Dropdown Menu**: Offers students the ability to choose the relevant academic semester.
+
+**Search Bar**: Allows students to search for specific courses by entering the Professor's Name, Language, Region, Course Name, or Course Topic.
+
+**Table**:
+
+- **Course ID**: Displays the unique identification number assigned to each course.
+
+- **Course Name**: Enumerates the titles of the courses available for the selected semester.
+
+- **Professor**: Names the academic in charge of the respective course.
+
+- **Course Status**: Informs whether the course is open for enrollment or otherwise.
+
+- **Score**: Indicates the student's academic performance in the given course (if applicable).
+
+- **Semester**: Denotes the academic term for the depicted courses.
+
+**Detailed Course Information:**
+
+**Fields**:
+
+- **Course ID**: Enter or view the identification number for the course.
+
+- **Course Topic**: Input or observe the main topic or theme of the course.
+
+- **Course Name**: Type in or see the official title of the course.
+
+- **Course Credit**: Specify or check the number of credits awarded upon successful completion of the course.
+
+- **Semester**: Enter or review the semester when the course is offered.
+
+- **Course Location**: Fill in or view the designated room or venue for the course sessions.
+
+- **Course Begintime**: Indicate or look up the starting time of the course sessions.
+
+- **Course Endtime**: Enter or view the ending time of the course sessions.
+
+- **Student Limited**: Define or see the maximum number of students allowed to enroll in the course.
+
+- **Student Count**: Check the current number of students enrolled in the course.
+
+- **Course Introduction**: Provides a brief overview or summary of what the course entails.
+
+- **Professor**: Enter or view the name of the professor instructing the course.
+
+- **Professor Region**: Specify or check the region or origin of the professor.
+
+- **Professor Language**: Enter or view the primary language used by the professor.
+
+**Button**:
+
+- **Drop**: Allows students to unenroll from the selected course.
+
+##### 4. My Student Profile Page:
+
+**Course Selection:**
+
+**Search Bar**: Enables students to search for specific courses using parameters such as Course ID, Course Name, Professor Name, Professor Topic, Professor Language, and Course Region.
+
+**Table**:
+
+- **Course Id**: Displays the unique identification number for each course.
+
+- **Course Name**: Lists the names of the available courses for registration.
+
+- **Professor Name**: Names the instructor responsible for each course.
+
+- **Professor Topic**: Describes the main academic focus or area of specialization of the professor for the course.
+
+- **Professor Language**: Specifies the primary teaching language used by the professor.
+
+- **Course Region**: Indicates the geographical or institutional region where the course is offered.
+
+**Detailed Course Information:**
+
+**Fields**:
+
+- **Course ID**: Allows entry or displays the unique identifier for the selected course.
+
+- **Course Name**: Facilitates entry or displays the title of the chosen course.
+
+- **Semester**: Offers a field to input or view the academic term when the course is offered.
+
+- **Professor**: Provides space to enter or view the name of the instructor responsible for the course.
+
+- **Professor Rating**: Lets students view the average rating or feedback given to the professor by former students.
+
+- **Course Location**: Gives a field to input or view the designated venue or room for the course.
+
+- **Course Introduction**: Contains a textbox for a brief overview or description of the course content and objectives.
+
+- **Student Limited**: Displays the maximum number of students allowed to enroll in the course.
+
+- **Student Count**: Shows the current number of students registered for the course.
+
+**Button**:
+
+- **Enroll**: Permits students to register for the selected course from the list.
+
+---
+
+##### 5.Student Profile Panel:
+
+ **Personal Information:**
+
+**Fields**:
+
+- **Student ID**: Displays the unique identification number of the student.
+
+- **Student Name**: Shows the full name of the student.
+
+**Academic Record:**
+
+**Table**:
+
+- **Course Name**: Lists the names of the courses the student is enrolled in or has completed.
+
+- **Professor Name**: Provides the name of the professor who taught or is teaching the course.
+
+- **Student Score**: Displays the score or grade the student received for each course.
+
+- **Semester**: Indicates the academic term in which the student took or is taking the course.
+
+**Performance Metric:**
+
+**Fields**:
+
+- **GPA**: Shows the student's current Grade Point Average on a scale, typically from 0 to 4 or 5.
+
+**Account Settings:**
+
+**Fields**:
+
+- **Username**: Displays the student's username for accessing the academic platform or system.
+
+- **Password**: Provides a masked field to protect the student's password. Only dots or asterisks are visible, ensuring privacy.
+
+**Buttons**:
+
+- **Save**: Allows the student to save any changes they've made to their profile.
+
+- **Change**: Enables the student to modify or update their password.
+
+##### 6. Graduation Status:
+
+**Information Label**: States the requirement for graduation, specifically mentioning the number of courses a student must complete before they can graduate.
+
+**Fields**:
+
+- **Courses Completed**: Displays the number of courses the student has completed so far.
+
+**Graduation Actions:**
+
+**Button**:
+
+- **Checking Status**: Allows the user to verify their current academic status and see how many more courses they need to complete for graduation.
+
+- **Apply for Graduation**: Enables the student to officially apply for graduation once they've met the required criteria. This button may be active or inactive depending on the student's academic status.
+
+####### **Student Transcript Panel**:
+
+##### 7. Transcript Overview:
+
+**Title**: Clearly labels the section as "Transcript".
+
+**Table**:
+
+- **Semester**: Shows the academic semester in which the course was taken.
+
+- **Course**: Lists the names of the courses the student has taken during the specified semester.
+
+- **Professor**: Specifies the instructor or professor who taught the course.
+
+- **Score**: Displays the grade or score the student received for each course.
+
+**Information Label**:
+
+- **GPA**: Represents the Grade Point Average of the student based on the scores from the courses listed. Displays the cumulative GPA value.
+
+**Actions:**
+
+**Button**:
+
+- **Print**: Allows the user to print a physical copy or save a digital copy of their transcript.
+
+##### 8.Student Rate Panel:
+
+**Course & Professor Rating Table**:
+
+- **Course Name**: Lists the names of the courses that the student is eligible to rate.
+
+- **Professor Name**: Specifies the instructor or professor of the respective course.
+
+- **Rate**: Indicates the current rating status of the course. If not rated, will display "Need Rate".
+
+- **Score**: Displays the student's score or grade for the respective course. If not graded, will display "NO Score Yet".
+
+**Rating Criteria
+
+ Rating Questions**:
+
+- **Course Materials**: Asks if the professor provided course materials, such as lecture notes, presentations, and reading materials, on time. Rate ranges from 0 to 5.
+
+- **Feedback and Guidance**: Inquires if appropriate feedback and guidance were given to students. Rate ranges from 0 to 5.
+
+- **Grading Promptness**: Checks if the professor provided grades and feedback promptly. Rate ranges from 0 to 5.
+
+- **Relevance and Application**: Asks if the professor possesses relevant academic or industry experience and effectively integrates theory with real-world applications. Rate ranges from 0 to 5.
+
+**Feedback Section:
+
+Comment Box**: Allows the student to provide additional feedback or comments regarding the course or professor.
+
+**Actions
+
+ Button**:
+
+- **Submit**: Enables the student to submit their ratings and feedback for the courses and professors listed.
+
+- **View**: (If applicable) Allows the student to view detailed ratings and comments from other students or view their own previous ratings.
+
+---
+
 #### 5. RateChartJPanel:
 
 Navigate through this panel to view, analyze, or adjust the rate charts, possibly related to course fees, faculty compensation, or other services.
+
+**Bar Chart**:
+
+- **Score Axis**: Represents the score given, ranging from 0 to 21.
+
+- **Professor Names**: Displays the names of the professors, e.g., "Professor Professor Smith".
+
+- **Score Parts**: Differentiates the scores based on four categories: Score, Score Part 1, Score Part 2, Score Part 3, and Score Part 4.
+
+**Color Legend**:
+
+- **Score**: Red color represents the overall score for the professor.
+
+- **Score Part 1**: Blue color indicates the score for the first part.
+
+- **Score Part 2**: Purple color signifies the score for the second part.
+
+- **Score Part 3**: Yellow color depicts the score for the third part.
+
+- **Score Part 4**: Green color marks the score for the fourth part.
+
+#### 6. MyProfileJPanel:
+
+Navigate through this panel to view, analyze, or adjust the rate charts, possibly related to course fees, faculty compensation, or other services.
+
+**Labels and Input Fields**:
+
+- **Employee ID**: Displays the identification number of the admin or employee.
+
+- **Employee Name**: Allows the user to view or edit their name.
+
+- **Username**: Shows the current username used for login.
+
+- **Password**: An input field to view or change the current password.
+
+**Button**:
+
+- **Save**: Enables the user to save any changes made to their profile.
 
 ---
 
@@ -1606,9 +2104,9 @@ Comment Box**: Allows the student to provide additional feedback or comments reg
 
 1. **User Interface (UI) Design:** The design is simplistic and straightforward. The use of tabs and sections makes it easy for students, professors, employee to navigate through their profiles and perform necessary tasks. 
 
-2. **Functionality:** The platform seems to offer essential functions required by students and professors:
-   - **Manage Courses**:Professor can create, pubblish, edit and delete courses, courses details.
-   - **My Schedule**:Choose your semester and directly show all informarion you need, eeven add to your Calender.
+2. **Functionality:** The platform offer essential functions required by students and professors:
+   - **Manage Courses**:Professor can create, publish, edit and delete courses, courses details.
+   - **My Schedule**:Choose your semester and directly show all information you need, even add to your Calendar.
    - **Manage Student**:Through entering keywords to search for students, display student informations.
    - **Course Registration**: Students can view available courses, course details, and enroll in them.
    - **Profile Management**: Personal information, courses taken, and other relevant data can be viewed and edited.
