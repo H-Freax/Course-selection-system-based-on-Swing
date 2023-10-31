@@ -330,6 +330,10 @@ public class PersonScheduleComboBoxAreaJPanel extends javax.swing.JPanel {
         String start=txtS.getText();
         String end=txtE.getText();
         String pId=txtpId.getText();
+        if(start.equals("")||end.equals("")){
+            JOptionPane.showMessageDialog(this, "Please Input!");
+            return;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         // 将字符串转换为LocalDate对象
         LocalDateTime localDate = LocalDateTime.parse(start, formatter);
