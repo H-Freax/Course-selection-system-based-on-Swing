@@ -258,11 +258,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         btnDrop.setText("Drop");
         btnDrop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    btnDropActionPerformed(evt);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                btnDropActionPerformed(evt);
             }
         });
 
@@ -280,20 +276,12 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
 
         selectSemComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                try {
-                    selectSemComboBoxItemStateChanged(evt);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                selectSemComboBoxItemStateChanged(evt);
             }
         });
         selectSemComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    selectSemComboBoxActionPerformed(evt);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                selectSemComboBoxActionPerformed(evt);
             }
         });
 
@@ -310,11 +298,7 @@ public class StudentManageCoursesJPanel extends javax.swing.JPanel {
         btnSearchCourses.setText("Search");
         btnSearchCourses.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    btnSearchCoursesActionPerformed(evt);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                btnSearchCoursesActionPerformed(evt);
             }
         });
 
