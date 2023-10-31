@@ -145,7 +145,15 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
             new String [] {
                 "Course Id", "Course Name", "Professor Name", "Professor Topic", "Professor Language", "Course Region"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane4.setViewportView(tblRegister);
 
         jLabel9.setText("Course ID:");
