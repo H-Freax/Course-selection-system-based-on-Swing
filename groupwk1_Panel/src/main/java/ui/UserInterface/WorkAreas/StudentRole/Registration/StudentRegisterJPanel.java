@@ -371,6 +371,7 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
     private Course getCourseInfoByID(String courseId) {
 
         try {
+
             return courseDirectory.loadCourseFromDatabase(courseId);
         } catch (SQLException e) {
             e.printStackTrace();
