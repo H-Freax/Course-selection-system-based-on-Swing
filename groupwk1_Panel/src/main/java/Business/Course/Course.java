@@ -285,7 +285,37 @@ public class Course {
             return null;
         }
     }
+    public static Course getCourseFromDatabase1(Connection connection, String courseId) throws SQLException {
+        String query = "SELECT * FROM Course WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, courseId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSetToCourse1(resultSet);
+            }
+            return null;
+        }
+    }
     static Course resultSetToCourse(ResultSet resultSet) throws SQLException {
+        return new Course(
+                resultSet.getString("id"),
+                resultSet.getString("name"),
+                resultSet.getString("introduction"),
+                resultSet.getInt("point"),
+                resultSet.getString("semesterid"),
+                resultSet.getString("statue"),
+                resultSet.getString("professor"),
+                resultSet.getString("location"),
+                resultSet.getInt("studentlimited"),
+                resultSet.getInt("studentcount"),
+                resultSet.getString("weekday"),
+                resultSet.getTimestamp("begintime").toLocalDateTime(),
+                resultSet.getTimestamp("endtime").toLocalDateTime(),
+                resultSet.getDouble("score")
+        );
+    }
+
+    static Course resultSetToCourse1(ResultSet resultSet) throws SQLException {
         return new Course(
                 resultSet.getString("id"),
                 resultSet.getString("name"),

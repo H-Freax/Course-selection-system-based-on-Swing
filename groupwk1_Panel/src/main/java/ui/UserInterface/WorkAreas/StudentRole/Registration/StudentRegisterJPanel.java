@@ -372,7 +372,7 @@ public class StudentRegisterJPanel extends javax.swing.JPanel {
 
         try {
 
-            return courseDirectory.loadCourseFromDatabase(courseId);
+            return courseDirectory.loadCourseFromDatabase1(courseId);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("数据库异常！！");

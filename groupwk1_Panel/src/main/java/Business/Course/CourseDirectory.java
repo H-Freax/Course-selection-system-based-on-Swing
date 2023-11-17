@@ -90,6 +90,19 @@ public class CourseDirectory {
         }
         return course;
     }
+    public Course loadCourseFromDatabase1(String courseId) throws SQLException {
+        String query = "SELECT * FROM Course where id =?";
+        Course course = null;
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, courseId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                course = Course.resultSetToCourse1(resultSet);
+            }
+        }
+        return course;
+    }
 
     //根据studentId查询Course
     public void loadCoursesFromDatabase(String studentId) throws SQLException {
